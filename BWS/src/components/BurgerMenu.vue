@@ -27,7 +27,12 @@
         </div>
 
         <div class="flex flex-col items-center gap-7 text-white text-2xl">
-          <button class="rail-icon" aria-label="Search">
+          <button
+            class="rail-icon"
+            :class="{ active: isSearchOpen }"
+            aria-label="Search"
+            @click="toggleSearch"
+          >
             <FontAwesomeIcon :icon="faMagnifyingGlass" />
           </button>
 
@@ -45,9 +50,101 @@
         </div>
       </div>
 
+      <!-- Search panel -->
+      <Transition name="search-slide">
+        <div
+          v-if="isSearchOpen"
+          class="w-[320px] md:w-[380px] bg-white border-r border-gray-200 px-6 md:px-8 py-10 overflow-y-auto"
+        >
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.25em] text-gray-400">
+                Navigation
+              </p>
+
+              <h2 class="mt-1 text-2xl font-black uppercase text-bws-blue">
+                Search
+              </h2>
+            </div>
+
+            <button
+              class="text-2xl text-black hover:text-bws-blue transition"
+              aria-label="Close search"
+              @click="closeSearch"
+            >
+              <FontAwesomeIcon :icon="faXmark" />
+            </button>
+          </div>
+
+          <div class="relative">
+            <FontAwesomeIcon
+              :icon="faMagnifyingGlass"
+              class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            />
+
+            <input
+              v-model="searchQuery"
+              ref="searchInput"
+              type="text"
+              placeholder="Search sea freight, tracking, careers..."
+              class="w-full border border-gray-300 pl-11 pr-4 py-4 text-sm font-semibold outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
+            />
+          </div>
+
+          <div v-if="!searchQuery" class="mt-8">
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
+              Popular searches
+            </p>
+
+            <div class="flex flex-wrap gap-2">
+              <button
+                v-for="term in popularSearches"
+                :key="term"
+                class="border border-gray-300 px-3 py-2 text-xs font-bold uppercase hover:border-bws-blue hover:text-bws-blue transition"
+                @click="searchQuery = term"
+              >
+                {{ term }}
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-8 space-y-3">
+            <a
+              v-for="result in filteredResults"
+              :key="result.path"
+              href="#"
+              class="search-result group"
+              @click="$emit('close')"
+            >
+              <div>
+                <p class="text-xs uppercase tracking-widest text-gray-400">
+                  {{ result.category }}
+                </p>
+
+                <h3 class="mt-1 font-black text-black group-hover:text-bws-blue transition">
+                  {{ result.name }}
+                </h3>
+              </div>
+
+              <FontAwesomeIcon
+                :icon="faChevronRight"
+                class="text-sm text-gray-400 group-hover:text-bws-blue group-hover:translate-x-1 transition"
+              />
+            </a>
+
+            <p
+              v-if="searchQuery && filteredResults.length === 0"
+              class="text-sm text-gray-500 border border-gray-200 p-4"
+            >
+              No results found. Try searching for “Sea Freight”, “Tracking”, or “Container”.
+            </p>
+          </div>
+        </div>
+      </Transition>
+
       <!-- Main column -->
       <div
-        class="w-[250px] md:w-[300px] bg-white px-8 md:px-10 py-24 flex flex-col justify-between border-r border-gray-200"
+        class="w-[250px] md:w-[300px] bg-white px-8 md:px-10 py-24 border-r border-gray-200"
       >
         <nav class="space-y-2">
           <button
@@ -66,8 +163,6 @@
             />
           </button>
         </nav>
-
-        <a href="#" class="menu-cta">Book your transport</a>
       </div>
 
       <!-- Second column -->
@@ -114,6 +209,7 @@
               :key="sub.name"
               href="#"
               class="third-menu-item"
+              @click="$emit('close')"
             >
               {{ sub.name }}
             </a>
@@ -180,12 +276,20 @@
           </article>
         </div>
       </div>
+
+      <!-- Stable CTA -->
+      <a
+        href="#"
+        class="fixed bottom-8 left-[116px] md:left-[140px] z-[120] border border-black bg-white px-6 py-4 text-sm font-black uppercase tracking-wide hover:bg-bws-blue hover:text-white hover:border-bws-blue hover:-translate-y-1 transition"
+      >
+        Book your transport
+      </a>
     </aside>
   </Transition>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import BwsLogo from './UI/BwsLogo.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
@@ -197,30 +301,26 @@ import {
   faPhone,
 } from '@fortawesome/free-solid-svg-icons'
 
-defineProps({
+const props = defineProps({
   isOpen: {
     type: Boolean,
     required: true,
   },
+  openSearch: {
+    type: Boolean,
+    default: false,
+  },
 })
 
-defineEmits(['close'])
+const emit = defineEmits(['close', 'search-opened'])
 
 const activeMain = ref(null)
 const activeChild = ref(null)
+const isSearchOpen = ref(false)
+const searchQuery = ref('')
+const searchInput = ref(null)
 
-const openMainColumn = (item) => {
-  if (!item.children) return
-
-  activeMain.value = item
-  activeChild.value = null
-}
-
-const openChildColumn = (child) => {
-  if (!child.children && !child.type) return
-
-  activeChild.value = child
-}
+const popularSearches = ['Sea Freight', 'Tracking', 'Container', 'Incoterms', 'Career']
 
 const menuItems = [
   {
@@ -347,16 +447,135 @@ const newsCards = [
   { title: 'New logistics solution improves B2B delivery time' },
   { title: 'Guide: choosing the right transport mode' },
 ]
+
+const openMainColumn = (item) => {
+  if (!item.children) {
+    emit('close')
+    return
+  }
+
+  activeMain.value = item
+  activeChild.value = null
+}
+
+const openChildColumn = (child) => {
+  if (!child.children && !child.type) {
+    emit('close')
+    return
+  }
+
+  activeChild.value = child
+}
+
+const toggleSearch = async () => {
+  isSearchOpen.value = !isSearchOpen.value
+
+  if (isSearchOpen.value) {
+    await nextTick()
+    searchInput.value?.focus()
+  }
+}
+
+const closeSearch = () => {
+  isSearchOpen.value = false
+  searchQuery.value = ''
+}
+
+const flattenMenuItems = (items, parent = '') => {
+  return items.flatMap((item) => {
+    const category = parent || item.name
+
+    const currentItem = {
+      name: item.name,
+      category,
+      path: `${parent}/${item.name}`,
+    }
+
+    const children = item.children ? flattenMenuItems(item.children, category) : []
+
+    return [currentItem, ...children]
+  })
+}
+
+const allSearchResults = flattenMenuItems(menuItems)
+
+const filteredResults = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase()
+
+  if (!query) return []
+
+  return allSearchResults.filter((item) =>
+    item.name.toLowerCase().includes(query)
+  )
+})
+
+watch(
+  () => props.openSearch,
+  async (value) => {
+    if (value && props.isOpen) {
+      isSearchOpen.value = true
+      emit('search-opened')
+
+      await nextTick()
+      searchInput.value?.focus()
+    }
+  }
+)
+
+watch(
+  () => props.isOpen,
+  async (value) => {
+    if (!value) {
+      closeSearch()
+      activeMain.value = null
+      activeChild.value = null
+      return
+    }
+
+    if (props.openSearch) {
+      isSearchOpen.value = true
+      emit('search-opened')
+
+      await nextTick()
+      searchInput.value?.focus()
+    }
+  }
+)
 </script>
 
 <style scoped>
 .rail-icon {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
 }
 
-.rail-icon:hover {
+.rail-icon:hover,
+.rail-icon.active {
   transform: translateX(6px) scale(1.12);
-  opacity: 0.85;
+  background: rgba(255, 255, 255, 0.14);
+  opacity: 0.95;
+}
+
+.search-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.search-result:hover {
+  border-color: #0000ab;
+  box-shadow: 0 12px 24px rgba(0, 0, 171, 0.1);
+  transform: translateY(-2px);
 }
 
 .main-menu-item,
@@ -416,25 +635,6 @@ const newsCards = [
   color: #0000ab;
 }
 
-.menu-cta {
-  border: 1px solid black;
-  padding: 14px 20px;
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  transition: all 0.3s ease;
-}
-
-.menu-cta:hover {
-  background: #0000ab;
-  color: white;
-  border-color: #0000ab;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(0, 0, 171, 0.25);
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease;
@@ -456,18 +656,22 @@ const newsCards = [
 }
 
 .column-slide-enter-active,
-.column-slide-leave-active {
+.column-slide-leave-active,
+.search-slide-enter-active,
+.search-slide-leave-active {
   transition:
     opacity 0.22s ease,
     transform 0.22s ease;
 }
 
-.column-slide-enter-from {
+.column-slide-enter-from,
+.search-slide-enter-from {
   opacity: 0;
   transform: translateX(-24px);
 }
 
-.column-slide-leave-to {
+.column-slide-leave-to,
+.search-slide-leave-to {
   opacity: 0;
   transform: translateX(24px);
 }

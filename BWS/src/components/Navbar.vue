@@ -8,12 +8,13 @@
     ]"
   >
     <nav class="relative h-24 md:h-28 px-6 md:px-12 flex items-center justify-between">
+      <!-- Left side -->
       <div class="flex items-center gap-10">
         <button
           class="burger-button"
           :class="{ active: isMenuOpen, scrolled: isScrolled }"
           aria-label="Toggle menu"
-          @click="toggleMenu"
+          @click="openMenu"
         >
           <span></span>
           <span></span>
@@ -31,15 +32,18 @@
         </div>
       </div>
 
+      <!-- Center logo -->
       <div class="absolute left-1/2 -translate-x-1/2 transition-transform duration-300 hover:scale-105">
         <BwsLogo :class="isScrolled ? 'text-bws-blue' : 'text-white'" />
       </div>
 
+      <!-- Right side -->
       <div class="flex items-center gap-10">
         <div class="hidden md:flex items-center gap-5">
           <button
             :class="['icon-button text-2xl', isScrolled ? 'text-black' : 'text-white']"
             aria-label="Search"
+            @click="openMenuSearch"
           >
             <FontAwesomeIcon :icon="faMagnifyingGlass" />
           </button>
@@ -67,7 +71,12 @@
     </nav>
   </header>
 
-  <BurgerMenu :is-open="isMenuOpen" @close="closeMenu" />
+  <BurgerMenu
+    :is-open="isMenuOpen"
+    :open-search="openSearchOnMenuOpen"
+    @close="closeMenu"
+    @search-opened="openSearchOnMenuOpen = false"
+  />
 </template>
 
 <script setup>
@@ -82,17 +91,25 @@ import {
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
+const openSearchOnMenuOpen = ref(false)
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 10
 }
 
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
+const openMenu = () => {
+  openSearchOnMenuOpen.value = false
+  isMenuOpen.value = true
+}
+
+const openMenuSearch = () => {
+  openSearchOnMenuOpen.value = true
+  isMenuOpen.value = true
 }
 
 const closeMenu = () => {
   isMenuOpen.value = false
+  openSearchOnMenuOpen.value = false
 }
 
 watch(isMenuOpen, (value) => {
