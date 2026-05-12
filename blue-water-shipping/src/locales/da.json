@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "toolbox": "ToolBox",
+    "solutions": "Løsninger",
+    "bookTransport": "Book Transport",
+    "tracking": "Sporing",
+    "scheduling": "Planlægning",
+    "contacts": "Kontakter",
+    "getQuote": "Få et Tilbud",
+    "bookNow": "Book Nu",
+    "customsCompliance": "Told & Overholdelse",
+    "langEn": "EN",
+    "langDa": "DA"
+  },
+  "floatingAbout": {
+    "ariaLabel": "Om Os",
+    "circleText": "OM OS · OM OS · OM OS · OM OS · "
+  },
+  "hero": {
+    "accentLine1": "Tung Løft",
+    "accentLine2": "Søfragt",
+    "headingLine1": "Pålidelighed Møder",
+    "headingLine2": "Friktionsfri",
+    "headingLine3": "Told"
+  }
+}

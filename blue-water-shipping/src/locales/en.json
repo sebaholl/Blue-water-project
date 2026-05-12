@@ -1,0 +1,28 @@
+{
+  "nav": {
+    "toolbox": "ToolBox",
+    "solutions": "Solutions",
+    "bookTransport": "Book Transport",
+    "tracking": "Tracking",
+    "scheduling": "Scheduling",
+    "contacts": "Contacts",
+    "getQuote": "Get a Quote",
+    "bookNow": "Book Now",
+    "customsCompliance": "Customs & Compliance",
+    "langEn": "EN",
+    "langDa": "DA"
+  },
+  "floatingAbout": {
+    "ariaLabel": "About Us",
+    "circleText": "ABOUT US · ABOUT US · ABOUT US · "
+  },
+  "hero": {
+    "accentLine1": "Heavy-Lift",
+    "accentLine2": "Sea Freight",
+    "headingLine1": "Reliability Meets",
+    "headingLine2": "Frictionless",
+    "headingLine3": "Customs",
+    "button1": "Heavy-Lift & Industrial Freight",
+    "button2": "Customs & Compliance"
+  }
+}

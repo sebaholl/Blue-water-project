@@ -111,7 +111,7 @@ body {
 
 ## Component Structure
 
-- Components are single-file components (`.vue`) using `<script setup>`.
+- Components are single-file components (`.js`) using `<script setup>`.
 - Shared layout elements (Navbar, Footer) live in `src/components/layout/`.
 - Page-specific sections can be sub-components inside `src/components/<PageName>/`.
 

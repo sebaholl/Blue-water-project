@@ -1,35 +1,52 @@
-@import './base.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+/* ── Proxima Nova — self-hosted webfont ─────────────────────────────────── */
+/* Place woff2/woff files in src/assets/fonts/ and uncomment:
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('./fonts/ProximaNova-Regular.woff2') format('woff2'),
+       url('./fonts/ProximaNova-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('./fonts/ProximaNova-Medium.woff2') format('woff2'),
+       url('./fonts/ProximaNova-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('./fonts/ProximaNova-Bold.woff2') format('woff2'),
+       url('./fonts/ProximaNova-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('./fonts/ProximaNova-Extrabold.woff2') format('woff2'),
+       url('./fonts/ProximaNova-Extrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('./fonts/ProximaNova-Black.woff2') format('woff2'),
+       url('./fonts/ProximaNova-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+*/
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+/* ── Body defaults ──────────────────────────────────────────────────────── */
+body {
+  font-family: 'Proxima Nova', sans-serif;
 }
