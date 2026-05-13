@@ -7,9 +7,9 @@
         : 'bg-bws-blue border-white/20',
     ]"
   >
-    <nav class="relative h-24 md:h-28 px-6 md:px-12 flex items-center justify-between">
+    <nav class="relative flex h-20 items-center justify-between px-5 md:h-28 md:px-12">
       <!-- Left -->
-      <div class="flex items-center gap-10">
+      <div class="flex items-center gap-6 md:gap-10">
         <button
           class="burger-button"
           :class="{ active: isMenuOpen, scrolled: isScrolled }"
@@ -33,13 +33,22 @@
       </div>
 
       <!-- Logo -->
-      <div class="absolute left-1/2 -translate-x-1/2 transition-transform duration-300 hover:scale-105">
-        <BwsLogo :class="isScrolled ? 'text-bws-blue' : 'text-white'" />
-      </div>
+      <RouterLink
+        to="/"
+        class="absolute left-1/2 -translate-x-1/2 transition-transform duration-300 hover:scale-105"
+        aria-label="Blue Water Shipping home"
+      >
+        <BwsLogo
+          :class="[
+            isScrolled ? 'text-bws-blue' : 'text-white',
+            '!h-14 md:!h-[70px]',
+          ]"
+        />
+      </RouterLink>
 
-      <!-- Right -->
-      <div class="flex items-center gap-10">
-        <div class="hidden md:flex items-center gap-5">
+      <!-- Desktop right -->
+      <div class="hidden items-center gap-10 md:flex">
+        <div class="flex items-center gap-5">
           <!-- Search -->
           <button
             :class="[
@@ -52,7 +61,7 @@
             <FontAwesomeIcon :icon="faMagnifyingGlass" />
           </button>
 
-          <!-- Language dropdown -->
+          <!-- Desktop language -->
           <div class="relative">
             <button
               :class="[
@@ -62,7 +71,7 @@
                   : 'text-white border-white/40',
               ]"
               :aria-label="t('nav.language')"
-              @click="isLanguageOpen = !isLanguageOpen"
+              @click.stop="isLanguageOpen = !isLanguageOpen"
             >
               <FontAwesomeIcon :icon="faEarthAmericas" class="text-lg" />
 
@@ -76,7 +85,7 @@
             <Transition name="dropdown">
               <div
                 v-if="isLanguageOpen"
-                class="absolute right-0 mt-3 w-40 border border-gray-200 bg-white shadow-xl z-[80]"
+                class="absolute right-0 z-[80] mt-3 w-40 border border-gray-200 bg-white shadow-xl"
               >
                 <button
                   v-for="language in languages"
@@ -93,18 +102,55 @@
           </div>
         </div>
 
-        <!-- CTA -->
-<RouterLink
-  :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
-  :class="[
-    'hidden md:flex h-12 w-[145px] items-center justify-center whitespace-nowrap px-5 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-0.5',
-    isScrolled
-      ? 'bg-bws-blue text-white hover:bg-blue-900'
-      : 'bg-white text-black hover:bg-gray-100',
-  ]"
->
-  {{ user ? (userRole === 'admin' ? 'Admin' : 'Account') : 'Book transport' }}
-</RouterLink>
+        <!-- Desktop CTA -->
+        <RouterLink
+          :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
+          :class="[
+            'flex h-12 w-[145px] items-center justify-center whitespace-nowrap px-5 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-0.5',
+            isScrolled
+              ? 'bg-bws-blue text-white hover:bg-blue-900'
+              : 'bg-white text-black hover:bg-gray-100',
+          ]"
+        >
+          {{ user ? (userRole === 'admin' ? 'Admin' : 'Account') : 'Book transport' }}
+        </RouterLink>
+      </div>
+
+      <!-- Mobile right -->
+      <div class="absolute right-5 flex items-center gap-2 md:hidden">
+        <!-- Mobile language -->
+        <div class="relative">
+          <button
+            :class="[
+              'mobile-language-button',
+              isScrolled
+                ? 'text-black border-black/20'
+                : 'text-white border-white/40',
+            ]"
+            :aria-label="t('nav.language')"
+            @click.stop="isMobileLanguageOpen = !isMobileLanguageOpen"
+          >
+            {{ locale === 'en' ? 'EN' : 'DA' }}
+          </button>
+
+          <Transition name="dropdown">
+            <div
+              v-if="isMobileLanguageOpen"
+              class="absolute right-0 top-[52px] z-[80] w-36 border border-gray-200 bg-white shadow-xl"
+            >
+              <button
+                v-for="language in languages"
+                :key="language.code"
+                class="language-option"
+                :class="{ active: locale === language.code }"
+                @click="changeLanguage(language.code)"
+              >
+                <span>{{ language.label }}</span>
+                <span class="font-black">{{ language.code.toUpperCase() }}</span>
+              </button>
+            </div>
+          </Transition>
+        </div>
       </div>
     </nav>
   </header>
@@ -134,12 +180,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 const { t, locale } = useI18n()
-
 const { user, userRole } = useAuth()
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
 const isLanguageOpen = ref(false)
+const isMobileLanguageOpen = ref(false)
 const openSearchOnMenuOpen = ref(false)
 
 const languages = [
@@ -150,7 +196,9 @@ const languages = [
 const changeLanguage = (code) => {
   locale.value = code
   localStorage.setItem('bws-locale', code)
+
   isLanguageOpen.value = false
+  isMobileLanguageOpen.value = false
 }
 
 const handleScroll = () => {
@@ -160,12 +208,14 @@ const handleScroll = () => {
 const openMenu = () => {
   openSearchOnMenuOpen.value = false
   isLanguageOpen.value = false
+  isMobileLanguageOpen.value = false
   isMenuOpen.value = true
 }
 
 const openMenuSearch = () => {
   openSearchOnMenuOpen.value = true
   isLanguageOpen.value = false
+  isMobileLanguageOpen.value = false
   isMenuOpen.value = true
 }
 
@@ -174,23 +224,31 @@ const closeMenu = () => {
   openSearchOnMenuOpen.value = false
 }
 
+const handleWindowClick = (event) => {
+  if (!event.target.closest('.language-switch')) {
+    isLanguageOpen.value = false
+  }
+
+  if (!event.target.closest('.mobile-language-button')) {
+    isMobileLanguageOpen.value = false
+  }
+}
+
 watch(isMenuOpen, (value) => {
   document.body.style.overflow = value ? 'hidden' : ''
 })
 
 onMounted(() => {
   handleScroll()
-  window.addEventListener('scroll', handleScroll)
 
-  window.addEventListener('click', (event) => {
-    if (!event.target.closest('.language-switch')) {
-      isLanguageOpen.value = false
-    }
-  })
+  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('click', handleWindowClick)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('click', handleWindowClick)
+
   document.body.style.overflow = ''
 })
 </script>
@@ -278,6 +336,22 @@ onUnmounted(() => {
   color: white;
 }
 
+.mobile-language-button {
+  height: 38px;
+  min-width: 46px;
+  border: 1px solid;
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.mobile-language-button:hover {
+  transform: translateY(-1px);
+}
+
 .dropdown-enter-active,
 .dropdown-leave-active {
   transition:
@@ -292,8 +366,8 @@ onUnmounted(() => {
 }
 
 .burger-button {
-  width: 36px;
-  height: 28px;
+  width: 34px;
+  height: 26px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -315,15 +389,15 @@ onUnmounted(() => {
 
 .burger-button span:nth-child(1),
 .burger-button span:nth-child(3) {
-  width: 36px;
+  width: 34px;
 }
 
 .burger-button span:nth-child(2) {
-  width: 26px;
+  width: 24px;
 }
 
 .burger-button:hover span:nth-child(2) {
-  width: 36px;
+  width: 34px;
 }
 
 .burger-button:hover span:nth-child(1) {
@@ -337,7 +411,7 @@ onUnmounted(() => {
 
 .burger-button.active span:nth-child(1) {
   transform: rotate(45deg) translate(2px, -3px);
-  width: 36px;
+  width: 34px;
 }
 
 .burger-button.active span:nth-child(2) {
@@ -347,6 +421,6 @@ onUnmounted(() => {
 
 .burger-button.active span:nth-child(3) {
   transform: rotate(-45deg) translate(2px, 3px);
-  width: 36px;
+  width: 34px;
 }
 </style>
