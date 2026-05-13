@@ -10,15 +10,15 @@
   <Transition name="slide-menu">
     <aside
       v-if="isOpen"
-      class="fixed top-0 left-0 z-[100] h-screen w-full bg-white flex overflow-hidden"
+      class="fixed top-0 left-0 z-[100] flex h-screen w-full overflow-hidden bg-white"
     >
       <!-- Left icon rail -->
-      <div class="w-20 md:w-24 bg-bws-blue flex flex-col items-center justify-between py-6">
+      <div class="flex w-20 flex-col items-center justify-between bg-bws-blue py-6 md:w-24">
         <div class="flex flex-col items-center gap-9">
           <BwsLogo class="text-white !h-12 md:!h-14" />
 
           <button
-            class="text-white text-4xl transition-all duration-300 hover:rotate-90 hover:scale-110"
+            class="text-4xl text-white transition-all duration-300 hover:rotate-90 hover:scale-110"
             aria-label="Close menu"
             @click="$emit('close')"
           >
@@ -26,7 +26,7 @@
           </button>
         </div>
 
-        <div class="flex flex-col items-center gap-7 text-white text-2xl">
+        <div class="flex flex-col items-center gap-7 text-2xl text-white">
           <button
             class="rail-icon"
             :class="{ active: isSearchOpen }"
@@ -63,7 +63,7 @@
             <Transition name="dropdown">
               <div
                 v-if="isLanguageOpen"
-                class="absolute left-16 bottom-0 w-40 border border-gray-200 bg-white shadow-xl z-[130]"
+                class="absolute bottom-0 left-16 z-[130] w-40 border border-gray-200 bg-white shadow-xl"
               >
                 <button
                   v-for="language in languages"
@@ -81,13 +81,76 @@
         </div>
       </div>
 
+      <!-- Mobile menu content -->
+      <div class="flex-1 overflow-y-auto bg-white px-6 py-8 md:hidden">
+        <p class="text-xs font-bold uppercase tracking-[0.25em] text-gray-400">
+          {{ t('menu.navigation') }}
+        </p>
+
+        <nav class="mt-6 space-y-3">
+          <details
+            v-for="item in menuItems"
+            :key="item.key"
+            class="mobile-menu-group"
+          >
+            <summary class="mobile-main-item">
+              <span>{{ item.name }}</span>
+
+              <FontAwesomeIcon
+                v-if="item.children"
+                :icon="faChevronDown"
+                class="text-sm"
+              />
+            </summary>
+
+            <div v-if="item.children" class="mt-3 space-y-2 pl-4">
+              <details
+                v-for="child in item.children"
+                :key="child.key"
+                class="mobile-sub-group"
+              >
+                <summary class="mobile-sub-item">
+                  <span>{{ child.name }}</span>
+
+                  <FontAwesomeIcon
+                    v-if="child.children"
+                    :icon="faChevronDown"
+                    class="text-xs"
+                  />
+                </summary>
+
+                <div v-if="child.children" class="mt-2 space-y-2 pl-4">
+                  <a
+                    v-for="sub in child.children"
+                    :key="sub.key"
+                    href="#"
+                    class="mobile-third-item"
+                    @click="$emit('close')"
+                  >
+                    {{ sub.name }}
+                  </a>
+                </div>
+              </details>
+            </div>
+          </details>
+        </nav>
+
+        <RouterLink
+          :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
+          class="mt-8 flex h-12 w-full items-center justify-center border border-black bg-white text-sm font-black uppercase tracking-wide transition hover:border-bws-blue hover:bg-bws-blue hover:text-white"
+          @click="$emit('close')"
+        >
+          {{ user ? (userRole === 'admin' ? 'Admin' : 'Account') : 'Book transport' }}
+        </RouterLink>
+      </div>
+
       <!-- Search panel -->
       <Transition name="search-slide">
         <div
           v-if="isSearchOpen"
-          class="w-[320px] md:w-[380px] bg-white border-r border-gray-200 px-6 md:px-8 py-10 overflow-y-auto"
+          class="w-[320px] overflow-y-auto border-r border-gray-200 bg-white px-6 py-10 md:w-[380px] md:px-8"
         >
-          <div class="flex items-center justify-between mb-6">
+          <div class="mb-6 flex items-center justify-between">
             <div>
               <p class="text-xs font-bold uppercase tracking-[0.25em] text-gray-400">
                 {{ t('menu.navigation') }}
@@ -99,7 +162,7 @@
             </div>
 
             <button
-              class="text-2xl text-black hover:text-bws-blue transition"
+              class="text-2xl text-black transition hover:text-bws-blue"
               aria-label="Close search"
               @click="closeSearch"
             >
@@ -114,16 +177,16 @@
             />
 
             <input
-              v-model="searchQuery"
               ref="searchInput"
+              v-model="searchQuery"
               type="text"
               :placeholder="t('menu.searchPlaceholder')"
-              class="w-full border border-gray-300 pl-11 pr-4 py-4 text-sm font-semibold outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
+              class="w-full border border-gray-300 py-4 pl-11 pr-4 text-sm font-semibold outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
             />
           </div>
 
           <div v-if="!searchQuery" class="mt-8">
-            <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
+            <p class="mb-4 text-xs font-bold uppercase tracking-widest text-gray-400">
               {{ t('menu.popularSearches') }}
             </p>
 
@@ -131,7 +194,7 @@
               <button
                 v-for="term in popularSearches"
                 :key="term"
-                class="border border-gray-300 px-3 py-2 text-xs font-bold uppercase hover:border-bws-blue hover:text-bws-blue transition"
+                class="border border-gray-300 px-3 py-2 text-xs font-bold uppercase transition hover:border-bws-blue hover:text-bws-blue"
                 @click="searchQuery = term"
               >
                 {{ term }}
@@ -152,20 +215,20 @@
                   {{ result.category }}
                 </p>
 
-                <h3 class="mt-1 font-black text-black group-hover:text-bws-blue transition">
+                <h3 class="mt-1 font-black text-black transition group-hover:text-bws-blue">
                   {{ result.name }}
                 </h3>
               </div>
 
               <FontAwesomeIcon
                 :icon="faChevronRight"
-                class="text-sm text-gray-400 group-hover:text-bws-blue group-hover:translate-x-1 transition"
+                class="text-sm text-gray-400 transition group-hover:translate-x-1 group-hover:text-bws-blue"
               />
             </a>
 
             <p
               v-if="searchQuery && filteredResults.length === 0"
-              class="text-sm text-gray-500 border border-gray-200 p-4"
+              class="border border-gray-200 p-4 text-sm text-gray-500"
             >
               {{ t('menu.noResults') }}
             </p>
@@ -173,9 +236,9 @@
         </div>
       </Transition>
 
-      <!-- Main column -->
+      <!-- Main column desktop -->
       <div
-        class="w-[250px] md:w-[300px] bg-white px-8 md:px-10 py-24 border-r border-gray-200"
+        class="hidden w-[250px] border-r border-gray-200 bg-white px-8 py-24 md:block md:w-[300px] md:px-10"
       >
         <nav class="space-y-2">
           <button
@@ -196,16 +259,16 @@
         </nav>
       </div>
 
-      <!-- Second column -->
+      <!-- Second column desktop -->
       <Transition name="column-slide" mode="out-in">
         <div
           v-if="activeMain?.children"
           :key="activeMain.key"
-          class="w-[230px] md:w-[270px] bg-white px-8 py-24 border-r border-gray-200"
+          class="hidden w-[230px] border-r border-gray-200 bg-white px-8 py-24 md:block md:w-[270px]"
         >
           <p class="column-label">{{ activeMain.name }}</p>
 
-          <nav class=" space-y-4">
+          <nav class="space-y-4">
             <button
               v-for="child in activeMain.children"
               :key="child.key"
@@ -225,12 +288,12 @@
         </div>
       </Transition>
 
-      <!-- Third column -->
+      <!-- Third column desktop -->
       <Transition name="column-slide" mode="out-in">
         <div
           v-if="activeChild?.children"
           :key="activeChild.key"
-          class="w-[260px] md:w-[310px] bg-white px-8 py-24 border-r border-gray-200"
+          class="hidden w-[260px] border-r border-gray-200 bg-white px-8 py-24 md:block md:w-[310px]"
         >
           <p class="column-label">{{ activeChild.name }}</p>
 
@@ -248,31 +311,31 @@
         </div>
       </Transition>
 
-      <!-- Right visual area -->
-      <div class="hidden lg:flex flex-1 bg-gray-200 relative overflow-hidden">
+      <!-- Right visual area desktop -->
+      <div class="relative hidden flex-1 overflow-hidden bg-gray-200 lg:flex">
         <div class="absolute inset-0 bg-bws-blue/5"></div>
 
         <div
           v-if="!activeChild?.type"
-          class="absolute inset-0 opacity-40 bg-[linear-gradient(to_bottom_right,transparent_49.9%,black_50%,transparent_50.1%),linear-gradient(to_top_right,transparent_49.9%,black_50%,transparent_50.1%)]"
+          class="absolute inset-0 bg-[linear-gradient(to_bottom_right,transparent_49.9%,black_50%,transparent_50.1%),linear-gradient(to_top_right,transparent_49.9%,black_50%,transparent_50.1%)] opacity-40"
         ></div>
 
         <div
           v-else-if="activeChild.type === 'containers'"
-          class="relative z-10 grid grid-cols-2 w-full h-full"
+          class="relative z-10 grid h-full w-full grid-cols-2"
         >
           <div
             v-for="container in containers"
             :key="container"
-            class="border border-black/60 flex flex-col items-center justify-center gap-4 hover:bg-white transition cursor-pointer"
+            class="flex cursor-pointer flex-col items-center justify-center gap-4 border border-black/60 transition hover:bg-white"
           >
             <div
-              class="w-24 h-14 border border-black rotate-[-20deg] flex items-center justify-center text-[10px] font-bold text-bws-blue"
+              class="flex h-14 w-24 rotate-[-20deg] items-center justify-center border border-black text-[10px] font-bold text-bws-blue"
             >
               BWS
             </div>
 
-            <p class="font-black text-sm uppercase text-center">
+            <p class="text-center text-sm font-black uppercase">
               {{ container }}
             </p>
           </div>
@@ -280,7 +343,7 @@
 
         <div
           v-else-if="activeChild.type === 'news'"
-          class="relative z-10 w-full max-w-sm px-8 py-24 space-y-6 bg-white/70"
+          class="relative z-10 w-full max-w-sm space-y-6 bg-white/70 px-8 py-24"
         >
           <p class="text-xs uppercase tracking-widest text-gray-500">
             {{ t('menu.latest') }}
@@ -289,9 +352,9 @@
           <article
             v-for="news in newsCards"
             :key="news.title"
-            class="border border-gray-300 bg-white hover:-translate-y-1 hover:shadow-lg transition cursor-pointer"
+            class="cursor-pointer border border-gray-300 bg-white transition hover:-translate-y-1 hover:shadow-lg"
           >
-            <div class="h-28 bg-gray-300 relative">
+            <div class="relative h-28 bg-gray-300">
               <div
                 class="absolute inset-0 bg-[linear-gradient(to_bottom_right,transparent_49.5%,black_50%,transparent_50.5%),linear-gradient(to_top_right,transparent_49.5%,black_50%,transparent_50.5%)]"
               ></div>
@@ -302,7 +365,7 @@
                 {{ news.title }}
               </h3>
 
-              <button class="mt-3 text-xs border border-black px-3 py-1 font-bold">
+              <button class="mt-3 border border-black px-3 py-1 text-xs font-bold">
                 {{ t('menu.readMore') }}
               </button>
             </div>
@@ -310,24 +373,26 @@
         </div>
       </div>
 
-      <!-- Stable CTA - always English -->
-<RouterLink
-  :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
-  class="fixed bottom-5 left-[116px] md:left-[140px] z-[120] border border-black bg-white px-6 py-4 text-sm font-black uppercase tracking-wide hover:bg-bws-blue hover:text-white hover:border-bws-blue hover:-translate-y-1 transition"
-  @click="$emit('close')"
->
-  {{ user ? (userRole === 'admin' ? 'Admin' : 'Account') : 'Book transport' }}
-</RouterLink>
+      <!-- Stable CTA desktop only -->
+      <RouterLink
+        :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
+        class="fixed bottom-5 left-[140px] z-[120] hidden border border-black bg-white px-6 py-4 text-sm font-black uppercase tracking-wide transition hover:-translate-y-1 hover:border-bws-blue hover:bg-bws-blue hover:text-white md:flex"
+        @click="$emit('close')"
+      >
+        {{ user ? (userRole === 'admin' ? 'Admin' : 'Account') : 'Book transport' }}
+      </RouterLink>
     </aside>
   </Transition>
 </template>
 
 <script setup>
-import { useAuth } from '../composables/useAuth'
 import { computed, nextTick, ref, watch } from 'vue'
+import { useAuth } from '../composables/useAuth'
 import { useI18n } from 'vue-i18n'
+
 import BwsLogo from './UI/BwsLogo.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import {
   faMagnifyingGlass,
   faEarthAmericas,
@@ -352,7 +417,6 @@ const props = defineProps({
 const emit = defineEmits(['close', 'search-opened'])
 
 const { t, locale } = useI18n()
-
 const { user, userRole } = useAuth()
 
 const activeMainKey = ref(null)
@@ -627,11 +691,14 @@ watch(
 
 <style scoped>
 .rail-icon {
-  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
   width: 44px;
   height: 44px;
   display: grid;
   place-items: center;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .rail-icon:hover,
@@ -710,7 +777,9 @@ watch(
   align-items: center;
   justify-content: space-between;
   text-align: left;
-  transition: color 0.25s ease, transform 0.25s ease;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
 }
 
 .main-menu-item {
@@ -728,10 +797,10 @@ watch(
 }
 
 .submenu-item {
+  margin-bottom: 1.25rem;
   font-size: 0.95rem;
   font-weight: 800;
   color: #666;
-  margin-bottom: 1.25rem;
 }
 
 .submenu-item:hover,
@@ -742,11 +811,13 @@ watch(
 
 .third-menu-item {
   display: block;
+  margin-bottom: 1.25rem;
   font-size: 0.9rem;
   font-weight: 800;
   color: #111;
-  transition: color 0.25s ease, transform 0.25s ease;
-  margin-bottom: 1.25rem;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
 }
 
 .third-menu-item:hover {
@@ -760,10 +831,53 @@ watch(
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: #0000ab;
-
   transform: translateY(-28px);
 }
 
+/* Mobile menu */
+.mobile-menu-group,
+.mobile-sub-group {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mobile-main-item,
+.mobile-sub-item {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-main-item {
+  padding: 18px 0;
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #111;
+}
+
+.mobile-sub-item {
+  padding: 12px 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #555;
+}
+
+.mobile-third-item {
+  display: block;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.mobile-main-item::-webkit-details-marker,
+.mobile-sub-item::-webkit-details-marker {
+  display: none;
+}
+
+/* Transitions */
 .fade-enter-active,
 .fade-leave-active,
 .dropdown-enter-active,

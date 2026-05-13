@@ -1,25 +1,27 @@
 <template>
-  <section class="min-h-screen bg-gray-100 px-6 py-16">
+  <section class="min-h-screen bg-gray-100 px-4 py-8 sm:px-6 sm:py-12 md:py-16">
     <div class="mx-auto max-w-6xl">
       <!-- Header -->
-      <div class="mb-8 flex flex-col justify-between gap-4 bg-white p-6 shadow md:flex-row md:items-center">
+      <div
+        class="mb-6 flex flex-col justify-between gap-5 bg-white p-5 shadow sm:p-6 md:mb-8 md:flex-row md:items-center"
+      >
         <div>
-          <p class="text-sm font-bold uppercase tracking-[0.25em] text-gray-400">
+          <p class="text-xs font-bold uppercase tracking-[0.25em] text-gray-400 sm:text-sm">
             {{ t('dashboard.clientPortal') }}
           </p>
 
-          <h1 class="mt-2 text-3xl font-black text-bws-blue">
+          <h1 class="mt-2 text-3xl font-black leading-tight text-bws-blue sm:text-4xl">
             {{ t('dashboard.welcome') }}
           </h1>
 
-          <p class="mt-2 text-gray-600">
+          <p class="mt-3 break-words text-sm leading-relaxed text-gray-600 sm:text-base">
             {{ t('dashboard.loggedInAs') }}:
             <span class="font-bold text-black">{{ user?.email }}</span>
           </p>
         </div>
 
         <button
-          class="bg-black px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-bws-blue"
+          class="flex h-12 w-full items-center justify-center bg-black px-5 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-bws-blue md:w-auto"
           @click="handleLogout"
         >
           {{ t('dashboard.logout') }}
@@ -27,40 +29,40 @@
       </div>
 
       <!-- Stats -->
-      <div class="grid gap-6 md:grid-cols-4">
-        <div class="bg-white p-6 shadow">
-          <p class="text-sm font-bold uppercase tracking-widest text-gray-400">
+      <div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        <div class="bg-white p-5 shadow sm:p-6">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400 sm:text-sm">
             {{ t('dashboard.active') }}
           </p>
-          <h2 class="mt-3 text-4xl font-black text-bws-blue">{{ activeCount }}</h2>
+          <h2 class="mt-3 text-3xl font-black text-bws-blue sm:text-4xl">{{ activeCount }}</h2>
         </div>
 
-        <div class="bg-white p-6 shadow">
-          <p class="text-sm font-bold uppercase tracking-widest text-gray-400">
+        <div class="bg-white p-5 shadow sm:p-6">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400 sm:text-sm">
             {{ t('dashboard.pending') }}
           </p>
-          <h2 class="mt-3 text-4xl font-black text-bws-blue">{{ pendingCount }}</h2>
+          <h2 class="mt-3 text-3xl font-black text-bws-blue sm:text-4xl">{{ pendingCount }}</h2>
         </div>
 
-        <div class="bg-white p-6 shadow">
-          <p class="text-sm font-bold uppercase tracking-widest text-gray-400">
+        <div class="bg-white p-5 shadow sm:p-6">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400 sm:text-sm">
             {{ t('dashboard.inTransit') }}
           </p>
-          <h2 class="mt-3 text-4xl font-black text-bws-blue">{{ inTransitCount }}</h2>
+          <h2 class="mt-3 text-3xl font-black text-bws-blue sm:text-4xl">{{ inTransitCount }}</h2>
         </div>
 
-        <div class="bg-white p-6 shadow">
-          <p class="text-sm font-bold uppercase tracking-widest text-gray-400">
+        <div class="bg-white p-5 shadow sm:p-6">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-400 sm:text-sm">
             {{ t('dashboard.delivered') }}
           </p>
-          <h2 class="mt-3 text-4xl font-black text-bws-blue">{{ deliveredCount }}</h2>
+          <h2 class="mt-3 text-3xl font-black text-bws-blue sm:text-4xl">{{ deliveredCount }}</h2>
         </div>
       </div>
 
       <div class="mt-6 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <!-- Saved shipments -->
-        <div class="bg-white p-6 shadow">
-          <div class="flex items-center justify-between gap-4">
+        <div class="bg-white p-5 shadow sm:p-6">
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 class="text-2xl font-black text-bws-blue">
               {{ t('dashboard.savedShipments') }}
             </h2>
@@ -74,28 +76,29 @@
             <article
               v-for="shipment in visibleShipments"
               :key="shipment.firebaseId || shipment.id"
-              class="cursor-pointer border border-gray-200 p-4 transition hover:-translate-y-1 hover:border-bws-blue hover:shadow-md"
+              class="cursor-pointer border border-gray-200 p-4 transition hover:-translate-y-1 hover:border-bws-blue hover:shadow-md sm:p-5"
               @click="openShipmentModal(shipment)"
             >
               <div class="flex flex-col justify-between gap-4 md:flex-row md:items-start">
-                <div class="flex-1">
+                <div class="min-w-0 flex-1">
                   <p class="text-xs font-bold uppercase tracking-widest text-gray-400">
                     {{ shipment.id }}
                   </p>
 
-                  <h3 class="mt-1 text-lg font-black">
+                  <h3 class="mt-1 break-words text-lg font-black">
                     {{ shipment.route }}
                   </h3>
 
-                  <p class="mt-1 text-sm text-gray-600">
-                    {{ translateTransportType(shipment.type) }} · {{ t('dashboard.eta') }}: {{ shipment.eta }}
+                  <p class="mt-1 text-sm leading-relaxed text-gray-600">
+                    {{ translateTransportType(shipment.type) }} · {{ t('dashboard.eta') }}:
+                    {{ shipment.eta }}
                   </p>
 
-                  <p v-if="shipment.company" class="mt-1 text-sm text-gray-500">
+                  <p v-if="shipment.company" class="mt-1 break-words text-sm text-gray-500">
                     {{ t('dashboard.company') }}: {{ shipment.company }}
                   </p>
 
-                  <p v-if="shipment.message" class="mt-2 text-sm text-gray-500">
+                  <p v-if="shipment.message" class="mt-2 break-words text-sm text-gray-500">
                     {{ shipment.message }}
                   </p>
 
@@ -103,7 +106,7 @@
                     <span
                       v-for="status in statusSteps"
                       :key="status"
-                      class="rounded-full px-3 py-1 text-xs font-bold uppercase"
+                      class="rounded-full px-3 py-1 text-[10px] font-bold uppercase sm:text-xs"
                       :class="getStepClass(shipment.status, status)"
                     >
                       {{ translateStatus(status) }}
@@ -121,7 +124,7 @@
 
                   <button
                     v-if="shipment.firebaseId && shipment.status !== 'Delivered'"
-                    class="border border-bws-blue px-4 py-2 text-xs font-black uppercase text-bws-blue transition hover:bg-bws-blue hover:text-white"
+                    class="min-h-11 border border-bws-blue px-4 py-2 text-xs font-black uppercase text-bws-blue transition hover:bg-bws-blue hover:text-white"
                     @click.stop="moveToNextStatus(shipment)"
                   >
                     {{ t('dashboard.moveTo') }} {{ translateStatus(getNextStatus(shipment.status)) }}
@@ -140,12 +143,12 @@
         </div>
 
         <!-- Booking form -->
-        <div class="bg-white p-6 shadow">
+        <div class="bg-white p-5 shadow sm:p-6">
           <h2 class="text-2xl font-black text-bws-blue">
             {{ t('dashboard.bookTransport') }}
           </h2>
 
-          <p class="mt-2 text-sm text-gray-600">
+          <p class="mt-2 text-sm leading-relaxed text-gray-600">
             {{ t('dashboard.bookingText') }}
           </p>
 
@@ -159,7 +162,7 @@
                 v-model="booking.company"
                 type="text"
                 required
-                class="w-full border border-gray-300 px-4 py-3 outline-none focus:border-bws-blue"
+                class="h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
               />
             </div>
 
@@ -173,11 +176,11 @@
                 type="text"
                 required
                 :placeholder="t('dashboard.destinationPlaceholder')"
-                class="w-full border border-gray-300 px-4 py-3 outline-none focus:border-bws-blue"
+                class="h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
               />
             </div>
 
-            <div class="grid gap-4 md:grid-cols-2">
+            <div class="grid gap-4 sm:grid-cols-2">
               <div>
                 <label class="mb-2 block text-sm font-bold text-gray-700">
                   {{ t('dashboard.departurePort') }}
@@ -188,7 +191,7 @@
                   type="text"
                   required
                   :placeholder="t('dashboard.departurePlaceholder')"
-                  class="w-full border border-gray-300 px-4 py-3 outline-none focus:border-bws-blue"
+                  class="h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
                 />
               </div>
 
@@ -202,7 +205,7 @@
                   type="text"
                   required
                   :placeholder="t('dashboard.arrivalPlaceholder')"
-                  class="w-full border border-gray-300 px-4 py-3 outline-none focus:border-bws-blue"
+                  class="h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
                 />
               </div>
             </div>
@@ -214,7 +217,7 @@
 
               <select
                 v-model="booking.transportType"
-                class="w-full border border-gray-300 px-4 py-3 outline-none focus:border-bws-blue"
+                class="h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
               >
                 <option value="Sea Freight">{{ t('transportTypes.seaFreight') }}</option>
                 <option value="Air Freight">{{ t('transportTypes.airFreight') }}</option>
@@ -231,22 +234,28 @@
                 v-model="booking.message"
                 rows="4"
                 required
-                class="w-full border border-gray-300 px-4 py-3 outline-none focus:border-bws-blue"
+                class="w-full border border-gray-300 px-4 py-3 text-base outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
               ></textarea>
             </div>
 
             <button
               :disabled="isSubmitting"
-              class="w-full bg-bws-blue px-5 py-3 font-bold uppercase tracking-wide text-white transition hover:bg-blue-900 disabled:cursor-not-allowed disabled:opacity-60"
+              class="flex h-12 w-full items-center justify-center bg-bws-blue px-5 text-sm font-black uppercase tracking-wide text-white transition hover:bg-blue-900 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {{ isSubmitting ? t('dashboard.sending') : t('dashboard.sendRequest') }}
             </button>
 
-            <p v-if="successMessage" class="text-sm font-bold text-green-700">
+            <p
+              v-if="successMessage"
+              class="border border-green-200 bg-green-50 p-3 text-sm font-bold text-green-700"
+            >
               {{ successMessage }}
             </p>
 
-            <p v-if="errorMessage" class="text-sm font-bold text-red-600">
+            <p
+              v-if="errorMessage"
+              class="border border-red-200 bg-red-50 p-3 text-sm font-bold text-red-600"
+            >
               {{ errorMessage }}
             </p>
           </form>
@@ -258,36 +267,36 @@
     <Transition name="modal-fade">
       <div
         v-if="selectedShipment"
-        class="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 px-6 backdrop-blur-sm"
+        class="fixed inset-0 z-[200] flex items-end justify-center bg-black/50 px-3 backdrop-blur-sm sm:items-center sm:px-6"
         @click.self="closeShipmentModal"
       >
-        <div class="max-h-[90vh] w-full max-w-4xl overflow-y-auto bg-white shadow-2xl">
-          <div class="flex items-start justify-between border-b border-gray-200 p-6">
-            <div>
+        <div class="max-h-[92vh] w-full max-w-4xl overflow-y-auto bg-white shadow-2xl sm:max-h-[90vh]">
+          <div class="flex items-start justify-between border-b border-gray-200 p-5 sm:p-6">
+            <div class="min-w-0">
               <p class="text-xs font-bold uppercase tracking-[0.25em] text-gray-400">
                 {{ t('dashboard.shipmentDetails') }}
               </p>
 
-              <h2 class="mt-2 text-3xl font-black text-bws-blue">
+              <h2 class="mt-2 break-words text-2xl font-black text-bws-blue sm:text-3xl">
                 {{ selectedShipment.id }}
               </h2>
 
-              <p class="mt-2 text-gray-600">
+              <p class="mt-2 break-words text-sm text-gray-600 sm:text-base">
                 {{ selectedShipment.route }}
               </p>
             </div>
 
             <button
-              class="text-3xl font-black text-black transition hover:text-bws-blue"
+              class="ml-4 text-3xl font-black text-black transition hover:text-bws-blue"
               @click="closeShipmentModal"
             >
               ×
             </button>
           </div>
 
-          <div class="grid gap-6 p-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div class="grid gap-6 p-5 sm:p-6 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <div class="grid gap-4 md:grid-cols-2">
+              <div class="grid gap-4 sm:grid-cols-2">
                 <div class="detail-box">
                   <p class="detail-label">{{ t('dashboard.containerNumber') }}</p>
                   <p class="detail-value">{{ selectedShipment.containerNumber }}</p>
@@ -381,9 +390,9 @@
                   v-for="document in selectedShipment.documents"
                   :key="document"
                   href="#"
-                  class="flex items-center justify-between border border-gray-200 px-4 py-3 text-sm font-bold transition hover:border-bws-blue hover:text-bws-blue"
+                  class="flex items-center justify-between gap-4 border border-gray-200 px-4 py-3 text-sm font-bold transition hover:border-bws-blue hover:text-bws-blue"
                 >
-                  <span>{{ translateDocument(document) }}</span>
+                  <span class="break-words">{{ translateDocument(document) }}</span>
                   <span>PDF</span>
                 </a>
               </div>
@@ -393,14 +402,14 @@
                   {{ t('dashboard.clientNote') }}
                 </h3>
 
-                <p class="mt-3 text-sm leading-relaxed text-gray-600">
+                <p class="mt-3 break-words text-sm leading-relaxed text-gray-600">
                   {{ selectedShipment.message || t('dashboard.noMessage') }}
                 </p>
               </div>
 
               <button
                 v-if="selectedShipment.firebaseId && selectedShipment.status !== 'Delivered'"
-                class="mt-6 w-full bg-bws-blue px-5 py-3 text-sm font-black uppercase tracking-wide text-white transition hover:bg-blue-900"
+                class="mt-6 flex h-12 w-full items-center justify-center bg-bws-blue px-5 text-sm font-black uppercase tracking-wide text-white transition hover:bg-blue-900"
                 @click="moveToNextStatus(selectedShipment)"
               >
                 {{ t('dashboard.moveTo') }} {{ translateStatus(getNextStatus(selectedShipment.status)) }}
