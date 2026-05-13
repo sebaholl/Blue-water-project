@@ -8,7 +8,7 @@
     ]"
   >
     <nav class="relative h-24 md:h-28 px-6 md:px-12 flex items-center justify-between">
-      <!-- Left side -->
+      <!-- Left -->
       <div class="flex items-center gap-10">
         <button
           class="burger-button"
@@ -27,46 +27,84 @@
             isScrolled ? 'text-black' : 'text-white',
           ]"
         >
-          <a href="#" class="nav-link">Solutions</a>
-          <a href="#" class="nav-link">Toolbox</a>
+          <a href="#" class="nav-link">{{ t('nav.solutions') }}</a>
+          <a href="#" class="nav-link">{{ t('nav.toolbox') }}</a>
         </div>
       </div>
 
-      <!-- Center logo -->
+      <!-- Logo -->
       <div class="absolute left-1/2 -translate-x-1/2 transition-transform duration-300 hover:scale-105">
         <BwsLogo :class="isScrolled ? 'text-bws-blue' : 'text-white'" />
       </div>
 
-      <!-- Right side -->
+      <!-- Right -->
       <div class="flex items-center gap-10">
         <div class="hidden md:flex items-center gap-5">
+          <!-- Search -->
           <button
-            :class="['icon-button text-2xl', isScrolled ? 'text-black' : 'text-white']"
-            aria-label="Search"
+            :class="[
+              'icon-button text-2xl',
+              isScrolled ? 'text-black' : 'text-white',
+            ]"
+            :aria-label="t('nav.search')"
             @click="openMenuSearch"
           >
             <FontAwesomeIcon :icon="faMagnifyingGlass" />
           </button>
 
-          <button
-            :class="['icon-button text-2xl', isScrolled ? 'text-black' : 'text-white']"
-            aria-label="Change language"
-          >
-            <FontAwesomeIcon :icon="faEarthAmericas" />
-          </button>
+          <!-- Language dropdown -->
+          <div class="relative">
+            <button
+              :class="[
+                'language-switch',
+                isScrolled
+                  ? 'text-black border-black/20'
+                  : 'text-white border-white/40',
+              ]"
+              :aria-label="t('nav.language')"
+              @click="isLanguageOpen = !isLanguageOpen"
+            >
+              <FontAwesomeIcon :icon="faEarthAmericas" class="text-lg" />
+
+              <span class="language-code">
+                {{ locale === 'en' ? 'EN' : 'DA' }}
+              </span>
+
+              <FontAwesomeIcon :icon="faChevronDown" class="text-xs" />
+            </button>
+
+            <Transition name="dropdown">
+              <div
+                v-if="isLanguageOpen"
+                class="absolute right-0 mt-3 w-40 border border-gray-200 bg-white shadow-xl z-[80]"
+              >
+                <button
+                  v-for="language in languages"
+                  :key="language.code"
+                  class="language-option"
+                  :class="{ active: locale === language.code }"
+                  @click="changeLanguage(language.code)"
+                >
+                  <span>{{ language.label }}</span>
+                  <span class="font-black">{{ language.code.toUpperCase() }}</span>
+                </button>
+              </div>
+            </Transition>
+          </div>
         </div>
 
-        <a
-          href="#"
-          :class="[
-            'hidden md:inline-block px-5 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-0.5',
-            isScrolled
-              ? 'bg-bws-blue text-white hover:bg-blue-900'
-              : 'bg-white text-black hover:bg-gray-100',
-          ]"
-        >
-          Book your transport
-        </a>
+        <!-- CTA -->
+<RouterLink
+  :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
+  :class="[
+    'hidden md:flex h-12 w-[145px] items-center justify-center whitespace-nowrap px-5 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-0.5',
+    isScrolled
+      ? 'bg-bws-blue text-white hover:bg-blue-900'
+      : 'bg-white text-black hover:bg-gray-100',
+  ]"
+>
+  {{ user ? (userRole === 'admin' ? 'Admin' : 'Account') : 'Book transport' }}
+</RouterLink>
       </div>
     </nav>
   </header>
@@ -81,17 +119,39 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useAuth } from '../composables/useAuth'
+
 import BwsLogo from './UI/BwsLogo.vue'
 import BurgerMenu from './BurgerMenu.vue'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import {
   faMagnifyingGlass,
   faEarthAmericas,
+  faChevronDown,
 } from '@fortawesome/free-solid-svg-icons'
+
+const { t, locale } = useI18n()
+
+const { user, userRole } = useAuth()
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
+const isLanguageOpen = ref(false)
 const openSearchOnMenuOpen = ref(false)
+
+const languages = [
+  { code: 'en', label: 'English' },
+  { code: 'da', label: 'Dansk' },
+]
+
+const changeLanguage = (code) => {
+  locale.value = code
+  localStorage.setItem('bws-locale', code)
+  isLanguageOpen.value = false
+}
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 10
@@ -99,11 +159,13 @@ const handleScroll = () => {
 
 const openMenu = () => {
   openSearchOnMenuOpen.value = false
+  isLanguageOpen.value = false
   isMenuOpen.value = true
 }
 
 const openMenuSearch = () => {
   openSearchOnMenuOpen.value = true
+  isLanguageOpen.value = false
   isMenuOpen.value = true
 }
 
@@ -119,6 +181,12 @@ watch(isMenuOpen, (value) => {
 onMounted(() => {
   handleScroll()
   window.addEventListener('scroll', handleScroll)
+
+  window.addEventListener('click', (event) => {
+    if (!event.target.closest('.language-switch')) {
+      isLanguageOpen.value = false
+    }
+  })
 })
 
 onUnmounted(() => {
@@ -149,12 +217,78 @@ onUnmounted(() => {
 }
 
 .icon-button {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .icon-button:hover {
   transform: translateY(-2px) scale(1.08);
   opacity: 0.8;
+}
+
+.language-switch {
+  width: 104px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid;
+  padding: 0 10px;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.language-switch:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+  opacity: 0.9;
+}
+
+.language-code {
+  width: 22px;
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.language-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #111;
+  text-transform: uppercase;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.language-option:hover,
+.language-option.active {
+  background: #0000ab;
+  color: white;
+}
+
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
 .burger-button {
@@ -175,6 +309,7 @@ onUnmounted(() => {
     opacity 0.25s ease,
     width 0.25s ease,
     background-color 0.25s ease;
+
   transform-origin: left center;
 }
 

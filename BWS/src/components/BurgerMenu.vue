@@ -30,7 +30,7 @@
           <button
             class="rail-icon"
             :class="{ active: isSearchOpen }"
-            aria-label="Search"
+            :aria-label="t('nav.search')"
             @click="toggleSearch"
           >
             <FontAwesomeIcon :icon="faMagnifyingGlass" />
@@ -44,9 +44,40 @@
             <FontAwesomeIcon :icon="faPhone" />
           </button>
 
-          <button class="rail-icon" aria-label="Language">
-            <FontAwesomeIcon :icon="faEarthAmericas" />
-          </button>
+          <!-- Language dropdown trigger -->
+          <div class="relative">
+            <button
+              class="rail-language"
+              :aria-label="t('nav.language')"
+              @click="isLanguageOpen = !isLanguageOpen"
+            >
+              <FontAwesomeIcon :icon="faEarthAmericas" class="text-lg" />
+
+              <span>
+                {{ locale === 'en' ? 'EN' : 'DA' }}
+              </span>
+
+              <FontAwesomeIcon :icon="faChevronDown" class="text-[10px]" />
+            </button>
+
+            <Transition name="dropdown">
+              <div
+                v-if="isLanguageOpen"
+                class="absolute left-16 bottom-0 w-40 border border-gray-200 bg-white shadow-xl z-[130]"
+              >
+                <button
+                  v-for="language in languages"
+                  :key="language.code"
+                  class="language-option"
+                  :class="{ active: locale === language.code }"
+                  @click="changeLanguage(language.code)"
+                >
+                  <span>{{ language.label }}</span>
+                  <span class="font-black">{{ language.code.toUpperCase() }}</span>
+                </button>
+              </div>
+            </Transition>
+          </div>
         </div>
       </div>
 
@@ -59,11 +90,11 @@
           <div class="flex items-center justify-between mb-6">
             <div>
               <p class="text-xs font-bold uppercase tracking-[0.25em] text-gray-400">
-                Navigation
+                {{ t('menu.navigation') }}
               </p>
 
               <h2 class="mt-1 text-2xl font-black uppercase text-bws-blue">
-                Search
+                {{ t('menu.search') }}
               </h2>
             </div>
 
@@ -86,14 +117,14 @@
               v-model="searchQuery"
               ref="searchInput"
               type="text"
-              placeholder="Search sea freight, tracking, careers..."
+              :placeholder="t('menu.searchPlaceholder')"
               class="w-full border border-gray-300 pl-11 pr-4 py-4 text-sm font-semibold outline-none transition focus:border-bws-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
             />
           </div>
 
           <div v-if="!searchQuery" class="mt-8">
             <p class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
-              Popular searches
+              {{ t('menu.popularSearches') }}
             </p>
 
             <div class="flex flex-wrap gap-2">
@@ -136,7 +167,7 @@
               v-if="searchQuery && filteredResults.length === 0"
               class="text-sm text-gray-500 border border-gray-200 p-4"
             >
-              No results found. Try searching for “Sea Freight”, “Tracking”, or “Container”.
+              {{ t('menu.noResults') }}
             </p>
           </div>
         </div>
@@ -149,9 +180,9 @@
         <nav class="space-y-2">
           <button
             v-for="item in menuItems"
-            :key="item.name"
+            :key="item.key"
             class="main-menu-item group"
-            :class="{ active: activeMain?.name === item.name }"
+            :class="{ active: activeMain?.key === item.key }"
             @click="openMainColumn(item)"
           >
             <span>{{ item.name }}</span>
@@ -169,17 +200,17 @@
       <Transition name="column-slide" mode="out-in">
         <div
           v-if="activeMain?.children"
-          :key="activeMain.name"
+          :key="activeMain.key"
           class="w-[230px] md:w-[270px] bg-white px-8 py-24 border-r border-gray-200"
         >
           <p class="column-label">{{ activeMain.name }}</p>
 
-          <nav class="mt-8 space-y-4">
+          <nav class=" space-y-4">
             <button
               v-for="child in activeMain.children"
-              :key="child.name"
+              :key="child.key"
               class="submenu-item group"
-              :class="{ active: activeChild?.name === child.name }"
+              :class="{ active: activeChild?.key === child.key }"
               @click="openChildColumn(child)"
             >
               <span>{{ child.name }}</span>
@@ -198,15 +229,15 @@
       <Transition name="column-slide" mode="out-in">
         <div
           v-if="activeChild?.children"
-          :key="activeChild.name"
+          :key="activeChild.key"
           class="w-[260px] md:w-[310px] bg-white px-8 py-24 border-r border-gray-200"
         >
           <p class="column-label">{{ activeChild.name }}</p>
 
-          <nav class="mt-8 space-y-4">
+          <nav class="space-y-4">
             <a
               v-for="sub in activeChild.children"
-              :key="sub.name"
+              :key="sub.key"
               href="#"
               class="third-menu-item"
               @click="$emit('close')"
@@ -251,7 +282,9 @@
           v-else-if="activeChild.type === 'news'"
           class="relative z-10 w-full max-w-sm px-8 py-24 space-y-6 bg-white/70"
         >
-          <p class="text-xs uppercase tracking-widest text-gray-500">Latest</p>
+          <p class="text-xs uppercase tracking-widest text-gray-500">
+            {{ t('menu.latest') }}
+          </p>
 
           <article
             v-for="news in newsCards"
@@ -270,26 +303,29 @@
               </h3>
 
               <button class="mt-3 text-xs border border-black px-3 py-1 font-bold">
-                Read more
+                {{ t('menu.readMore') }}
               </button>
             </div>
           </article>
         </div>
       </div>
 
-      <!-- Stable CTA -->
-      <a
-        href="#"
-        class="fixed bottom-8 left-[116px] md:left-[140px] z-[120] border border-black bg-white px-6 py-4 text-sm font-black uppercase tracking-wide hover:bg-bws-blue hover:text-white hover:border-bws-blue hover:-translate-y-1 transition"
-      >
-        Book your transport
-      </a>
+      <!-- Stable CTA - always English -->
+<RouterLink
+  :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
+  class="fixed bottom-5 left-[116px] md:left-[140px] z-[120] border border-black bg-white px-6 py-4 text-sm font-black uppercase tracking-wide hover:bg-bws-blue hover:text-white hover:border-bws-blue hover:-translate-y-1 transition"
+  @click="$emit('close')"
+>
+  {{ user ? (userRole === 'admin' ? 'Admin' : 'Account') : 'Book transport' }}
+</RouterLink>
     </aside>
   </Transition>
 </template>
 
 <script setup>
+import { useAuth } from '../composables/useAuth'
 import { computed, nextTick, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import BwsLogo from './UI/BwsLogo.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
@@ -297,6 +333,7 @@ import {
   faEarthAmericas,
   faXmark,
   faChevronRight,
+  faChevronDown,
   faLocationCrosshairs,
   faPhone,
 } from '@fortawesome/free-solid-svg-icons'
@@ -314,122 +351,163 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'search-opened'])
 
-const activeMain = ref(null)
-const activeChild = ref(null)
+const { t, locale } = useI18n()
+
+const { user, userRole } = useAuth()
+
+const activeMainKey = ref(null)
+const activeChildKey = ref(null)
 const isSearchOpen = ref(false)
+const isLanguageOpen = ref(false)
 const searchQuery = ref('')
 const searchInput = ref(null)
 
-const popularSearches = ['Sea Freight', 'Tracking', 'Container', 'Incoterms', 'Career']
+const languages = [
+  { code: 'en', label: 'English' },
+  { code: 'da', label: 'Dansk' },
+]
 
-const menuItems = [
+const changeLanguage = (code) => {
+  locale.value = code
+  localStorage.setItem('bws-locale', code)
+  isLanguageOpen.value = false
+}
+
+const popularSearches = computed(() => [
+  t('searchTerms.seaFreight'),
+  t('searchTerms.tracking'),
+  t('searchTerms.container'),
+  t('searchTerms.incoterms'),
+  t('searchTerms.career'),
+])
+
+const menuItems = computed(() => [
   {
-    name: 'Solutions',
+    key: 'solutions',
+    name: t('menu.solutions'),
     children: [
       {
-        name: 'Transport',
+        key: 'transport',
+        name: t('menu.transport'),
         children: [
-          { name: 'Road Transport' },
-          { name: 'Sea Freight' },
-          { name: 'Air Freight' },
-          { name: 'Rail Transport' },
-          { name: 'Courier Transport' },
-          { name: 'Port Service' },
-          { name: 'Oil, Gas & Industrial Projects' },
-          { name: 'Reefer Logistics' },
-          { name: 'Marine Logistics' },
+          { key: 'road-transport', name: t('menu.roadTransport') },
+          { key: 'sea-freight', name: t('menu.seaFreight') },
+          { key: 'air-freight', name: t('menu.airFreight') },
+          { key: 'rail-transport', name: t('menu.railTransport') },
+          { key: 'courier-transport', name: t('menu.courierTransport') },
+          { key: 'port-service', name: t('menu.portService') },
+          { key: 'oil-gas-projects', name: t('menu.oilGasProjects') },
+          { key: 'reefer-logistics', name: t('menu.reeferLogistics') },
+          { key: 'marine-logistics', name: t('menu.marineLogistics') },
         ],
       },
       {
-        name: 'Expertise',
+        key: 'expertise',
+        name: t('menu.expertise'),
         children: [
-          { name: 'Automotive' },
-          { name: 'Retail' },
-          { name: 'Energy' },
-          { name: 'Pharma' },
+          { key: 'automotive', name: t('menu.automotive') },
+          { key: 'retail', name: t('menu.retail') },
+          { key: 'energy', name: t('menu.energy') },
+          { key: 'pharma', name: t('menu.pharma') },
         ],
       },
       {
-        name: 'Service',
+        key: 'service',
+        name: t('menu.service'),
         children: [
-          { name: 'Customs Clearance' },
-          { name: 'Warehousing' },
-          { name: 'Supply Chain Management' },
+          { key: 'customs-clearance', name: t('menu.customsClearance') },
+          { key: 'warehousing', name: t('menu.warehousing') },
+          { key: 'supply-chain', name: t('menu.supplyChain') },
         ],
       },
     ],
   },
   {
-    name: 'Toolbox',
+    key: 'toolbox',
+    name: t('menu.toolbox'),
     children: [
       {
-        name: 'Tools',
+        key: 'tools',
+        name: t('menu.tools'),
         type: 'containers',
         children: [
-          { name: 'Carbon Calculator' },
-          { name: 'Container Specifications' },
-          { name: 'Trailer Specifications' },
-          { name: 'Courier Shipments' },
-          { name: 'Currency Converter' },
-          { name: 'Unit Converter' },
-          { name: 'Country Codes' },
-          { name: 'Incoterms 2020' },
+          { key: 'carbon-calculator', name: t('menu.carbonCalculator') },
+          { key: 'container-specs', name: t('menu.containerSpecs') },
+          { key: 'trailer-specs', name: t('menu.trailerSpecs') },
+          { key: 'courier-shipments', name: t('menu.courierShipments') },
+          { key: 'currency-converter', name: t('menu.currencyConverter') },
+          { key: 'unit-converter', name: t('menu.unitConverter') },
+          { key: 'country-codes', name: t('menu.countryCodes') },
+          { key: 'incoterms', name: t('menu.incoterms') },
         ],
       },
       {
-        name: 'Traffic Information',
+        key: 'traffic-information',
+        name: t('menu.trafficInformation'),
         children: [
-          { name: 'Port Updates' },
-          { name: 'Road Delays' },
-          { name: 'Weather Alerts' },
+          { key: 'port-updates', name: t('menu.portUpdates') },
+          { key: 'road-delays', name: t('menu.roadDelays') },
+          { key: 'weather-alerts', name: t('menu.weatherAlerts') },
         ],
       },
       {
-        name: 'Surcharges & Fees',
+        key: 'surcharges-fees',
+        name: t('menu.surchargesFees'),
         children: [
-          { name: 'Fuel Surcharges' },
-          { name: 'Handling Fees' },
-          { name: 'Customs Fees' },
+          { key: 'fuel-surcharges', name: t('menu.fuelSurcharges') },
+          { key: 'handling-fees', name: t('menu.handlingFees') },
+          { key: 'customs-fees', name: t('menu.customsFees') },
         ],
       },
     ],
   },
   {
-    name: 'Insights',
+    key: 'insights',
+    name: t('menu.insights'),
     children: [
-      { name: 'News', type: 'news' },
-      { name: 'Case Stories', type: 'news' },
-      { name: 'Blog Posts', type: 'news' },
-      { name: 'Guides', type: 'news' },
+      { key: 'news', name: t('menu.news'), type: 'news' },
+      { key: 'case-stories', name: t('menu.caseStories'), type: 'news' },
+      { key: 'blog-posts', name: t('menu.blogPosts'), type: 'news' },
+      { key: 'guides', name: t('menu.guides'), type: 'news' },
     ],
   },
   {
-    name: 'Responsibility',
+    key: 'responsibility',
+    name: t('menu.responsibility'),
     children: [
-      { name: 'Responsibility' },
-      { name: 'Transport Solutions' },
-      { name: 'Environment' },
-      { name: 'A people’s business' },
-      { name: 'Governance' },
-      { name: 'Partnerships' },
+      { key: 'responsibility-main', name: t('menu.responsibility') },
+      { key: 'environment', name: t('menu.environment') },
+      { key: 'people-business', name: t('menu.peopleBusiness') },
+      { key: 'governance', name: t('menu.governance') },
+      { key: 'partnerships', name: t('menu.partnerships') },
     ],
   },
   {
-    name: 'About',
+    key: 'about',
+    name: t('menu.about'),
     children: [
-      { name: 'About us' },
-      { name: 'Organisation' },
-      { name: 'Values' },
-      { name: 'Policies' },
-      { name: 'Safety' },
-      { name: 'History' },
-      { name: 'Foundation' },
+      { key: 'about-us', name: t('menu.aboutUs') },
+      { key: 'organisation', name: t('menu.organisation') },
+      { key: 'values', name: t('menu.values') },
+      { key: 'policies', name: t('menu.policies') },
+      { key: 'safety', name: t('menu.safety') },
+      { key: 'history', name: t('menu.history') },
+      { key: 'foundation', name: t('menu.foundation') },
     ],
   },
   {
-    name: 'Career',
+    key: 'career',
+    name: t('menu.career'),
   },
-]
+])
+
+const activeMain = computed(() =>
+  menuItems.value.find((item) => item.key === activeMainKey.value)
+)
+
+const activeChild = computed(() =>
+  activeMain.value?.children?.find((child) => child.key === activeChildKey.value)
+)
 
 const containers = [
   '20’ Dry container',
@@ -454,8 +532,8 @@ const openMainColumn = (item) => {
     return
   }
 
-  activeMain.value = item
-  activeChild.value = null
+  activeMainKey.value = item.key
+  activeChildKey.value = null
 }
 
 const openChildColumn = (child) => {
@@ -464,11 +542,12 @@ const openChildColumn = (child) => {
     return
   }
 
-  activeChild.value = child
+  activeChildKey.value = child.key
 }
 
 const toggleSearch = async () => {
   isSearchOpen.value = !isSearchOpen.value
+  isLanguageOpen.value = false
 
   if (isSearchOpen.value) {
     await nextTick()
@@ -497,14 +576,14 @@ const flattenMenuItems = (items, parent = '') => {
   })
 }
 
-const allSearchResults = flattenMenuItems(menuItems)
+const allSearchResults = computed(() => flattenMenuItems(menuItems.value))
 
 const filteredResults = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
 
   if (!query) return []
 
-  return allSearchResults.filter((item) =>
+  return allSearchResults.value.filter((item) =>
     item.name.toLowerCase().includes(query)
   )
 })
@@ -514,6 +593,7 @@ watch(
   async (value) => {
     if (value && props.isOpen) {
       isSearchOpen.value = true
+      isLanguageOpen.value = false
       emit('search-opened')
 
       await nextTick()
@@ -527,13 +607,15 @@ watch(
   async (value) => {
     if (!value) {
       closeSearch()
-      activeMain.value = null
-      activeChild.value = null
+      isLanguageOpen.value = false
+      activeMainKey.value = null
+      activeChildKey.value = null
       return
     }
 
     if (props.openSearch) {
       isSearchOpen.value = true
+      isLanguageOpen.value = false
       emit('search-opened')
 
       await nextTick()
@@ -557,6 +639,49 @@ watch(
   transform: translateX(6px) scale(1.12);
   background: rgba(255, 255, 255, 0.14);
   opacity: 0.95;
+}
+
+.rail-language {
+  width: 54px;
+  min-height: 54px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: grid;
+  place-items: center;
+  gap: 1px;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.rail-language:hover {
+  transform: translateX(6px) scale(1.08);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: white;
+}
+
+.language-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #111;
+  text-transform: uppercase;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.language-option:hover,
+.language-option.active {
+  background: #0000ab;
+  color: white;
 }
 
 .search-result {
@@ -606,6 +731,7 @@ watch(
   font-size: 0.95rem;
   font-weight: 800;
   color: #666;
+  margin-bottom: 1.25rem;
 }
 
 .submenu-item:hover,
@@ -620,6 +746,7 @@ watch(
   font-weight: 800;
   color: #111;
   transition: color 0.25s ease, transform 0.25s ease;
+  margin-bottom: 1.25rem;
 }
 
 .third-menu-item:hover {
@@ -633,16 +760,28 @@ watch(
   text-transform: uppercase;
   letter-spacing: 0.18em;
   color: #0000ab;
+
+  transform: translateY(-28px);
 }
 
 .fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.25s ease;
+.fade-leave-active,
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateX(-8px);
 }
 
 .slide-menu-enter-active,
