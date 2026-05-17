@@ -6,24 +6,68 @@
       </p>
 
       <div class="mt-16 grid gap-12 md:grid-cols-3">
-        <!-- Transport -->
-        <div>
-          <h3 class="text-lg font-black">
-            {{ t('footer.transport') }}
-          </h3>
+       <!-- Transport -->
+<div>
+  <h3 class="text-lg font-black">
+    {{ t('footer.transport') }}
+  </h3>
 
-          <ul class="mt-8 space-y-5 text-sm font-bold text-white/70">
-            <li><a href="#" class="footer-link">{{ t('footer.roadTransport') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.seaFreight') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.airFreight') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.railTransport') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.courierTransport') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.portService') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.oilGasProjects') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.reeferLogistics') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.marineLogistics') }}</a></li>
-          </ul>
-        </div>
+  <ul class="mt-8 space-y-5 text-sm font-bold text-white/70">
+    <li>
+      <RouterLink to="/road-transport" class="footer-link">
+       {{ t('footer.roadTransport') }}
+      </RouterLink>
+    </li>
+
+    <li>
+      <RouterLink to="/sea-freight" class="footer-link">
+        {{ t('footer.seaFreight') }}
+      </RouterLink>
+    </li>
+
+    <li>
+      <RouterLink to="/air-freight" class="footer-link">
+       {{ t('footer.airFreight') }}
+      </RouterLink>
+    </li>
+
+    <li>
+      <a href="https://www.bws.net/solutions/transport/rail-transport" target="_blank" rel="noopener noreferrer" class="footer-link">
+        {{ t('footer.railTransport') }}
+      </a>
+    </li>
+
+    <li>
+      <a href="https://www.bws.net/solutions/transport/courier-transport" target="_blank" rel="noopener noreferrer" class="footer-link">
+        {{ t('footer.courierTransport') }}
+      </a>
+    </li>
+
+    <li>
+      <a href="https://www.bws.net/solutions/transport/port-service" target="_blank" rel="noopener noreferrer" class="footer-link">
+        {{ t('footer.portService') }}
+      </a>
+    </li>
+
+    <li>
+      <a href="https://www.bws.net/solutions/transport/oil-gas-industrial-projects" target="_blank" rel="noopener noreferrer" class="footer-link">
+        {{ t('footer.oilGasProjects') }}
+      </a>
+    </li>
+
+    <li>
+      <a href="https://www.bws.net/solutions/transport/reefer-logistics" target="_blank" rel="noopener noreferrer" class="footer-link">
+        {{ t('footer.reeferLogistics') }}
+      </a>
+    </li>
+
+    <li>
+      <a href="https://www.bws.net/solutions/transport/marine-logistics" target="_blank" rel="noopener noreferrer" class="footer-link">
+        {{ t('footer.marineLogistics') }}
+      </a>
+    </li>
+  </ul>
+</div>
 
         <!-- Information -->
         <div>

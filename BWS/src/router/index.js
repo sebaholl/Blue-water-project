@@ -9,6 +9,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import AdminView from '../views/AdminView.vue'
+import SeaFreightView from '../views/SeaFreightView.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
@@ -27,6 +28,12 @@ const routes = [
     name: 'admin',
     component: AdminView,
     meta: { requiresAuth: true, requiresAdmin: true },
+  },
+
+  {
+  path: '/sea-freight',
+  name: 'sea-freight',
+  component: SeaFreightView,
   },
 ]
 

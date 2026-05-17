@@ -455,7 +455,7 @@ const menuItems = computed(() => [
         name: t('menu.transport'),
         children: [
           { key: 'road-transport', name: t('menu.roadTransport') },
-          { key: 'sea-freight', name: t('menu.seaFreight') },
+          { key: 'sea-freight', name: t('menu.seaFreight'), path: '/sea-freight' },
           { key: 'air-freight', name: t('menu.airFreight') },
           { key: 'rail-transport', name: t('menu.railTransport') },
           { key: 'courier-transport', name: t('menu.courierTransport') },
@@ -601,6 +601,11 @@ const openMainColumn = (item) => {
 }
 
 const openChildColumn = (child) => {
+  if (child.path) {
+    emit('close')
+    return
+  }
+
   if (!child.children && !child.type) {
     emit('close')
     return
