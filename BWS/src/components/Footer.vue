@@ -42,41 +42,38 @@
           </ul>
         </div>
 
-        <!-- Social / CTA -->
+        <!-- Social -->
         <div>
           <h3 class="text-lg font-black">
             {{ t('footer.followUs') }}
           </h3>
 
           <div class="mt-8 flex gap-4">
-            <a href="#" class="social-link" aria-label="Facebook">f</a>
-            <a href="#" class="social-link" aria-label="Instagram">ig</a>
-            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
-            <a href="#" class="social-link" aria-label="YouTube">yt</a>
-          </div>
+            <a href="#" class="social-link" aria-label="Facebook">
+              <FontAwesomeIcon :icon="faFacebookF" />
+            </a>
 
-          <div class="mt-12 border border-white/20 p-6">
-            <p class="text-xl font-black">
-              {{ t('footer.needHelp') }}
-            </p>
+            <a href="#" class="social-link" aria-label="Instagram">
+              <FontAwesomeIcon :icon="faInstagram" />
+            </a>
 
-            <p class="mt-3 text-sm leading-relaxed text-white/70">
-              {{ t('footer.helpText') }}
-            </p>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <FontAwesomeIcon :icon="faLinkedinIn" />
+            </a>
 
-            <RouterLink
-              to="/login"
-              class="mt-6 inline-flex h-12 items-center justify-center bg-white px-6 text-sm font-black uppercase tracking-wide text-black transition hover:-translate-y-1 hover:bg-gray-100"
-            >
-              {{ t('footer.bookTransport') }}
-            </RouterLink>
+            <a href="#" class="social-link" aria-label="YouTube">
+              <FontAwesomeIcon :icon="faYoutube" />
+            </a>
           </div>
         </div>
       </div>
 
-      <div class="mt-16 flex flex-col justify-between gap-4 border-t border-white/20 pt-6 text-sm font-bold text-white/50 md:flex-row">
+      <div
+        class="mt-16 flex flex-col justify-between gap-4 border-t border-white/20 pt-6 text-sm font-bold text-white/50 md:flex-row"
+      >
         <p>© {{ currentYear }} {{ t('footer.prototype') }}</p>
-        <p>{{ t('footer.projectText') }}</p>
+
+        <!-- <p>{{ t('footer.projectText') }}</p> -->
       </div>
     </div>
   </footer>
@@ -85,16 +82,27 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+import {
+  faFacebookF,
+  faInstagram,
+  faLinkedinIn,
+  faYoutube,
+} from '@fortawesome/free-brands-svg-icons'
+
 const { t } = useI18n()
+
 const currentYear = new Date().getFullYear()
 </script>
 
 <style scoped>
 .footer-link {
+  display: inline-block;
+
   transition:
     color 0.25s ease,
     transform 0.25s ease;
-  display: inline-block;
 }
 
 .footer-link:hover {
@@ -105,20 +113,27 @@ const currentYear = new Date().getFullYear()
 .social-link {
   width: 52px;
   height: 52px;
-  border-radius: 999px;
+
   display: grid;
   place-items: center;
+
+  border-radius: 999px;
+
   background: rgba(255, 255, 255, 0.08);
-  font-weight: 900;
-  text-transform: uppercase;
+
+  font-size: 1.1rem;
+  color: white;
+
   transition:
     background-color 0.25s ease,
-    transform 0.25s ease;
+    transform 0.25s ease,
+    color 0.25s ease;
 }
 
 .social-link:hover {
   background: white;
   color: #0000ab;
+
   transform: translateY(-4px);
 }
 </style>
