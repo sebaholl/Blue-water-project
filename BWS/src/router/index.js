@@ -10,6 +10,11 @@ import RegisterView from '../views/RegisterView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import AdminView from '../views/AdminView.vue'
 import SeaFreightView from '../views/SeaFreightView.vue'
+import RoadTransportView from '../views/RoadTransportView.vue'
+import AirFreightView from '../views/AirFreightView.vue'
+import TrackTraceView from '../views/TrackTraceView.vue'
+import ContactView from '../views/ContactView.vue'
+import AboutView from '../views/AboutView.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
@@ -35,6 +40,12 @@ const routes = [
   name: 'sea-freight',
   component: SeaFreightView,
   },
+
+  { path: '/road-transport', name: 'road-transport', component: RoadTransportView },
+  { path: '/air-freight', name: 'air-freight', component: AirFreightView },
+  { path: '/track-trace', name: 'track-trace', component: TrackTraceView },
+  { path: '/contact', name: 'contact', component: ContactView },
+  { path: '/about', name: 'about', component: AboutView },
 ]
 
 const router = createRouter({

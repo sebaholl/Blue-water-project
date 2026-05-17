@@ -1,59 +1,53 @@
 <template>
   <section class="bg-white">
-    <!-- Hero -->
-    <div class="bg-bws-blue text-white">
-      <div class="mx-auto grid max-w-7xl gap-10 px-6 py-20 md:grid-cols-2 md:px-12 md:py-28">
-        <div>
-          <p class="text-sm font-black uppercase tracking-[0.3em] text-white/60">
-            Sea Freight
-          </p>
+<!-- Hero -->
+<section class="relative min-h-[calc(100vh-80px)] overflow-hidden bg-bws-blue text-white md:min-h-[calc(100vh-112px)]">
+  <!-- Background image -->
+  <img
+    :src="seaFreightHero"
+    alt="Container ship carrying sea freight containers"
+    class="absolute inset-0 h-full w-full object-cover"
+  />
 
-          <h1 class="mt-4 max-w-2xl text-4xl font-black leading-tight md:text-6xl">
-            Reliable sea freight solutions for European B2B logistics.
-          </h1>
+  <!-- EVEN blue overlay -->
+  <div class="absolute inset-0 bg-bws-blue/75"></div>
 
-          <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/75">
-            Move your goods efficiently across global trade routes with flexible FCL, LCL,
-            reefer and project cargo solutions.
-          </p>
+  <!-- Hero content -->
+  <div
+    class="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center px-6 py-20 md:min-h-[calc(100vh-112px)] md:px-12"
+  >
+    <div class="max-w-3xl">
+      <p class="text-sm font-black uppercase tracking-[0.3em] text-white/70">
+        Sea Freight
+      </p>
 
-          <div class="mt-8 flex flex-col gap-4 sm:flex-row">
-            <RouterLink
-              to="/login"
-              class="inline-flex h-12 items-center justify-center bg-white px-6 text-sm font-black uppercase tracking-wide text-black transition hover:-translate-y-1 hover:bg-gray-100"
-            >
-              Book transport
-            </RouterLink>
+      <h1 class="mt-5 text-4xl font-black leading-tight md:text-7xl">
+        Reliable sea freight solutions for European B2B logistics.
+      </h1>
 
-            <a
-              href="#process"
-              class="inline-flex h-12 items-center justify-center border border-white/40 px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-white hover:text-bws-blue"
-            >
-              View process
-            </a>
-          </div>
-        </div>
+      <p class="mt-6 max-w-2xl text-base leading-relaxed text-white/85 md:text-xl">
+        Move your goods efficiently across global trade routes with flexible FCL, LCL,
+        reefer and project cargo solutions.
+      </p>
 
-        <div class="relative min-h-[320px] overflow-hidden border border-white/20 bg-white/10">
-          <div class="absolute inset-0 bg-[linear-gradient(to_bottom_right,transparent_49.5%,white_50%,transparent_50.5%),linear-gradient(to_top_right,transparent_49.5%,white_50%,transparent_50.5%)] opacity-20"></div>
+      <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+        <RouterLink
+          to="/login"
+          class="inline-flex h-12 items-center justify-center bg-white px-6 text-sm font-black uppercase tracking-wide text-black transition hover:-translate-y-1 hover:bg-gray-100"
+        >
+          Book transport
+        </RouterLink>
 
-          <div class="absolute bottom-8 left-8 right-8 bg-white p-6 text-black">
-            <p class="text-xs font-black uppercase tracking-[0.25em] text-gray-400">
-              Focus service
-            </p>
-
-            <h2 class="mt-2 text-2xl font-black text-bws-blue">
-              Sea Freight Europe
-            </h2>
-
-            <p class="mt-2 text-sm leading-relaxed text-gray-600">
-              Designed for companies that need clear transport options, stronger communication
-              and faster access to booking.
-            </p>
-          </div>
-        </div>
+        <a
+          href="#process"
+          class="inline-flex h-12 items-center justify-center border border-white/40 px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-white hover:text-bws-blue"
+        >
+          View process
+        </a>
       </div>
     </div>
+  </div>
+</section>
 
     <!-- USP cards -->
     <div class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
@@ -195,6 +189,9 @@
 </template>
 
 <script setup>
+
+import seaFreightHero from '../assets/SeaFreightShip.jpeg'
+
 const benefits = [
   {
     number: '01',

@@ -36,13 +36,13 @@
             <FontAwesomeIcon :icon="faMagnifyingGlass" />
           </button>
 
-          <button class="rail-icon" aria-label="Track shipment">
+          <RouterLink to="/track-trace" class="rail-icon" aria-label="Track shipment" @click="$emit('close')">
             <FontAwesomeIcon :icon="faLocationCrosshairs" />
-          </button>
+          </RouterLink>
 
-          <button class="rail-icon" aria-label="Contact">
+          <RouterLink to="/contact" class="rail-icon" aria-label="Contact" @click="$emit('close')">
             <FontAwesomeIcon :icon="faPhone" />
-          </button>
+          </RouterLink>
 
           <!-- Language dropdown trigger -->
           <div class="relative">
@@ -53,9 +53,7 @@
             >
               <FontAwesomeIcon :icon="faEarthAmericas" class="text-lg" />
 
-              <span>
-                {{ locale === 'en' ? 'EN' : 'DA' }}
-              </span>
+              <span>{{ locale === 'en' ? 'EN' : 'DA' }}</span>
 
               <FontAwesomeIcon :icon="faChevronDown" class="text-[10px]" />
             </button>
@@ -120,18 +118,50 @@
                 </summary>
 
                 <div v-if="child.children" class="mt-2 space-y-2 pl-4">
-                  <a
-                    v-for="sub in child.children"
-                    :key="sub.key"
-                    href="#"
-                    class="mobile-third-item"
-                    @click="$emit('close')"
-                  >
-                    {{ sub.name }}
-                  </a>
+                  <template v-for="sub in child.children" :key="sub.key">
+                    <RouterLink
+                      v-if="sub.path"
+                      :to="sub.path"
+                      class="mobile-third-item"
+                      @click="$emit('close')"
+                    >
+                      {{ sub.name }}
+                    </RouterLink>
+
+                    <a
+                      v-else
+                      :href="sub.url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="mobile-third-item"
+                      @click="$emit('close')"
+                    >
+                      {{ sub.name }}
+                    </a>
+                  </template>
                 </div>
               </details>
             </div>
+
+            <RouterLink
+              v-else-if="item.path"
+              :to="item.path"
+              class="mobile-direct-link"
+              @click="$emit('close')"
+            >
+              {{ item.name }}
+            </RouterLink>
+
+            <a
+              v-else-if="item.url"
+              :href="item.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mobile-direct-link"
+              @click="$emit('close')"
+            >
+              {{ item.name }}
+            </a>
           </details>
         </nav>
 
@@ -203,28 +233,53 @@
           </div>
 
           <div class="mt-8 space-y-3">
-            <a
-              v-for="result in filteredResults"
-              :key="result.path"
-              href="#"
-              class="search-result group"
-              @click="$emit('close')"
-            >
-              <div>
-                <p class="text-xs uppercase tracking-widest text-gray-400">
-                  {{ result.category }}
-                </p>
+            <template v-for="result in filteredResults" :key="result.searchKey">
+              <RouterLink
+                v-if="result.path"
+                :to="result.path"
+                class="search-result group"
+                @click="$emit('close')"
+              >
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-gray-400">
+                    {{ result.category }}
+                  </p>
 
-                <h3 class="mt-1 font-black text-black transition group-hover:text-bws-blue">
-                  {{ result.name }}
-                </h3>
-              </div>
+                  <h3 class="mt-1 font-black text-black transition group-hover:text-bws-blue">
+                    {{ result.name }}
+                  </h3>
+                </div>
 
-              <FontAwesomeIcon
-                :icon="faChevronRight"
-                class="text-sm text-gray-400 transition group-hover:translate-x-1 group-hover:text-bws-blue"
-              />
-            </a>
+                <FontAwesomeIcon
+                  :icon="faChevronRight"
+                  class="text-sm text-gray-400 transition group-hover:translate-x-1 group-hover:text-bws-blue"
+                />
+              </RouterLink>
+
+              <a
+                v-else
+                :href="result.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="search-result group"
+                @click="$emit('close')"
+              >
+                <div>
+                  <p class="text-xs uppercase tracking-widest text-gray-400">
+                    {{ result.category }}
+                  </p>
+
+                  <h3 class="mt-1 font-black text-black transition group-hover:text-bws-blue">
+                    {{ result.name }}
+                  </h3>
+                </div>
+
+                <FontAwesomeIcon
+                  :icon="faChevronRight"
+                  class="text-sm text-gray-400 transition group-hover:translate-x-1 group-hover:text-bws-blue"
+                />
+              </a>
+            </template>
 
             <p
               v-if="searchQuery && filteredResults.length === 0"
@@ -298,15 +353,27 @@
           <p class="column-label">{{ activeChild.name }}</p>
 
           <nav class="space-y-4">
-            <a
-              v-for="sub in activeChild.children"
-              :key="sub.key"
-              href="#"
-              class="third-menu-item"
-              @click="$emit('close')"
-            >
-              {{ sub.name }}
-            </a>
+            <template v-for="sub in activeChild.children" :key="sub.key">
+              <RouterLink
+                v-if="sub.path"
+                :to="sub.path"
+                class="third-menu-item"
+                @click="$emit('close')"
+              >
+                {{ sub.name }}
+              </RouterLink>
+
+              <a
+                v-else
+                :href="sub.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="third-menu-item"
+                @click="$emit('close')"
+              >
+                {{ sub.name }}
+              </a>
+            </template>
           </nav>
         </div>
       </Transition>
@@ -426,6 +493,8 @@ const isLanguageOpen = ref(false)
 const searchQuery = ref('')
 const searchInput = ref(null)
 
+const bwsBaseUrl = 'https://www.bws.net'
+
 const languages = [
   { code: 'en', label: 'English' },
   { code: 'da', label: 'Dansk' },
@@ -454,34 +523,34 @@ const menuItems = computed(() => [
         key: 'transport',
         name: t('menu.transport'),
         children: [
-          { key: 'road-transport', name: t('menu.roadTransport') },
+          { key: 'road-transport', name: t('menu.roadTransport'), path: '/road-transport' },
           { key: 'sea-freight', name: t('menu.seaFreight'), path: '/sea-freight' },
-          { key: 'air-freight', name: t('menu.airFreight') },
-          { key: 'rail-transport', name: t('menu.railTransport') },
-          { key: 'courier-transport', name: t('menu.courierTransport') },
-          { key: 'port-service', name: t('menu.portService') },
-          { key: 'oil-gas-projects', name: t('menu.oilGasProjects') },
-          { key: 'reefer-logistics', name: t('menu.reeferLogistics') },
-          { key: 'marine-logistics', name: t('menu.marineLogistics') },
+          { key: 'air-freight', name: t('menu.airFreight'), path: '/air-freight' },
+          { key: 'rail-transport', name: t('menu.railTransport'), url: `${bwsBaseUrl}/solutions/transport/rail-transport` },
+          { key: 'courier-transport', name: t('menu.courierTransport'), url: `${bwsBaseUrl}/solutions/transport/courier-transport` },
+          { key: 'port-service', name: t('menu.portService'), url: `${bwsBaseUrl}/solutions/transport/port-service` },
+          { key: 'oil-gas-projects', name: t('menu.oilGasProjects'), url: `${bwsBaseUrl}/solutions/transport/oil-gas-industrial-projects` },
+          { key: 'reefer-logistics', name: t('menu.reeferLogistics'), url: `${bwsBaseUrl}/solutions/transport/reefer-logistics` },
+          { key: 'marine-logistics', name: t('menu.marineLogistics'), url: `${bwsBaseUrl}/solutions/transport/marine-logistics` },
         ],
       },
       {
         key: 'expertise',
         name: t('menu.expertise'),
         children: [
-          { key: 'automotive', name: t('menu.automotive') },
-          { key: 'retail', name: t('menu.retail') },
-          { key: 'energy', name: t('menu.energy') },
-          { key: 'pharma', name: t('menu.pharma') },
+          { key: 'automotive', name: t('menu.automotive'), url: `${bwsBaseUrl}/solutions/expertise/automotive` },
+          { key: 'retail', name: t('menu.retail'), url: `${bwsBaseUrl}/solutions/expertise/retail` },
+          { key: 'energy', name: t('menu.energy'), url: `${bwsBaseUrl}/solutions/expertise/energy` },
+          { key: 'pharma', name: t('menu.pharma'), url: `${bwsBaseUrl}/solutions/expertise/pharma` },
         ],
       },
       {
         key: 'service',
         name: t('menu.service'),
         children: [
-          { key: 'customs-clearance', name: t('menu.customsClearance') },
-          { key: 'warehousing', name: t('menu.warehousing') },
-          { key: 'supply-chain', name: t('menu.supplyChain') },
+          { key: 'customs-clearance', name: t('menu.customsClearance'), url: `${bwsBaseUrl}/solutions/service/customs-clearance` },
+          { key: 'warehousing', name: t('menu.warehousing'), url: `${bwsBaseUrl}/solutions/service/warehousing` },
+          { key: 'supply-chain', name: t('menu.supplyChain'), url: `${bwsBaseUrl}/solutions/service/supply-chain-management` },
         ],
       },
     ],
@@ -495,32 +564,33 @@ const menuItems = computed(() => [
         name: t('menu.tools'),
         type: 'containers',
         children: [
-          { key: 'carbon-calculator', name: t('menu.carbonCalculator') },
-          { key: 'container-specs', name: t('menu.containerSpecs') },
-          { key: 'trailer-specs', name: t('menu.trailerSpecs') },
-          { key: 'courier-shipments', name: t('menu.courierShipments') },
-          { key: 'currency-converter', name: t('menu.currencyConverter') },
-          { key: 'unit-converter', name: t('menu.unitConverter') },
-          { key: 'country-codes', name: t('menu.countryCodes') },
-          { key: 'incoterms', name: t('menu.incoterms') },
+          { key: 'track-trace', name: t('searchTerms.tracking'), path: '/track-trace' },
+          { key: 'carbon-calculator', name: t('menu.carbonCalculator'), url: `${bwsBaseUrl}/toolbox/tools/carbon-calculator` },
+          { key: 'container-specs', name: t('menu.containerSpecs'), url: `${bwsBaseUrl}/toolbox/tools/container-specifications` },
+          { key: 'trailer-specs', name: t('menu.trailerSpecs'), url: `${bwsBaseUrl}/toolbox/tools/trailer-specifications` },
+          { key: 'courier-shipments', name: t('menu.courierShipments'), url: `${bwsBaseUrl}/toolbox/tools/courier-shipments` },
+          { key: 'currency-converter', name: t('menu.currencyConverter'), url: `${bwsBaseUrl}/toolbox/tools/currency-converter` },
+          { key: 'unit-converter', name: t('menu.unitConverter'), url: `${bwsBaseUrl}/toolbox/tools/unit-converter` },
+          { key: 'country-codes', name: t('menu.countryCodes'), url: `${bwsBaseUrl}/toolbox/tools/country-codes` },
+          { key: 'incoterms', name: t('menu.incoterms'), url: `${bwsBaseUrl}/toolbox/tools/incoterms-2020` },
         ],
       },
       {
         key: 'traffic-information',
         name: t('menu.trafficInformation'),
         children: [
-          { key: 'port-updates', name: t('menu.portUpdates') },
-          { key: 'road-delays', name: t('menu.roadDelays') },
-          { key: 'weather-alerts', name: t('menu.weatherAlerts') },
+          { key: 'port-updates', name: t('menu.portUpdates'), url: `${bwsBaseUrl}/toolbox/traffic-information/port-updates` },
+          { key: 'road-delays', name: t('menu.roadDelays'), url: `${bwsBaseUrl}/toolbox/traffic-information/road-delays` },
+          { key: 'weather-alerts', name: t('menu.weatherAlerts'), url: `${bwsBaseUrl}/toolbox/traffic-information/weather-alerts` },
         ],
       },
       {
         key: 'surcharges-fees',
         name: t('menu.surchargesFees'),
         children: [
-          { key: 'fuel-surcharges', name: t('menu.fuelSurcharges') },
-          { key: 'handling-fees', name: t('menu.handlingFees') },
-          { key: 'customs-fees', name: t('menu.customsFees') },
+          { key: 'fuel-surcharges', name: t('menu.fuelSurcharges'), url: `${bwsBaseUrl}/toolbox/surcharges-fees/fuel-surcharges` },
+          { key: 'handling-fees', name: t('menu.handlingFees'), url: `${bwsBaseUrl}/toolbox/surcharges-fees/handling-fees` },
+          { key: 'customs-fees', name: t('menu.customsFees'), url: `${bwsBaseUrl}/toolbox/surcharges-fees/customs-fees` },
         ],
       },
     ],
@@ -529,39 +599,58 @@ const menuItems = computed(() => [
     key: 'insights',
     name: t('menu.insights'),
     children: [
-      { key: 'news', name: t('menu.news'), type: 'news' },
-      { key: 'case-stories', name: t('menu.caseStories'), type: 'news' },
-      { key: 'blog-posts', name: t('menu.blogPosts'), type: 'news' },
-      { key: 'guides', name: t('menu.guides'), type: 'news' },
+      {
+        key: 'latest',
+        name: t('menu.latest'),
+        children: [
+          { key: 'news', name: t('menu.news'), url: `${bwsBaseUrl}/insights/news` },
+          { key: 'case-stories', name: t('menu.caseStories'), url: `${bwsBaseUrl}/insights/case-stories` },
+          { key: 'blog-posts', name: t('menu.blogPosts'), url: `${bwsBaseUrl}/insights/blog-posts` },
+          { key: 'guides', name: t('menu.guides'), url: `${bwsBaseUrl}/insights/guides` },
+        ],
+      },
     ],
   },
   {
     key: 'responsibility',
     name: t('menu.responsibility'),
     children: [
-      { key: 'responsibility-main', name: t('menu.responsibility') },
-      { key: 'environment', name: t('menu.environment') },
-      { key: 'people-business', name: t('menu.peopleBusiness') },
-      { key: 'governance', name: t('menu.governance') },
-      { key: 'partnerships', name: t('menu.partnerships') },
+      {
+        key: 'responsibility-overview',
+        name: t('menu.responsibility'),
+        children: [
+          { key: 'environment', name: t('menu.environment'), url: `${bwsBaseUrl}/responsibility/environment` },
+          { key: 'people-business', name: t('menu.peopleBusiness'), url: `${bwsBaseUrl}/responsibility/a-peoples-business` },
+          { key: 'governance', name: t('menu.governance'), url: `${bwsBaseUrl}/responsibility/governance` },
+          { key: 'partnerships', name: t('menu.partnerships'), url: `${bwsBaseUrl}/responsibility/partnerships` },
+        ],
+      },
     ],
   },
   {
     key: 'about',
     name: t('menu.about'),
     children: [
-      { key: 'about-us', name: t('menu.aboutUs') },
-      { key: 'organisation', name: t('menu.organisation') },
-      { key: 'values', name: t('menu.values') },
-      { key: 'policies', name: t('menu.policies') },
-      { key: 'safety', name: t('menu.safety') },
-      { key: 'history', name: t('menu.history') },
-      { key: 'foundation', name: t('menu.foundation') },
+      {
+        key: 'company',
+        name: t('menu.about'),
+        children: [
+          { key: 'about-us', name: t('menu.aboutUs'), path: '/about' },
+          { key: 'organisation', name: t('menu.organisation'), url: `${bwsBaseUrl}/about/organisation` },
+          { key: 'values', name: t('menu.values'), url: `${bwsBaseUrl}/about/values` },
+          { key: 'policies', name: t('menu.policies'), url: `${bwsBaseUrl}/about/policies` },
+          { key: 'safety', name: t('menu.safety'), url: `${bwsBaseUrl}/about/safety` },
+          { key: 'history', name: t('menu.history'), url: `${bwsBaseUrl}/about/history` },
+          { key: 'foundation', name: t('menu.foundation'), url: `${bwsBaseUrl}/about/foundation` },
+          { key: 'contact', name: 'Contact', path: '/contact' },
+        ],
+      },
     ],
   },
   {
     key: 'career',
     name: t('menu.career'),
+    url: `${bwsBaseUrl}/career`,
   },
 ])
 
@@ -591,6 +680,11 @@ const newsCards = [
 ]
 
 const openMainColumn = (item) => {
+  if (item.path || item.url) {
+    emit('close')
+    return
+  }
+
   if (!item.children) {
     emit('close')
     return
@@ -601,7 +695,7 @@ const openMainColumn = (item) => {
 }
 
 const openChildColumn = (child) => {
-  if (child.path) {
+  if (child.path || child.url) {
     emit('close')
     return
   }
@@ -636,7 +730,9 @@ const flattenMenuItems = (items, parent = '') => {
     const currentItem = {
       name: item.name,
       category,
-      path: `${parent}/${item.name}`,
+      path: item.path,
+      url: item.url,
+      searchKey: `${category}-${item.key}`,
     }
 
     const children = item.children ? flattenMenuItems(item.children, category) : []
@@ -645,7 +741,9 @@ const flattenMenuItems = (items, parent = '') => {
   })
 }
 
-const allSearchResults = computed(() => flattenMenuItems(menuItems.value))
+const allSearchResults = computed(() =>
+  flattenMenuItems(menuItems.value).filter((item) => item.path || item.url)
+)
 
 const filteredResults = computed(() => {
   const query = searchQuery.value.trim().toLowerCase()
@@ -869,7 +967,8 @@ watch(
   color: #555;
 }
 
-.mobile-third-item {
+.mobile-third-item,
+.mobile-direct-link {
   display: block;
   padding: 10px 0;
   font-size: 0.9rem;

@@ -70,46 +70,135 @@
 </div>
 
         <!-- Information -->
-        <div>
-          <h3 class="text-lg font-black">
-            {{ t('footer.information') }}
-          </h3>
+<div>
+  <h3 class="text-lg font-black">
+    {{ t('footer.information') }}
+  </h3>
 
-          <ul class="mt-8 space-y-5 text-sm font-bold text-white/70">
-            <li><a href="#" class="footer-link">{{ t('footer.solutions') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.about') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.conditions') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.trafficInfo') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.surchargesFees') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.privacyPolicy') }}</a></li>
-            <li><a href="#" class="footer-link">{{ t('footer.taxPolicy') }}</a></li>
-          </ul>
-        </div>
+  <ul class="mt-8 space-y-5 text-sm font-bold text-white/70">
+    <li>
+      <a
+        href="https://www.bws.net/solutions"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+      >
+        {{ t('footer.solutions') }}
+      </a>
+    </li>
+
+    <li>
+      <RouterLink to="/about" class="footer-link">
+        {{ t('footer.about') }}
+      </RouterLink>
+    </li>
+
+    <li>
+      <a
+        href="https://www.bws.net/about/conditions"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+      >
+        {{ t('footer.conditions') }}
+      </a>
+    </li>
+
+    <li>
+      <RouterLink to="/track-trace" class="footer-link">
+        {{ t('footer.trafficInfo') }}
+      </RouterLink>
+    </li>
+
+    <li>
+      <a
+        href="https://www.bws.net/toolbox/surcharges-fees"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+      >
+        {{ t('footer.surchargesFees') }}
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="https://www.bws.net/about/privacy-policy"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+      >
+        {{ t('footer.privacyPolicy') }}
+      </a>
+    </li>
+
+    <li>
+      <a
+        href="https://www.bws.net/about/tax-policy"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="footer-link"
+      >
+        {{ t('footer.taxPolicy') }}
+      </a>
+    </li>
+
+    <li>
+      <RouterLink to="/contact" class="footer-link">
+        Contact
+      </RouterLink>
+    </li>
+  </ul>
+</div>
 
         <!-- Social -->
-        <div>
-          <h3 class="text-lg font-black">
-            {{ t('footer.followUs') }}
-          </h3>
+<div>
+  <h3 class="text-lg font-black">
+    {{ t('footer.followUs') }}
+  </h3>
 
-          <div class="mt-8 flex gap-4">
-            <a href="#" class="social-link" aria-label="Facebook">
-              <FontAwesomeIcon :icon="faFacebookF" />
-            </a>
+  <div class="mt-8 flex gap-4">
+    <a
+      href="https://www.facebook.com/bluewatershipping"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-link"
+      aria-label="Facebook"
+    >
+      <FontAwesomeIcon :icon="faFacebookF" />
+    </a>
 
-            <a href="#" class="social-link" aria-label="Instagram">
-              <FontAwesomeIcon :icon="faInstagram" />
-            </a>
+    <a
+      href="https://www.instagram.com/bluewatershipping"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-link"
+      aria-label="Instagram"
+    >
+      <FontAwesomeIcon :icon="faInstagram" />
+    </a>
 
-            <a href="#" class="social-link" aria-label="LinkedIn">
-              <FontAwesomeIcon :icon="faLinkedinIn" />
-            </a>
+    <a
+      href="https://www.linkedin.com/company/blue-water-shipping"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-link"
+      aria-label="LinkedIn"
+    >
+      <FontAwesomeIcon :icon="faLinkedinIn" />
+    </a>
 
-            <a href="#" class="social-link" aria-label="YouTube">
-              <FontAwesomeIcon :icon="faYoutube" />
-            </a>
-          </div>
-        </div>
+    <a
+      href="https://www.youtube.com/@BlueWaterShipping"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-link"
+      aria-label="YouTube"
+    >
+      <FontAwesomeIcon :icon="faYoutube" />
+    </a>
+  </div>
+</div>
       </div>
 
       <div
