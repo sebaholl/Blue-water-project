@@ -1,0 +1,124 @@
+<template>
+  <footer class="bg-bws-blue text-white">
+    <div class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
+      <p class="text-sm font-black text-white/60">
+        Blue Water Shipping
+      </p>
+
+      <div class="mt-16 grid gap-12 md:grid-cols-3">
+        <!-- Transport -->
+        <div>
+          <h3 class="text-lg font-black">
+            {{ t('footer.transport') }}
+          </h3>
+
+          <ul class="mt-8 space-y-5 text-sm font-bold text-white/70">
+            <li><a href="#" class="footer-link">{{ t('footer.roadTransport') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.seaFreight') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.airFreight') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.railTransport') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.courierTransport') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.portService') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.oilGasProjects') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.reeferLogistics') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.marineLogistics') }}</a></li>
+          </ul>
+        </div>
+
+        <!-- Information -->
+        <div>
+          <h3 class="text-lg font-black">
+            {{ t('footer.information') }}
+          </h3>
+
+          <ul class="mt-8 space-y-5 text-sm font-bold text-white/70">
+            <li><a href="#" class="footer-link">{{ t('footer.solutions') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.about') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.conditions') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.trafficInfo') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.surchargesFees') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.privacyPolicy') }}</a></li>
+            <li><a href="#" class="footer-link">{{ t('footer.taxPolicy') }}</a></li>
+          </ul>
+        </div>
+
+        <!-- Social / CTA -->
+        <div>
+          <h3 class="text-lg font-black">
+            {{ t('footer.followUs') }}
+          </h3>
+
+          <div class="mt-8 flex gap-4">
+            <a href="#" class="social-link" aria-label="Facebook">f</a>
+            <a href="#" class="social-link" aria-label="Instagram">ig</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+            <a href="#" class="social-link" aria-label="YouTube">yt</a>
+          </div>
+
+          <div class="mt-12 border border-white/20 p-6">
+            <p class="text-xl font-black">
+              {{ t('footer.needHelp') }}
+            </p>
+
+            <p class="mt-3 text-sm leading-relaxed text-white/70">
+              {{ t('footer.helpText') }}
+            </p>
+
+            <RouterLink
+              to="/login"
+              class="mt-6 inline-flex h-12 items-center justify-center bg-white px-6 text-sm font-black uppercase tracking-wide text-black transition hover:-translate-y-1 hover:bg-gray-100"
+            >
+              {{ t('footer.bookTransport') }}
+            </RouterLink>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 flex flex-col justify-between gap-4 border-t border-white/20 pt-6 text-sm font-bold text-white/50 md:flex-row">
+        <p>© {{ currentYear }} {{ t('footer.prototype') }}</p>
+        <p>{{ t('footer.projectText') }}</p>
+      </div>
+    </div>
+  </footer>
+</template>
+
+<script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const currentYear = new Date().getFullYear()
+</script>
+
+<style scoped>
+.footer-link {
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+  display: inline-block;
+}
+
+.footer-link:hover {
+  color: white;
+  transform: translateX(6px);
+}
+
+.social-link {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 900;
+  text-transform: uppercase;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.social-link:hover {
+  background: white;
+  color: #0000ab;
+  transform: translateY(-4px);
+}
+</style>

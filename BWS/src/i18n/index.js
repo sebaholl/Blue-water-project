@@ -12,6 +12,35 @@ const messages = {
       language: 'Change language',
     },
 
+    footer: {
+  transport: 'Transport',
+  roadTransport: 'Road Transport',
+  seaFreight: 'Sea Freight',
+  airFreight: 'Air Freight',
+  railTransport: 'Rail Transport',
+  courierTransport: 'Courier Transport',
+  portService: 'Port Service',
+  oilGasProjects: 'Oil, Gas & Projects',
+  reeferLogistics: 'Reefer Logistics',
+  marineLogistics: 'Marine Logistics',
+
+  information: 'Information',
+  solutions: 'Solutions',
+  about: 'About',
+  conditions: 'Conditions',
+  trafficInfo: 'Traffic Info',
+  surchargesFees: 'Surcharges & Fees',
+  privacyPolicy: 'Privacy Policy',
+  taxPolicy: 'Tax Policy',
+
+  followUs: 'Follow us',
+  needHelp: 'Need help with your shipment?',
+  helpText: 'Contact our sea freight team and get guidance for your next transport request.',
+  bookTransport: 'Book transport',
+  prototype: 'Blue Water Shipping prototype',
+  projectText: 'Created for final semester project',
+},
+
     auth: {
       clientPortal: 'Client Portal',
       login: 'Login',
@@ -218,6 +247,35 @@ const messages = {
       search: 'Søg',
       language: 'Skift sprog',
     },
+
+    footer: {
+  transport: 'Transport',
+  roadTransport: 'Vejtransport',
+  seaFreight: 'Søfragt',
+  airFreight: 'Luftfragt',
+  railTransport: 'Jernbanetransport',
+  courierTransport: 'Kurertransport',
+  portService: 'Havneservice',
+  oilGasProjects: 'Olie, Gas & Projekter',
+  reeferLogistics: 'Kølelogistik',
+  marineLogistics: 'Marine Logistik',
+
+  information: 'Information',
+  solutions: 'Løsninger',
+  about: 'Om os',
+  conditions: 'Betingelser',
+  trafficInfo: 'Trafikinformation',
+  surchargesFees: 'Tillæg & Gebyrer',
+  privacyPolicy: 'Privatlivspolitik',
+  taxPolicy: 'Skattepolitik',
+
+  followUs: 'Følg os',
+  needHelp: 'Har du brug for hjælp med din forsendelse?',
+  helpText: 'Kontakt vores søfragtteam og få vejledning til din næste transportforespørgsel.',
+  bookTransport: 'Book transport',
+  prototype: 'Blue Water Shipping prototype',
+  projectText: 'Lavet til afsluttende semesterprojekt',
+},
 
     auth: {
       clientPortal: 'Kundeportal',
