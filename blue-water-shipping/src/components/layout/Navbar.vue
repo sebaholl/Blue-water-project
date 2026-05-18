@@ -35,7 +35,7 @@
       <!-- Logo -->
       <RouterLink
         to="/"
-        class="absolute left-1/2 -translate-x-1/2 transition-transform duration-300 hover:scale-105"
+        class="absolute left-1/2 -translate-x-1/2"
         aria-label="Blue Water Shipping home"
       >
         <BwsLogo
