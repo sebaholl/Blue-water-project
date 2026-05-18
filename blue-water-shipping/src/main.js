@@ -8,11 +8,13 @@ import router from './router'
 import en from './locales/en.json'
 import da from './locales/da.json'
 
+const savedLocale = localStorage.getItem('bws-locale') || 'en'
+
 const i18n = createI18n({
-    legacy: false,
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: { en, da },
+  legacy: false,
+  locale: savedLocale,
+  fallbackLocale: 'en',
+  messages: { en, da },
 })
 
 const app = createApp(App)

@@ -1,10 +1,12 @@
 <script setup>
-import NavBar from '@/components/layout/NavBar.vue'
+import Navbar from '@/components/layout/Navbar.vue'
+import Footer from '@/components/layout/Footer.vue'
 import Section2 from '@/views/Section2.vue'
 </script>
 
 <template>
-  <NavBar />
+  <Navbar />
   <RouterView />
   <Section2 />
+  <Footer />
 </template>
