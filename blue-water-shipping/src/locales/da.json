@@ -16,6 +16,38 @@
     "ariaLabel": "Om Os",
     "circleText": "OM OS · OM OS · OM OS · OM OS · "
   },
+  "clients": {
+    "heading": "Betroet af ledende virksomheder verden over"
+  },
+  "section1": {
+    "heading": "Kend dine containerspecifikationer",
+    "body": "Vi kan stille en container til søfragt til rådighed for præcis den type gods, du har",
+    "cta": "Beregn forsendelsesomkostninger",
+    "placeholder": "Skibsbillede pladsholder",
+    "advantages": {
+      "heading": "Fordele ved Søfragt",
+      "subheading": "fra Kina til Moskva",
+      "badge1": "Laveste pris",
+      "badge2": "Egnet til alle typer gods",
+      "badge3": "Betroede store rederier"
+    }
+  },
+  "section4": {
+    "eyebrow": "DK → NO Handelsrute",
+    "headline": "Lad ikke papirarbejde stå i vejen for din forsyningskæde.",
+    "body": "Se vores guide til forsendelse fra Danmark til Norge — skabt til operatører, der flytter fragt, ikke papir.",
+    "cta": "Udforsk Toldguide",
+    "trustSignal": "Gratis guide · Ingen tilmelding påkrævet",
+    "routeFrom": "Danmark",
+    "routeTo": "Norge",
+    "stat1Value": "~36t",
+    "stat1Label": "Gnsn. Transittid",
+    "stat2Value": "6",
+    "stat2Label": "Aktive Havnepar",
+    "stat3Value": "100%",
+    "stat3Label": "Toldbehandlingsrate",
+    "inHouseNote": "Tolderklæringer håndteres internt"
+  },
   "hero": {
     "accentLine1": "Tung Løft",
     "accentLine2": "Søfragt",

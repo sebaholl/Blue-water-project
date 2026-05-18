@@ -16,6 +16,38 @@
     "ariaLabel": "About Us",
     "circleText": "ABOUT US · ABOUT US · ABOUT US · "
   },
+  "clients": {
+    "heading": "Trusted by leading companies worldwide"
+  },
+  "section1": {
+    "heading": "Know your container specifications",
+    "body": "We have a wide range of containers for sea freight, suitable for all types of cargo",
+    "cta": "View Heavy Lift Specs",
+    "placeholder": "Ship image placeholder",
+    "advantages": {
+      "heading": "Advantages of Sea Freight",
+      "subheading": "from China to Moscow",
+      "badge1": "Lowest cost",
+      "badge2": "Suitable for all cargo types",
+      "badge3": "Trusted major carriers"
+    }
+  },
+  "section4": {
+    "eyebrow": "DK → NO Trade Route",
+    "headline": "Don't let paperwork get in the way of your supply chain.",
+    "body": "See our Denmark-to-Norway shipping guide — built for operators who move cargo, not paper.",
+    "cta": "Explore Customs Guide",
+    "trustSignal": "Free guide · No sign-up required",
+    "routeFrom": "Denmark",
+    "routeTo": "Norway",
+    "stat1Value": "~36h",
+    "stat1Label": "Avg. Transit Time",
+    "stat2Value": "6",
+    "stat2Label": "Active Port Pairs",
+    "stat3Value": "100%",
+    "stat3Label": "Customs Clearance Rate",
+    "inHouseNote": "Toll declarations handled in-house"
+  },
   "hero": {
     "accentLine1": "Heavy-Lift",
     "accentLine2": "Sea Freight",

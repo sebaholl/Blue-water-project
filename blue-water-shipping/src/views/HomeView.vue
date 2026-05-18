@@ -1,6 +1,8 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import FloatingAboutButton from '@/components/ui/FloatingAboutButton.vue'
+import Clients from '@/components/ui/Clients.vue'
+import Section1 from '@/views/Section1.vue'
 
 const { t } = useI18n()
 
@@ -59,7 +61,9 @@ const heroVideoUrl = new URL('../assets/Hero-section-v.mp4', import.meta.url).hr
       
     </div>
 
-  </section>  
+  </section>
 
+  <Clients />
+  <Section1 />
   
 </template>
