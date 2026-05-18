@@ -454,10 +454,10 @@
 
 <script setup>
 import { computed, nextTick, ref, watch } from 'vue'
-import { useAuth } from '../composables/useAuth'
+import { useAuth } from '../../composables/useAuth'
 import { useI18n } from 'vue-i18n'
 
-import BwsLogo from './UI/BwsLogo.vue'
+import BwsLogo from '../ui/BwsLogo.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import {

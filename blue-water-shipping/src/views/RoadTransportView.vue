@@ -234,7 +234,7 @@
 </template>
 
 <script setup>
-import roadTransportHero from '../assets/RoadTransport.jpeg'
+import roadTransportHero from '../assets/Cargo-ship-home-page.jpeg'
 
 const routes = [
   {

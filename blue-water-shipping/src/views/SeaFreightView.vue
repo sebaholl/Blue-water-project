@@ -190,7 +190,7 @@
 
 <script setup>
 
-import seaFreightHero from '../assets/SeaFreightShip.jpeg'
+import seaFreightHero from '../assets/Cargo-ship-home-page.jpeg'
 
 const benefits = [
   {

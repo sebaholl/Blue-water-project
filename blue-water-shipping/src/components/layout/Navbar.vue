@@ -166,9 +166,9 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useAuth } from '../composables/useAuth'
+import { useAuth } from '../../composables/useAuth'
 
-import BwsLogo from './UI/BwsLogo.vue'
+import BwsLogo from '../ui/BwsLogo.vue'
 import BurgerMenu from './BurgerMenu.vue'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'

@@ -233,7 +233,7 @@
 </template>
 
 <script setup>
-import airFreightHero from '../assets/AirFreight.jpg'
+import airFreightHero from '../assets/big-ship.png'
 
 const priorities = [
   {
