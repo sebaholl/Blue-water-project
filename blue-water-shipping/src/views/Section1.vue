@@ -33,6 +33,7 @@ const { t } = useI18n()
 
     <!-- Advantages strip -->
     <div class="border-t border-white/10 mb-12"></div>
+   
   </section>
 
   <!-- Section 4: Trade Route Snapshot -->
