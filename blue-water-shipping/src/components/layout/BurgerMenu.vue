@@ -9,9 +9,9 @@
 
   <Transition name="slide-menu">
     <aside
-      v-if="isOpen"
-      class="fixed top-0 left-0 z-[100] flex h-screen w-full overflow-hidden bg-white"
-    >
+  v-if="isOpen"
+  class="fixed top-0 left-0 z-[100] flex h-screen w-full overflow-hidden bg-transparent"
+>
       <!-- Left icon rail -->
       <div class="flex w-20 flex-col items-center justify-between bg-bw-blue py-6 md:w-24">
         <div class="flex flex-col items-center gap-9">
@@ -44,7 +44,6 @@
             <FontAwesomeIcon :icon="faPhone" />
           </RouterLink>
 
-          <!-- Language dropdown trigger -->
           <div class="relative">
             <button
               class="rail-language"
@@ -52,9 +51,7 @@
               @click="isLanguageOpen = !isLanguageOpen"
             >
               <FontAwesomeIcon :icon="faEarthAmericas" class="text-lg" />
-
               <span>{{ locale === 'en' ? 'EN' : 'DA' }}</span>
-
               <FontAwesomeIcon :icon="faChevronDown" class="text-[10px]" />
             </button>
 
@@ -86,35 +83,17 @@
         </p>
 
         <nav class="mt-6 space-y-3">
-          <details
-            v-for="item in menuItems"
-            :key="item.key"
-            class="mobile-menu-group"
-          >
+          <details v-for="item in menuItems" :key="item.key" class="mobile-menu-group">
             <summary class="mobile-main-item">
               <span>{{ item.name }}</span>
-
-              <FontAwesomeIcon
-                v-if="item.children"
-                :icon="faChevronDown"
-                class="text-sm"
-              />
+              <FontAwesomeIcon v-if="item.children" :icon="faChevronDown" class="text-sm" />
             </summary>
 
             <div v-if="item.children" class="mt-3 space-y-2 pl-4">
-              <details
-                v-for="child in item.children"
-                :key="child.key"
-                class="mobile-sub-group"
-              >
+              <details v-for="child in item.children" :key="child.key" class="mobile-sub-group">
                 <summary class="mobile-sub-item">
                   <span>{{ child.name }}</span>
-
-                  <FontAwesomeIcon
-                    v-if="child.children"
-                    :icon="faChevronDown"
-                    class="text-xs"
-                  />
+                  <FontAwesomeIcon v-if="child.children" :icon="faChevronDown" class="text-xs" />
                 </summary>
 
                 <div v-if="child.children" class="mt-2 space-y-2 pl-4">
@@ -378,67 +357,19 @@
         </div>
       </Transition>
 
-      <!-- Right visual area desktop -->
-      <div class="relative hidden flex-1 overflow-hidden bg-gray-200 lg:flex">
-        <div class="absolute inset-0 bg-bw-blue/5"></div>
+     <!-- Right visual area desktop -->
+<div class="relative hidden flex-1 overflow-hidden bg-bw-blue/35 lg:flex">
+  <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10"></div>
 
-        <div
-          v-if="!activeChild?.type"
-          class="absolute inset-0 bg-[linear-gradient(to_bottom_right,transparent_49.9%,black_50%,transparent_50.1%),linear-gradient(to_top_right,transparent_49.9%,black_50%,transparent_50.1%)] opacity-40"
-        ></div>
+  <div class="absolute -right-32 top-20 h-96 w-96 rounded-full bg-white/10 blur-3xl"></div>
+  <div class="absolute bottom-0 left-20 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
 
-        <div
-          v-else-if="activeChild.type === 'containers'"
-          class="relative z-10 grid h-full w-full grid-cols-2"
-        >
-          <div
-            v-for="container in containers"
-            :key="container"
-            class="flex cursor-pointer flex-col items-center justify-center gap-4 border border-black/60 transition hover:bg-white"
-          >
-            <div
-              class="flex h-14 w-24 rotate-[-20deg] items-center justify-center border border-black text-[10px] font-bold text-bw-blue"
-            >
-              BWS
-            </div>
-
-            <p class="text-center text-sm font-black uppercase">
-              {{ container }}
-            </p>
-          </div>
-        </div>
-
-        <div
-          v-else-if="activeChild.type === 'news'"
-          class="relative z-10 w-full max-w-sm space-y-6 bg-white/70 px-8 py-24"
-        >
-          <p class="text-xs uppercase tracking-widest text-gray-500">
-            {{ t('menu.latest') }}
-          </p>
-
-          <article
-            v-for="news in newsCards"
-            :key="news.title"
-            class="cursor-pointer border border-gray-300 bg-white transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <div class="relative h-28 bg-gray-300">
-              <div
-                class="absolute inset-0 bg-[linear-gradient(to_bottom_right,transparent_49.5%,black_50%,transparent_50.5%),linear-gradient(to_top_right,transparent_49.5%,black_50%,transparent_50.5%)]"
-              ></div>
-            </div>
-
-            <div class="p-4">
-              <h3 class="text-sm font-bold leading-tight">
-                {{ news.title }}
-              </h3>
-
-              <button class="mt-3 border border-black px-3 py-1 text-xs font-bold">
-                {{ t('menu.readMore') }}
-              </button>
-            </div>
-          </article>
-        </div>
-      </div>
+  <div class="relative z-10 flex h-full w-full items-end justify-end p-10">
+    <p class="text-xs font-black uppercase tracking-[0.35em] text-white/45">
+      Blue Water Shipping
+    </p>
+  </div>
+</div>
 
       <!-- Stable CTA desktop only -->
       <RouterLink
@@ -493,8 +424,6 @@ const isLanguageOpen = ref(false)
 const searchQuery = ref('')
 const searchInput = ref(null)
 
-const bwsBaseUrl = 'https://www.bws.net'
-
 const languages = [
   { code: 'en', label: 'English' },
   { code: 'da', label: 'Dansk' },
@@ -526,31 +455,31 @@ const menuItems = computed(() => [
           { key: 'road-transport', name: t('menu.roadTransport'), path: '/road-transport' },
           { key: 'sea-freight', name: t('menu.seaFreight'), path: '/sea-freight' },
           { key: 'air-freight', name: t('menu.airFreight'), path: '/air-freight' },
-          { key: 'rail-transport', name: t('menu.railTransport'), url: `${bwsBaseUrl}/solutions/transport/rail-transport` },
-          { key: 'courier-transport', name: t('menu.courierTransport'), url: `${bwsBaseUrl}/solutions/transport/courier-transport` },
-          { key: 'port-service', name: t('menu.portService'), url: `${bwsBaseUrl}/solutions/transport/port-service` },
-          { key: 'oil-gas-projects', name: t('menu.oilGasProjects'), url: `${bwsBaseUrl}/solutions/transport/oil-gas-industrial-projects` },
-          { key: 'reefer-logistics', name: t('menu.reeferLogistics'), url: `${bwsBaseUrl}/solutions/transport/reefer-logistics` },
-          { key: 'marine-logistics', name: t('menu.marineLogistics'), url: `${bwsBaseUrl}/solutions/transport/marine-logistics` },
+          { key: 'rail-transport', name: t('menu.railTransport'), path: '/not-developed' },
+          { key: 'courier-transport', name: t('menu.courierTransport'), path: '/not-developed' },
+          { key: 'port-service', name: t('menu.portService'), path: '/not-developed' },
+          { key: 'oil-gas-projects', name: t('menu.oilGasProjects'), path: '/not-developed' },
+          { key: 'reefer-logistics', name: t('menu.reeferLogistics'), path: '/not-developed' },
+          { key: 'marine-logistics', name: t('menu.marineLogistics'), path: '/not-developed' },
         ],
       },
       {
         key: 'expertise',
         name: t('menu.expertise'),
         children: [
-          { key: 'automotive', name: t('menu.automotive'), url: `${bwsBaseUrl}/solutions/expertise/automotive` },
-          { key: 'retail', name: t('menu.retail'), url: `${bwsBaseUrl}/solutions/expertise/retail` },
-          { key: 'energy', name: t('menu.energy'), url: `${bwsBaseUrl}/solutions/expertise/energy` },
-          { key: 'pharma', name: t('menu.pharma'), url: `${bwsBaseUrl}/solutions/expertise/pharma` },
+          { key: 'automotive', name: t('menu.automotive'), path: '/not-developed' },
+          { key: 'retail', name: t('menu.retail'), path: '/not-developed' },
+          { key: 'energy', name: t('menu.energy'), path: '/not-developed' },
+          { key: 'pharma', name: t('menu.pharma'), path: '/not-developed' },
         ],
       },
       {
         key: 'service',
         name: t('menu.service'),
         children: [
-          { key: 'customs-clearance', name: t('menu.customsClearance'), url: `${bwsBaseUrl}/solutions/service/customs-clearance` },
-          { key: 'warehousing', name: t('menu.warehousing'), url: `${bwsBaseUrl}/solutions/service/warehousing` },
-          { key: 'supply-chain', name: t('menu.supplyChain'), url: `${bwsBaseUrl}/solutions/service/supply-chain-management` },
+          { key: 'customs-clearance', name: t('menu.customsClearance'), path: '/not-developed' },
+          { key: 'warehousing', name: t('menu.warehousing'), path: '/not-developed' },
+          { key: 'supply-chain', name: t('menu.supplyChain'), path: '/not-developed' },
         ],
       },
     ],
@@ -562,35 +491,33 @@ const menuItems = computed(() => [
       {
         key: 'tools',
         name: t('menu.tools'),
-        type: 'containers',
         children: [
-          { key: 'track-trace', name: t('searchTerms.tracking'), path: '/track-trace' },
-          { key: 'carbon-calculator', name: t('menu.carbonCalculator'), url: `${bwsBaseUrl}/toolbox/tools/carbon-calculator` },
-          { key: 'container-specs', name: t('menu.containerSpecs'), url: `${bwsBaseUrl}/toolbox/tools/container-specifications` },
-          { key: 'trailer-specs', name: t('menu.trailerSpecs'), url: `${bwsBaseUrl}/toolbox/tools/trailer-specifications` },
-          { key: 'courier-shipments', name: t('menu.courierShipments'), url: `${bwsBaseUrl}/toolbox/tools/courier-shipments` },
-          { key: 'currency-converter', name: t('menu.currencyConverter'), url: `${bwsBaseUrl}/toolbox/tools/currency-converter` },
-          { key: 'unit-converter', name: t('menu.unitConverter'), url: `${bwsBaseUrl}/toolbox/tools/unit-converter` },
-          { key: 'country-codes', name: t('menu.countryCodes'), url: `${bwsBaseUrl}/toolbox/tools/country-codes` },
-          { key: 'incoterms', name: t('menu.incoterms'), url: `${bwsBaseUrl}/toolbox/tools/incoterms-2020` },
+          { key: 'carbon-calculator', name: t('menu.carbonCalculator'), url: 'https://www.bws.net/toolbox/carbon-calculator' },
+          { key: 'container-specs', name: t('menu.containerSpecs'), url: 'https://www.bws.net/toolbox/container-specifications' },
+          { key: 'trailer-specs', name: t('menu.trailerSpecs'), url: 'https://www.bws.net/toolbox/trailer-specifications' },
+          { key: 'courier-shipments', name: t('menu.courierShipments'), path: '/not-developed' },
+          { key: 'currency-converter', name: t('menu.currencyConverter'), url: 'https://www.bws.net/toolbox/currency-converter' },
+          { key: 'unit-converter', name: t('menu.unitConverter'), path: '/not-developed' },
+          { key: 'country-codes', name: t('menu.countryCodes'), url: 'https://www.bws.net/toolbox/country-codes' },
+          { key: 'incoterms', name: t('menu.incoterms'), url: 'https://www.bws.net/toolbox/incoterms' },
         ],
       },
       {
         key: 'traffic-information',
         name: t('menu.trafficInformation'),
         children: [
-          { key: 'port-updates', name: t('menu.portUpdates'), url: `${bwsBaseUrl}/toolbox/traffic-information/port-updates` },
-          { key: 'road-delays', name: t('menu.roadDelays'), url: `${bwsBaseUrl}/toolbox/traffic-information/road-delays` },
-          { key: 'weather-alerts', name: t('menu.weatherAlerts'), url: `${bwsBaseUrl}/toolbox/traffic-information/weather-alerts` },
+          { key: 'port-updates', name: t('menu.portUpdates'), path: '/not-developed' },
+          { key: 'road-delays', name: t('menu.roadDelays'), path: '/not-developed' },
+          { key: 'weather-alerts', name: t('menu.weatherAlerts'), path: '/not-developed' },
         ],
       },
       {
         key: 'surcharges-fees',
         name: t('menu.surchargesFees'),
         children: [
-          { key: 'fuel-surcharges', name: t('menu.fuelSurcharges'), url: `${bwsBaseUrl}/toolbox/surcharges-fees/fuel-surcharges` },
-          { key: 'handling-fees', name: t('menu.handlingFees'), url: `${bwsBaseUrl}/toolbox/surcharges-fees/handling-fees` },
-          { key: 'customs-fees', name: t('menu.customsFees'), url: `${bwsBaseUrl}/toolbox/surcharges-fees/customs-fees` },
+          { key: 'fuel-surcharges', name: t('menu.fuelSurcharges'), path: '/not-developed' },
+          { key: 'handling-fees', name: t('menu.handlingFees'), path: '/not-developed' },
+          { key: 'customs-fees', name: t('menu.customsFees'), path: '/not-developed' },
         ],
       },
     ],
@@ -603,10 +530,10 @@ const menuItems = computed(() => [
         key: 'latest',
         name: t('menu.latest'),
         children: [
-          { key: 'news', name: t('menu.news'), url: `${bwsBaseUrl}/insights/news` },
-          { key: 'case-stories', name: t('menu.caseStories'), url: `${bwsBaseUrl}/insights/case-stories` },
-          { key: 'blog-posts', name: t('menu.blogPosts'), url: `${bwsBaseUrl}/insights/blog-posts` },
-          { key: 'guides', name: t('menu.guides'), url: `${bwsBaseUrl}/insights/guides` },
+          { key: 'news', name: t('menu.news'), path: '/not-developed' },
+          { key: 'case-stories', name: t('menu.caseStories'), path: '/not-developed' },
+          { key: 'blog-posts', name: t('menu.blogPosts'), path: '/not-developed' },
+          { key: 'guides', name: t('menu.guides'), path: '/not-developed' },
         ],
       },
     ],
@@ -619,10 +546,10 @@ const menuItems = computed(() => [
         key: 'responsibility-overview',
         name: t('menu.responsibility'),
         children: [
-          { key: 'environment', name: t('menu.environment'), url: `${bwsBaseUrl}/responsibility/environment` },
-          { key: 'people-business', name: t('menu.peopleBusiness'), url: `${bwsBaseUrl}/responsibility/a-peoples-business` },
-          { key: 'governance', name: t('menu.governance'), url: `${bwsBaseUrl}/responsibility/governance` },
-          { key: 'partnerships', name: t('menu.partnerships'), url: `${bwsBaseUrl}/responsibility/partnerships` },
+          { key: 'environment', name: t('menu.environment'), path: '/not-developed' },
+          { key: 'people-business', name: t('menu.peopleBusiness'), path: '/not-developed' },
+          { key: 'governance', name: t('menu.governance'), path: '/not-developed' },
+          { key: 'partnerships', name: t('menu.partnerships'), path: '/not-developed' },
         ],
       },
     ],
@@ -636,12 +563,12 @@ const menuItems = computed(() => [
         name: t('menu.about'),
         children: [
           { key: 'about-us', name: t('menu.aboutUs'), path: '/about' },
-          { key: 'organisation', name: t('menu.organisation'), url: `${bwsBaseUrl}/about/organisation` },
-          { key: 'values', name: t('menu.values'), url: `${bwsBaseUrl}/about/values` },
-          { key: 'policies', name: t('menu.policies'), url: `${bwsBaseUrl}/about/policies` },
-          { key: 'safety', name: t('menu.safety'), url: `${bwsBaseUrl}/about/safety` },
-          { key: 'history', name: t('menu.history'), url: `${bwsBaseUrl}/about/history` },
-          { key: 'foundation', name: t('menu.foundation'), url: `${bwsBaseUrl}/about/foundation` },
+          { key: 'organisation', name: t('menu.organisation'), path: '/not-developed' },
+          { key: 'values', name: t('menu.values'), path: '/not-developed' },
+          { key: 'policies', name: t('menu.policies'), path: '/not-developed' },
+          { key: 'safety', name: t('menu.safety'), path: '/not-developed' },
+          { key: 'history', name: t('menu.history'), path: '/not-developed' },
+          { key: 'foundation', name: t('menu.foundation'), path: '/not-developed' },
           { key: 'contact', name: 'Contact', path: '/contact' },
         ],
       },
@@ -650,7 +577,7 @@ const menuItems = computed(() => [
   {
     key: 'career',
     name: t('menu.career'),
-    url: `${bwsBaseUrl}/career`,
+    path: '/not-developed',
   },
 ])
 
@@ -661,23 +588,6 @@ const activeMain = computed(() =>
 const activeChild = computed(() =>
   activeMain.value?.children?.find((child) => child.key === activeChildKey.value)
 )
-
-const containers = [
-  '20’ Dry container',
-  '20’ Open top container',
-  '20’ Flat rack container',
-  '20’ Reefer container',
-  '40’ Dry container',
-  '40’ Dry high-cube container',
-  '40’ Reefer high-cube container',
-  '45’ Dry high-cube container',
-]
-
-const newsCards = [
-  { title: 'Blue Water expands European sea freight services' },
-  { title: 'New logistics solution improves B2B delivery time' },
-  { title: 'Guide: choosing the right transport mode' },
-]
 
 const openMainColumn = (item) => {
   if (item.path || item.url) {
@@ -700,7 +610,7 @@ const openChildColumn = (child) => {
     return
   }
 
-  if (!child.children && !child.type) {
+  if (!child.children) {
     emit('close')
     return
   }
@@ -937,7 +847,6 @@ watch(
   transform: translateY(-28px);
 }
 
-/* Mobile menu */
 .mobile-menu-group,
 .mobile-sub-group {
   border-bottom: 1px solid #e5e7eb;
@@ -981,7 +890,6 @@ watch(
   display: none;
 }
 
-/* Transitions */
 .fade-enter-active,
 .fade-leave-active,
 .dropdown-enter-active,

@@ -6,8 +6,12 @@ import Footer from '@/components/layout/Footer.vue'
 
 <template>
   <Navbar />
-  <RouterView />
-  <Section2 />
+
+  <main class="pt-24 md:pt-28 min-h-screen">
+    <RouterView />
+    <Section2 />
+  </main>
+
   <Footer />
 </template>
 
