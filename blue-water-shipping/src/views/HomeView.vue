@@ -55,9 +55,11 @@ const heroVideoUrl = new URL('../assets/Hero-section-v.mp4', import.meta.url).hr
         </button>
       </RouterLink>
 
-      <button class="font-proxima font-medium text-bw-white text-base md:text-lg lg:text-xl leading-tight bg-[#D9D9D9] px-10 py-5">
-        {{ t('hero.button2') }}
-      </button>
+      <RouterLink to="/Customs">
+        <button class="font-proxima font-medium text-bw-white text-base md:text-lg lg:text-xl leading-tight bg-[#D9D9D9] px-10 py-5">
+          {{ t('hero.button2') }}
+        </button>
+      </RouterLink>
     </div>  
 
       

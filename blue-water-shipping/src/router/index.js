@@ -11,6 +11,7 @@ const routes = [
   { path: '/air-freight', name: 'air-freight', component: () => import('../views/AirFreightView.vue') },
   { path: '/track-trace', name: 'track-trace', component: () => import('../views/TrackTraceView.vue') },
   { path: '/Heavy-lift', name: 'heavy-lift', component: () => import('../views/Heavy-lift.vue') },
+  { path: '/Customs', name: 'customs', component: () => import('../views/Customs.vue') },
   { path: '/contact', name: 'contact', component: () => import('../views/ContactView.vue') },
   { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') },
   { path: '/register', name: 'register', component: () => import('../views/RegisterView.vue') },
