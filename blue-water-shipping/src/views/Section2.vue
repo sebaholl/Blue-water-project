@@ -6,13 +6,6 @@ const { t } = useI18n()
 
 <template>
   <section id="trade-route-snapshot" class="relative overflow-hidden bg-bw-sand">
-    <!-- Huge Watermark Background -->
-    <div
-      class="absolute -left-4 top-1/2 -translate-y-1/2 select-none pointer-events-none whitespace-nowrap font-proxima font-black text-bw-blue/5 text-[12rem] z-0"
-      aria-hidden="true"
-    >
-      DK → NO
-    </div>
 
     <div class="max-w-7xl mx-auto px-6 py-16 lg:py-24 relative z-10">
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20 items-center">

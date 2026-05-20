@@ -1,7 +1,9 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { ShieldCheck, Ship } from 'lucide-vue-next'
+import Section2 from './Section2.vue';
 const { t } = useI18n()
+
 </script>
 
 <template>
@@ -17,9 +19,12 @@ const { t } = useI18n()
           <p class="font-proxima text-base md:text-lg text-bw-steel mb-8 max-w-md">
             {{ t('section1.body') }}
           </p>
-          <button class="font-proxima font-bold text-bw-white bg-[#FE3966] px-8 py-3 rounded text-xl">
-            {{ t('section1.cta') }}
-          </button>
+          <!-- "View Heavy Lift Specs" button" -->
+           <a href="https://www.bws.net/toolbox/container-specifications">
+             <button class="font-proxima font-bold text-bw-white bg-[#FE3966] px-8 py-3 rounded text-xl">
+               {{ t('section1.cta') }}
+             </button>
+           </a>
         </div>
       </div>
     </div>
@@ -35,6 +40,7 @@ const { t } = useI18n()
     <div class="border-t border-white/10 mb-12"></div>
    
   </section>
-
-  <!-- Section 4: Trade Route Snapshot -->
-</template>
+  
+  <Section2 />
+  
+  </template>

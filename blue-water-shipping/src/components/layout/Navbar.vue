@@ -106,7 +106,7 @@
         <RouterLink
           :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
           :class="[
-            'flex h-12 w-[145px] items-center justify-center whitespace-nowrap px-5 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-0.5',
+            'flex h-12 w-[165px] items-center justify-center whitespace-nowrap px-7 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-1',
             isScrolled
               ? 'bg-bw-blue text-white hover:bg-blue-900'
               : 'bg-white text-black hover:bg-gray-100',
