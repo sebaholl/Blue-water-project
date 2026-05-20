@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { onAuthStateChanged } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase/config'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 const routes = [
   { path: '/', name: 'home', component: () => import('../views/HomeView.vue') },
@@ -27,6 +28,16 @@ const routes = [
     component: () => import('../views/AdminView.vue'),
     meta: { requiresAuth: true, requiresAdmin: true },
   },
+  {
+  path: '/:pathMatch(.*)*',
+  name: 'NotFound',
+  component: NotFoundView,
+},
+{
+  path: '/contact/:officeSlug',
+  name: 'ContactOffice',
+  component: () => import('@/views/ContactOfficeView.vue'),
+},
 ]
 
 const router = createRouter({
