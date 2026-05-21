@@ -32,28 +32,28 @@ const heroVideoUrl = new URL('../assets/Hero-section-v.mp4', import.meta.url).hr
   <div class="relative z-10 max-w-6xl px-6 py-10 md:px-12 lg:px-20">
     <!-- Green accent lines -->
     <p
-      class="font-proxima text-4xl font-medium leading-[0.95] tracking-wide text-bw-green md:text-6xl lg:text-7xl xl:text-[6.5rem]"
+      class="font-proxima text-3xl font-medium leading-[0.95] tracking-wide text-bw-green md:text-6xl lg:text-7xl xl:text-[6rem]"
     >
       {{ t('hero.accentLine1') }}
     </p>
 
     <p
-      class="mb-4 font-proxima text-4xl font-medium leading-[0.95] tracking-wide text-bw-green md:text-6xl lg:text-7xl xl:text-[6.5rem]"
+      class="mb-4 font-proxima text-3xl font-medium leading-[0.95] tracking-wide text-bw-green md:text-6xl lg:text-7xl xl:text-[6rem]"
     >
       {{ t('hero.accentLine2') }}
     </p>
 
     <!-- White headline -->
     <h1 class="font-proxima font-black leading-[0.95] text-bw-white">
-      <span class="block text-5xl md:text-7xl lg:text-8xl xl:text-[7rem]">
+      <span class="block text-3xl md:text-7xl lg:text-8xl xl:text-[6rem]">
         {{ t('hero.headingLine1') }}
       </span>
 
-      <span class="block text-5xl md:text-7xl lg:text-8xl xl:text-[7rem]">
+      <span class="block text-3xl md:text-7xl lg:text-8xl xl:text-[6rem]">
         {{ t('hero.headingLine2') }}
       </span>
 
-      <span class="block text-5xl md:text-7xl lg:text-8xl xl:text-[7rem]">
+      <span class="block text-5xl md:text-7xl lg:text-8xl xl:text-[rem]">
         {{ t('hero.headingLine3') }}
       </span>
     </h1>

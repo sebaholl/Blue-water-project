@@ -9,7 +9,6 @@ import Footer from '@/components/layout/Footer.vue'
 
   <main class="pt-24 md:pt-28 min-h-screen">
     <RouterView />
-    <Section2 />
   </main>
 
   <Footer />
