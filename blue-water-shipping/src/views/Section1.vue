@@ -21,7 +21,7 @@ const { t } = useI18n()
           </p>
           <!-- "View Heavy Lift Specs" button" -->
            <a href="https://www.bws.net/toolbox/container-specifications">
-             <button class="font-proxima font-bold text-bw-white bg-[#FE3966] px-8 py-3 rounded text-xl">
+             <button class="font-proxima font-bold text-bw-white bg-[#FE3966] px-8 py-3 text-xl">
                {{ t('section1.cta') }}
              </button>
            </a>
