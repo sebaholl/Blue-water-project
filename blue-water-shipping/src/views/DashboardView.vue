@@ -440,6 +440,19 @@ import {
 import { db } from '../firebase/config'
 import { useAuth } from '../composables/useAuth'
 
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Dashboard | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Prototype dashboard for managing Blue Water Shipping transport requests.',
+    },
+  ],
+})
+
 const router = useRouter()
 const { t } = useI18n()
 const { user, logout } = useAuth()

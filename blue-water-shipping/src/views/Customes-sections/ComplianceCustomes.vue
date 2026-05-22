@@ -8,6 +8,19 @@ import {
   Zap, CheckCircle, Award, Search, ArrowRight
 } from 'lucide-vue-next'
 
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Customs Compliance | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Compliance support for customs documentation, transport requirements and cross-border logistics.',
+    },
+  ],
+})
+
 const { t } = useI18n()
 
 const trackingSteps = [

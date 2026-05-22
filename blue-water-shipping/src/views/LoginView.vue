@@ -76,6 +76,19 @@ import { useI18n } from 'vue-i18n'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase/config'
 
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Login | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Log in to the Blue Water Shipping prototype client portal.',
+    },
+  ],
+})
+
 const router = useRouter()
 const { t } = useI18n()
 

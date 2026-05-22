@@ -79,6 +79,19 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 
 import { auth, db } from '../firebase/config'
 
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Register | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Create an account for the Blue Water Shipping prototype client portal.',
+    },
+  ],
+})
+
 const router = useRouter()
 const { t } = useI18n()
 
