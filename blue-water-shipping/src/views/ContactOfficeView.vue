@@ -1,20 +1,26 @@
 <template>
   <section class="bg-white">
     <!-- Hero -->
-    <section class="bg-bw-blue text-white">
+    <section
+      class="bg-bw-blue text-white"
+      aria-labelledby="contact-office-title"
+    >
       <div class="mx-auto max-w-7xl px-6 py-20 md:px-12 md:py-28">
         <RouterLink
           to="/contact"
-          class="text-sm font-black uppercase tracking-[0.25em] text-white/60 transition hover:text-white"
+          class="text-sm font-black uppercase tracking-[0.25em] text-white/70 transition hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
         >
           ← Back to contact
         </RouterLink>
 
-        <p class="mt-10 text-sm font-black uppercase tracking-[0.3em] text-white/60">
+        <p class="mt-10 text-sm font-black uppercase tracking-[0.3em] text-white/70">
           Contact office
         </p>
 
-        <h1 class="mt-5 max-w-4xl text-4xl font-black leading-tight md:text-7xl">
+        <h1
+          id="contact-office-title"
+          class="mt-5 max-w-4xl text-4xl font-black leading-tight md:text-7xl"
+        >
           {{ selectedOffice.name }}
         </h1>
 
@@ -25,26 +31,34 @@
     </section>
 
     <!-- Contact form section -->
-    <section class="bg-gray-100 px-4 py-10 md:px-6 md:py-20">
+    <section
+      class="bg-gray-100 px-4 py-10 md:px-6 md:py-20"
+      aria-labelledby="office-details-title"
+    >
       <!-- Office information -->
       <div class="mx-auto mb-8 max-w-7xl bg-white p-6 shadow-xl sm:p-8 lg:p-10">
-        <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+        <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
           Office details
         </p>
 
         <div class="mt-6 grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <h2 class="text-3xl font-black text-bw-blue">
+            <h2
+              id="office-details-title"
+              class="text-3xl font-black text-bw-blue"
+            >
               {{ selectedOffice.name }}
             </h2>
 
-            <p class="mt-3 text-sm font-bold text-black">
-              {{ selectedOffice.address }}
-            </p>
+            <address class="mt-3 not-italic">
+              <p class="text-sm font-bold text-black">
+                {{ selectedOffice.address }}
+              </p>
 
-            <p class="mt-2 text-sm text-gray-600">
-              {{ selectedOffice.country }}
-            </p>
+              <p class="mt-2 text-sm text-gray-600">
+                {{ selectedOffice.country }}
+              </p>
+            </address>
           </div>
 
           <div>
@@ -55,23 +69,35 @@
             <div class="mt-6 grid gap-4 sm:grid-cols-2">
               <p class="text-sm">
                 <span class="font-black text-black">Phone:</span>
-                {{ selectedOffice.phone }}
+                <a
+                  :href="`tel:${selectedOffice.phone.replaceAll(' ', '')}`"
+                  class="ml-1 text-gray-600 transition hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+                >
+                  {{ selectedOffice.phone }}
+                </a>
               </p>
 
               <p class="text-sm">
                 <span class="font-black text-black">Email:</span>
-                {{ selectedOffice.email }}
+                <a
+                  :href="`mailto:${selectedOffice.email}`"
+                  class="ml-1 text-gray-600 transition hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+                >
+                  {{ selectedOffice.email }}
+                </a>
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="mx-auto grid max-w-7xl overflow-hidden bg-white shadow-xl lg:grid-cols-[1.35fr_0.65fr]">
+      <div
+        class="mx-auto grid max-w-7xl overflow-hidden bg-white shadow-xl lg:grid-cols-[1.35fr_0.65fr]"
+      >
         <!-- Form area -->
         <div class="p-5 sm:p-8 lg:p-14">
           <div>
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
               Get in touch
             </p>
 
@@ -90,7 +116,7 @@
               v-for="category in categories"
               :key="category"
               type="button"
-              class="h-12 border text-xs font-black uppercase tracking-wide transition sm:text-sm"
+              class="h-12 border text-xs font-black uppercase tracking-wide transition focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2 sm:text-sm"
               :class="selectedCategory === category
                 ? 'border-bw-blue bg-bw-blue text-white'
                 : 'border-gray-300 bg-white text-black hover:border-bw-blue hover:text-bw-blue'"
@@ -106,7 +132,8 @@
               v-for="(step, index) in steps"
               :key="step.id"
               type="button"
-              class="text-left"
+              class="text-left focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+              :aria-label="`Go to step ${index + 1}: ${step.title}`"
               @click="currentStep = index"
             >
               <div class="flex items-center justify-between gap-4">
@@ -122,7 +149,14 @@
                 </p>
               </div>
 
-              <div class="mt-3 h-[3px] bg-gray-300">
+              <div
+                class="mt-3 h-[3px] bg-gray-300"
+                role="progressbar"
+                :aria-valuenow="stepProgress(index)"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                :aria-label="`${step.title} completion`"
+              >
                 <div
                   class="h-full bg-bw-blue transition-all duration-500"
                   :style="{ width: `${stepProgress(index)}%` }"
@@ -140,10 +174,33 @@
               </h3>
 
               <div class="mt-8 grid gap-6 md:grid-cols-2">
-                <FormInput v-model="form.from" label="From" placeholder="Example: Esbjerg" required />
-                <FormInput v-model="form.to" label="To" placeholder="Example: Aberdeen" required />
-                <FormInput v-model="form.cargoType" label="Type of cargo" placeholder="Example: Project Cargo" required />
-                <FormSelect v-model="form.transport" label="Preferred transport" required :options="transportOptions" />
+                <FormInput
+                  v-model="form.from"
+                  label="From"
+                  placeholder="Example: Esbjerg"
+                  required
+                />
+
+                <FormInput
+                  v-model="form.to"
+                  label="To"
+                  placeholder="Example: Aberdeen"
+                  required
+                />
+
+                <FormInput
+                  v-model="form.cargoType"
+                  label="Type of cargo"
+                  placeholder="Example: Project Cargo"
+                  required
+                />
+
+                <FormSelect
+                  v-model="form.transport"
+                  label="Preferred transport"
+                  required
+                  :options="transportOptions"
+                />
               </div>
             </div>
 
@@ -154,10 +211,32 @@
               </h3>
 
               <div class="mt-8 grid gap-6 md:grid-cols-2">
-                <FormInput v-model="form.weight" label="Estimated weight" placeholder="Example: 1200 kg" required />
-                <FormInput v-model="form.dimensions" label="Cargo dimensions" placeholder="Example: 120 × 80 × 100 cm" />
-                <FormSelect v-model="form.urgency" label="Urgency" required :options="urgencyOptions" />
-                <FormInput v-model="form.readyDate" label="Ready date" type="date" required />
+                <FormInput
+                  v-model="form.weight"
+                  label="Estimated weight"
+                  placeholder="Example: 1200 kg"
+                  required
+                />
+
+                <FormInput
+                  v-model="form.dimensions"
+                  label="Cargo dimensions"
+                  placeholder="Example: 120 × 80 × 100 cm"
+                />
+
+                <FormSelect
+                  v-model="form.urgency"
+                  label="Urgency"
+                  required
+                  :options="urgencyOptions"
+                />
+
+                <FormInput
+                  v-model="form.readyDate"
+                  label="Ready date"
+                  type="date"
+                  required
+                />
               </div>
 
               <div class="mt-6">
@@ -168,9 +247,14 @@
                 <textarea
                   v-model="form.cargoNotes"
                   rows="4"
-                  class="w-full border border-gray-300 px-4 py-3 text-base outline-none transition focus:border-bw-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
+                  maxlength="1000"
+                  class="w-full border border-gray-300 px-4 py-3 text-base outline-none transition focus:border-bw-blue focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
                   placeholder="Tell us about special handling, fragile cargo, temperature needs, etc."
                 ></textarea>
+
+                <p class="mt-2 text-xs text-gray-500">
+                  {{ form.cargoNotes.length }}/1000 characters
+                </p>
               </div>
             </div>
 
@@ -181,10 +265,49 @@
               </h3>
 
               <div class="mt-8 grid gap-6 md:grid-cols-2">
-                <FormInput v-model="form.name" label="Full name" placeholder="Your name" required />
-                <FormInput v-model="form.company" label="Company" placeholder="Company name" required />
-                <FormInput v-model="form.email" label="Email" type="email" placeholder="name@company.com" required />
-                <FormInput v-model="form.phone" label="Phone" placeholder="+45 ..." />
+                <FormInput
+                  v-model="form.name"
+                  label="Full name"
+                  placeholder="Your name"
+                  required
+                />
+
+                <FormInput
+                  v-model="form.company"
+                  label="Company"
+                  placeholder="Company name"
+                  required
+                />
+
+                <FormInput
+                  v-model="form.email"
+                  label="Email"
+                  type="email"
+                  placeholder="name@company.com"
+                  required
+                />
+
+                <FormInput
+                  v-model="form.phone"
+                  label="Phone"
+                  placeholder="+45 ..."
+                />
+              </div>
+
+              <div class="mt-6">
+                <label class="flex items-start gap-3 text-sm leading-relaxed text-gray-600">
+                  <input
+                    v-model="form.gdprConsent"
+                    type="checkbox"
+                    required
+                    class="mt-1 h-4 w-4 accent-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+                  />
+
+                  <span>
+                    I agree that Blue Water Shipping may process my information
+                    in order to respond to this request.
+                  </span>
+                </label>
               </div>
             </div>
 
@@ -192,7 +315,7 @@
             <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <button
                 type="button"
-                class="h-12 px-6 text-sm font-black uppercase tracking-wide text-gray-500 transition hover:text-bw-blue disabled:cursor-not-allowed disabled:opacity-40"
+                class="h-12 px-6 text-sm font-black uppercase tracking-wide text-gray-500 transition hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
                 :disabled="currentStep === 0"
                 @click="currentStep--"
               >
@@ -202,7 +325,7 @@
               <button
                 v-if="currentStep < steps.length - 1"
                 type="button"
-                class="h-12 bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900"
+                class="h-12 bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
                 @click="goNext"
               >
                 Next step →
@@ -212,7 +335,7 @@
                 v-else
                 type="submit"
                 :disabled="isSubmitting"
-                class="h-12 bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900 disabled:cursor-not-allowed disabled:opacity-60"
+                class="h-12 bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {{ isSubmitting ? 'Sending...' : 'Send request' }}
               </button>
@@ -220,6 +343,7 @@
 
             <p
               v-if="successMessage"
+              aria-live="polite"
               class="mt-6 border border-green-200 bg-green-50 p-4 text-sm font-bold text-green-700"
             >
               {{ successMessage }}
@@ -227,6 +351,7 @@
 
             <p
               v-if="errorMessage"
+              aria-live="assertive"
               class="mt-6 border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-600"
             >
               {{ errorMessage }}
@@ -256,8 +381,9 @@
               <article :key="activeContact.name" class="overflow-hidden bg-white shadow-xl">
                 <img
                   :src="activeContact.image"
-                  :alt="activeContact.name"
+                  :alt="`${activeContact.name} - ${activeContact.role}`"
                   class="h-[300px] w-full object-cover"
+                  loading="lazy"
                 />
 
                 <div class="p-6">
@@ -275,11 +401,21 @@
 
                   <div class="mt-6 space-y-2 text-sm">
                     <p class="font-bold text-black">
-                      {{ activeContact.phone }}
+                      <a
+                        :href="`tel:${activeContact.phone.replaceAll(' ', '')}`"
+                        class="transition hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+                      >
+                        {{ activeContact.phone }}
+                      </a>
                     </p>
 
                     <p class="text-gray-600">
-                      {{ activeContact.email }}
+                      <a
+                        :href="`mailto:${activeContact.email}`"
+                        class="transition hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+                      >
+                        {{ activeContact.email }}
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -291,7 +427,7 @@
           <div class="absolute bottom-2 left-1/2 z-20 flex -translate-x-1/2 items-center gap-5">
             <button
               type="button"
-              class="flex h-10 w-10 items-center justify-center rounded-full border border-black/20 bg-white text-xs font-black transition hover:scale-105 hover:border-bw-blue hover:text-bw-blue"
+              class="flex h-10 w-10 items-center justify-center rounded-full border border-black/20 bg-white text-xs font-black transition hover:scale-105 hover:border-bw-blue hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
               :aria-label="isPaused ? 'Play contact rotation' : 'Pause contact rotation'"
               @click="toggleRotation"
             >
@@ -304,13 +440,14 @@
                 v-for="(contact, index) in officeContacts"
                 :key="contact.name"
                 type="button"
-                class="relative h-10 w-10"
+                class="relative h-10 w-10 focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
                 :aria-label="`Show ${contact.name}`"
                 @click="selectContact(index)"
               >
                 <svg
                   class="absolute inset-0 h-full w-full -rotate-90"
                   viewBox="0 0 36 36"
+                  aria-hidden="true"
                 >
                   <path
                     class="text-gray-400"
@@ -340,6 +477,7 @@
                   :src="contact.image"
                   :alt="contact.name"
                   class="absolute inset-[5px] h-[30px] w-[30px] rounded-full object-cover"
+                  loading="lazy"
                 />
               </button>
             </div>
@@ -354,7 +492,33 @@
 import { computed, defineComponent, h, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { useHead } from '@unhead/vue'
+
 import { db } from '../firebase/config'
+
+useHead({
+  title: 'Contact Office | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Send a guided transport request to a selected Blue Water Shipping office.',
+    },
+    {
+      property: 'og:title',
+      content: 'Contact Office | Blue Water Shipping',
+    },
+    {
+      property: 'og:description',
+      content:
+        'Send a guided transport request to a selected Blue Water Shipping office.',
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+  ],
+})
 
 const route = useRoute()
 
@@ -366,7 +530,8 @@ const offices = [
     address: 'Trafikhavnskaj 9, 6700 Esbjerg',
     phone: '+45 79 13 40 00',
     email: 'info@bws.dk',
-    description: 'Contact the Esbjerg office for sea freight, project cargo and Danish logistics coordination.',
+    description:
+      'Contact the Esbjerg office for sea freight, project cargo and Danish logistics coordination.',
     longText:
       'The Esbjerg office is an important location for Danish logistics activities, especially connected to sea freight, offshore, project cargo and transport coordination.',
   },
@@ -377,7 +542,8 @@ const offices = [
     address: 'Copenhagen, Denmark',
     phone: '+45 79 13 40 00',
     email: 'copenhagen@bws.dk',
-    description: 'Contact Copenhagen for transport planning, business logistics and customer support.',
+    description:
+      'Contact Copenhagen for transport planning, business logistics and customer support.',
     longText:
       'The Copenhagen area supports Danish and international customers with business logistics, transport coordination and customer-focused solutions.',
   },
@@ -388,7 +554,8 @@ const offices = [
     address: 'Aarhus, Denmark',
     phone: '+45 79 13 40 00',
     email: 'aarhus@bws.dk',
-    description: 'Contact Aarhus for Danish road transport, sea freight and logistics support.',
+    description:
+      'Contact Aarhus for Danish road transport, sea freight and logistics support.',
     longText:
       'The Aarhus office supports transport flows across Denmark and Europe, with a focus on road transport, sea freight and customer support.',
   },
@@ -399,7 +566,8 @@ const offices = [
     address: 'Hamburg, Germany',
     phone: '+49 40 0000 0000',
     email: 'hamburg@bws.net',
-    description: 'Contact Hamburg for European port-related logistics and international transport.',
+    description:
+      'Contact Hamburg for European port-related logistics and international transport.',
     longText:
       'Hamburg is one of Europe’s most important logistics areas and supports international sea freight and European transport connections.',
   },
@@ -410,7 +578,8 @@ const offices = [
     address: 'Rotterdam, Netherlands',
     phone: '+31 10 000 0000',
     email: 'rotterdam@bws.net',
-    description: 'Contact Rotterdam for European sea freight and port logistics.',
+    description:
+      'Contact Rotterdam for European sea freight and port logistics.',
     longText:
       'Rotterdam is connected to one of Europe’s strongest port regions and supports international cargo movement and logistics planning.',
   },
@@ -421,7 +590,8 @@ const offices = [
     address: 'Aberdeen, United Kingdom',
     phone: '+44 1224 000000',
     email: 'aberdeen@bws.net',
-    description: 'Contact Aberdeen for offshore, energy and project cargo logistics.',
+    description:
+      'Contact Aberdeen for offshore, energy and project cargo logistics.',
     longText:
       'Aberdeen supports transport and logistics needs connected to offshore, energy and project cargo activities.',
   },
@@ -455,6 +625,7 @@ const form = reactive({
   company: '',
   email: '',
   phone: '',
+  gdprConsent: false,
 })
 
 const steps = [
@@ -471,7 +642,7 @@ const steps = [
   {
     id: 'contact',
     title: 'Contact Information',
-    requiredFields: ['name', 'company', 'email'],
+    requiredFields: ['name', 'company', 'email', 'gdprConsent'],
   },
 ]
 
@@ -529,7 +700,13 @@ const selectContact = (index) => {
 
 const stepProgress = (stepIndex) => {
   const step = steps[stepIndex]
-  const filled = step.requiredFields.filter((field) => form[field]?.toString().trim()).length
+  const filled = step.requiredFields.filter((field) => {
+    if (typeof form[field] === 'boolean') {
+      return form[field]
+    }
+
+    return form[field]?.toString().trim()
+  }).length
 
   return Math.round((filled / step.requiredFields.length) * 100)
 }
@@ -537,7 +714,13 @@ const stepProgress = (stepIndex) => {
 const isCurrentStepValid = computed(() => {
   const requiredFields = steps[currentStep.value].requiredFields
 
-  return requiredFields.every((field) => form[field]?.toString().trim())
+  return requiredFields.every((field) => {
+    if (typeof form[field] === 'boolean') {
+      return form[field]
+    }
+
+    return form[field]?.toString().trim()
+  })
 })
 
 const goNext = () => {
@@ -567,8 +750,28 @@ const resetForm = () => {
   form.company = ''
   form.email = ''
   form.phone = ''
+  form.gdprConsent = false
   currentStep.value = 0
   selectedCategory.value = 'Transport'
+}
+
+const validateFormLength = () => {
+  if (form.cargoNotes.length > 1000) {
+    errorMessage.value = 'Cargo notes are too long.'
+    return false
+  }
+
+  if (form.name.length > 100 || form.company.length > 100) {
+    errorMessage.value = 'Name or company input is too long.'
+    return false
+  }
+
+  if (form.email.length > 150 || form.phone.length > 50) {
+    errorMessage.value = 'Contact information is too long.'
+    return false
+  }
+
+  return true
 }
 
 const submitForm = async () => {
@@ -577,6 +780,10 @@ const submitForm = async () => {
 
   if (!isCurrentStepValid.value) {
     errorMessage.value = 'Please fill in all required fields before sending.'
+    return
+  }
+
+  if (!validateFormLength()) {
     return
   }
 
@@ -591,19 +798,20 @@ const submitForm = async () => {
       selectedContact: activeContact.value.name,
       selectedContactRole: activeContact.value.role,
       category: selectedCategory.value,
-      from: form.from,
-      to: form.to,
-      cargoType: form.cargoType,
+      from: form.from.trim(),
+      to: form.to.trim(),
+      cargoType: form.cargoType.trim(),
       transport: form.transport,
-      weight: form.weight,
-      dimensions: form.dimensions,
+      weight: form.weight.trim(),
+      dimensions: form.dimensions.trim(),
       urgency: form.urgency,
       readyDate: form.readyDate,
-      cargoNotes: form.cargoNotes,
-      name: form.name,
-      company: form.company,
-      email: form.email,
-      phone: form.phone,
+      cargoNotes: form.cargoNotes.trim(),
+      name: form.name.trim(),
+      company: form.company.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      gdprConsent: form.gdprConsent,
       status: 'New',
       createdAt: serverTimestamp(),
     })
@@ -651,19 +859,33 @@ const FormInput = defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
+    const inputId = computed(() =>
+      props.label.toLowerCase().replaceAll(' ', '-')
+    )
+
+    const autocomplete = computed(() => {
+      if (props.type === 'email') return 'email'
+      if (props.label === 'Full name') return 'name'
+      if (props.label === 'Phone') return 'tel'
+      if (props.label === 'Company') return 'organization'
+      return 'off'
+    })
+
     return () =>
       h('div', [
-        h('label', { class: 'mb-2 block text-sm font-bold text-gray-700' }, [
+        h('label', { class: 'mb-2 block text-sm font-bold text-gray-700', for: inputId.value }, [
           props.label,
           props.required ? h('span', { class: 'ml-1 text-bw-blue' }, '*') : null,
         ]),
         h('input', {
+          id: inputId.value,
           value: props.modelValue,
           type: props.type,
           required: props.required,
           placeholder: props.placeholder,
+          autocomplete: autocomplete.value,
           class:
-            'h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bw-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]',
+            'h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bw-blue focus:ring-2 focus:ring-bw-blue focus:ring-offset-2',
           onInput: (event) => emit('update:modelValue', event.target.value),
         }),
       ])
@@ -679,19 +901,24 @@ const FormSelect = defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
+    const selectId = computed(() =>
+      props.label.toLowerCase().replaceAll(' ', '-')
+    )
+
     return () =>
       h('div', [
-        h('label', { class: 'mb-2 block text-sm font-bold text-gray-700' }, [
+        h('label', { class: 'mb-2 block text-sm font-bold text-gray-700', for: selectId.value }, [
           props.label,
           props.required ? h('span', { class: 'ml-1 text-bw-blue' }, '*') : null,
         ]),
         h(
           'select',
           {
+            id: selectId.value,
             value: props.modelValue,
             required: props.required,
             class:
-              'h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bw-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]',
+              'h-12 w-full border border-gray-300 px-4 text-base outline-none transition focus:border-bw-blue focus:ring-2 focus:ring-bw-blue focus:ring-offset-2',
             onChange: (event) => emit('update:modelValue', event.target.value),
           },
           [

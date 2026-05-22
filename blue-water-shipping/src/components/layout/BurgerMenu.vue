@@ -1,16 +1,21 @@
 <template>
   <Transition name="fade">
-    <div
-      v-if="isOpen"
-      class="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm"
-      @click="$emit('close')"
-    ></div>
+
+<div
+  v-if="isOpen"
+  class="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm"
+  aria-hidden="true"
+  @click="$emit('close')"
+></div>
   </Transition>
 
   <Transition name="slide-menu">
     <aside
   v-if="isOpen"
-  class="fixed top-0 left-0 z-[100] flex h-screen w-full overflow-hidden bg-transparent"
+  class="fixed left-0 top-0 z-[100] flex h-screen w-full overflow-hidden bg-transparent"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Main navigation menu"
 >
       <!-- Left icon rail -->
       <div class="flex w-20 flex-col items-center justify-between bg-bw-blue py-6 md:w-24">
@@ -185,13 +190,15 @@
               class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
             />
 
-            <input
-              ref="searchInput"
-              v-model="searchQuery"
-              type="text"
-              :placeholder="t('menu.searchPlaceholder')"
-              class="w-full border border-gray-300 py-4 pl-11 pr-4 text-sm font-semibold outline-none transition focus:border-bw-blue focus:shadow-[0_0_0_3px_rgba(0,0,171,0.12)]"
-            />
+<input
+  id="burger-search"
+  ref="searchInput"
+  v-model="searchQuery"
+  type="search"
+  :placeholder="t('menu.searchPlaceholder')"
+  class="w-full border border-gray-300 py-4 pl-11 pr-4 text-sm font-semibold outline-none transition focus:border-bw-blue focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+  aria-label="Search the website menu"
+/>
           </div>
 
           <div v-if="!searchQuery" class="mt-8">
@@ -384,7 +391,7 @@
 </template>
 
 <script setup>
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useAuth } from '../../composables/useAuth'
 import { useI18n } from 'vue-i18n'
 
@@ -665,6 +672,21 @@ const filteredResults = computed(() => {
   )
 })
 
+
+const handleEscape = (event) => {
+  if (event.key === 'Escape' && props.isOpen) {
+    emit('close')
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleEscape)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleEscape)
+})
+
 watch(
   () => props.openSearch,
   async (value) => {
@@ -939,5 +961,25 @@ watch(
 .search-slide-leave-to {
   opacity: 0;
   transform: translateX(24px);
+}
+
+.rail-icon:focus-visible,
+.rail-language:focus-visible,
+.main-menu-item:focus-visible,
+.submenu-item:focus-visible,
+.third-menu-item:focus-visible,
+.mobile-main-item:focus-visible,
+.mobile-sub-item:focus-visible,
+.mobile-third-item:focus-visible,
+.mobile-direct-link:focus-visible,
+.search-result:focus-visible,
+.language-option:focus-visible {
+  outline: 2px solid #0000ab;
+  outline-offset: 4px;
+}
+
+.rail-icon:focus-visible,
+.rail-language:focus-visible {
+  outline-color: white;
 }
 </style>

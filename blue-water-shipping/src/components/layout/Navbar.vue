@@ -1,48 +1,59 @@
 <template>
   <header
     :class="[
-      'fixed top-0 left-0 z-50 w-full border-b transition-all duration-300',
+      'fixed left-0 top-0 z-50 w-full border-b transition-all duration-300',
       isScrolled
-        ? 'bg-white border-gray-200 shadow-sm'
-        : 'bg-bw-blue border-white/20',
+        ? 'border-gray-200 bg-white shadow-sm'
+        : 'border-white/20 bg-bw-blue',
     ]"
   >
-    <nav class="relative flex h-20 items-center justify-between px-5 md:h-28 md:px-12">
+    <nav
+      class="relative flex h-20 items-center justify-between px-5 md:h-28 md:px-12"
+      aria-label="Main navigation"
+    >
       <!-- Left -->
       <div class="flex items-center gap-6 md:gap-10">
         <button
           class="burger-button"
           :class="{ active: isMenuOpen, scrolled: isScrolled }"
-          aria-label="Toggle menu"
+          :aria-label="isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'"
+          :aria-expanded="isMenuOpen"
+          aria-controls="main-burger-menu"
           @click="openMenu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </button>
 
         <div
           :class="[
-            'hidden md:flex items-center gap-10 font-bold uppercase tracking-wide transition-colors',
-            isScrolled ? 'text-black' : 'text-white',
+            'hidden items-center gap-10 font-bold uppercase tracking-wide transition-colors md:flex',
+            isScrolled ? 'text-bw-blue' : 'text-white',
           ]"
         >
-          <a href="#" class="nav-link">{{ t('nav.solutions') }}</a>
-          <a href="#" class="nav-link">{{ t('nav.toolbox') }}</a>
+          <button type="button" class="nav-link" @click="openMenu">
+            {{ t('nav.solutions') }}
+          </button>
+
+          <button type="button" class="nav-link" @click="openMenu">
+            {{ t('nav.toolbox') }}
+          </button>
         </div>
       </div>
 
       <!-- Logo -->
       <RouterLink
         to="/"
-        class="absolute left-1/2 -translate-x-1/2"
-        aria-label="Blue Water Shipping home"
+        class="absolute left-1/2 -translate-x-1/2 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
+        aria-label="Go to Blue Water Shipping homepage"
       >
         <BwsLogo
           :class="[
             isScrolled ? 'text-bw-blue' : 'text-white',
             '!h-14 md:!h-[70px]',
           ]"
+          aria-hidden="true"
         />
       </RouterLink>
 
@@ -52,39 +63,44 @@
           <!-- Search -->
           <button
             :class="[
-              'icon-button text-2xl',
-              isScrolled ? 'text-black' : 'text-white',
+              'icon-button text-2xl focus:outline-none focus:ring-2 focus:ring-offset-2',
+              isScrolled
+                ? 'text-black focus:ring-bw-blue focus:ring-offset-white'
+                : 'text-white focus:ring-white focus:ring-offset-bw-blue',
             ]"
             :aria-label="t('nav.search')"
             @click="openMenuSearch"
           >
-            <FontAwesomeIcon :icon="faMagnifyingGlass" />
+            <FontAwesomeIcon :icon="faMagnifyingGlass" aria-hidden="true" />
           </button>
 
           <!-- Desktop language -->
           <div class="relative">
             <button
               :class="[
-                'language-switch',
+                'language-switch focus:outline-none focus:ring-2 focus:ring-offset-2',
                 isScrolled
-                  ? 'text-black border-black/20'
-                  : 'text-white border-white/40',
+                  ? 'border-black/20 text-black focus:ring-bw-blue focus:ring-offset-white'
+                  : 'border-white/40 text-white focus:ring-white focus:ring-offset-bw-blue',
               ]"
               :aria-label="t('nav.language')"
+              :aria-expanded="isLanguageOpen"
+              aria-controls="desktop-language-menu"
               @click.stop="isLanguageOpen = !isLanguageOpen"
             >
-              <FontAwesomeIcon :icon="faEarthAmericas" class="text-lg" />
+              <FontAwesomeIcon :icon="faEarthAmericas" class="text-lg" aria-hidden="true" />
 
               <span class="language-code">
                 {{ locale === 'en' ? 'EN' : 'DA' }}
               </span>
 
-              <FontAwesomeIcon :icon="faChevronDown" class="text-xs" />
+              <FontAwesomeIcon :icon="faChevronDown" class="text-xs" aria-hidden="true" />
             </button>
 
             <Transition name="dropdown">
               <div
                 v-if="isLanguageOpen"
+                id="desktop-language-menu"
                 class="absolute right-0 z-[80] mt-3 w-40 border border-gray-200 bg-white shadow-xl"
               >
                 <button
@@ -92,6 +108,7 @@
                   :key="language.code"
                   class="language-option"
                   :class="{ active: locale === language.code }"
+                  type="button"
                   @click="changeLanguage(language.code)"
                 >
                   <span>{{ language.label }}</span>
@@ -106,11 +123,12 @@
         <RouterLink
           :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
           :class="[
-            'flex h-12 min-w-[170px] items-center justify-center whitespace-nowrap px-5 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-0.5',
+            'flex h-12 min-w-[170px] items-center justify-center whitespace-nowrap px-5 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2',
             isScrolled
-              ? 'bg-bw-blue text-white hover:bg-blue-900'
-              : 'bg-white text-black hover:bg-gray-100',
+              ? 'bg-bw-blue text-white hover:bg-blue-900 focus:ring-bw-blue focus:ring-offset-white'
+              : 'bg-white text-black hover:bg-gray-100 focus:ring-white focus:ring-offset-bw-blue',
           ]"
+          :aria-label="user ? (userRole === 'admin' ? 'Open admin dashboard' : 'Open account dashboard') : 'Book transport through the client portal'"
         >
           {{ user ? (userRole === 'admin' ? 'Admin' : 'Account') : 'Book transport' }}
         </RouterLink>
@@ -122,12 +140,14 @@
         <div class="relative">
           <button
             :class="[
-              'mobile-language-button',
+              'mobile-language-button focus:outline-none focus:ring-2 focus:ring-offset-2',
               isScrolled
-                ? 'text-black border-black/20'
-                : 'text-white border-white/40',
+                ? 'border-black/20 text-black focus:ring-bw-blue focus:ring-offset-white'
+                : 'border-white/40 text-white focus:ring-white focus:ring-offset-bw-blue',
             ]"
             :aria-label="t('nav.language')"
+            :aria-expanded="isMobileLanguageOpen"
+            aria-controls="mobile-language-menu"
             @click.stop="isMobileLanguageOpen = !isMobileLanguageOpen"
           >
             {{ locale === 'en' ? 'EN' : 'DA' }}
@@ -136,6 +156,7 @@
           <Transition name="dropdown">
             <div
               v-if="isMobileLanguageOpen"
+              id="mobile-language-menu"
               class="absolute right-0 top-[52px] z-[80] w-36 border border-gray-200 bg-white shadow-xl"
             >
               <button
@@ -143,6 +164,7 @@
                 :key="language.code"
                 class="language-option"
                 :class="{ active: locale === language.code }"
+                type="button"
                 @click="changeLanguage(language.code)"
               >
                 <span>{{ language.label }}</span>
@@ -156,6 +178,7 @@
   </header>
 
   <BurgerMenu
+    id="main-burger-menu"
     :is-open="isMenuOpen"
     :open-search="openSearchOnMenuOpen"
     @close="closeMenu"
@@ -234,6 +257,17 @@ const handleWindowClick = (event) => {
   }
 }
 
+const handleEscape = (event) => {
+  if (event.key === 'Escape') {
+    isLanguageOpen.value = false
+    isMobileLanguageOpen.value = false
+
+    if (isMenuOpen.value) {
+      closeMenu()
+    }
+  }
+}
+
 watch(isMenuOpen, (value) => {
   document.body.style.overflow = value ? 'hidden' : ''
 })
@@ -243,11 +277,13 @@ onMounted(() => {
 
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('click', handleWindowClick)
+  window.addEventListener('keydown', handleEscape)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
   window.removeEventListener('click', handleWindowClick)
+  window.removeEventListener('keydown', handleEscape)
 
   document.body.style.overflow = ''
 })
@@ -270,8 +306,14 @@ onUnmounted(() => {
   transition: width 0.3s ease;
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
   width: 100%;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
 }
 
 .icon-button {
@@ -336,6 +378,11 @@ onUnmounted(() => {
   color: white;
 }
 
+.language-option:focus-visible {
+  outline: 2px solid #0000ab;
+  outline-offset: -4px;
+}
+
 .mobile-language-button {
   height: 38px;
   min-width: 46px;
@@ -371,6 +418,11 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.burger-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 8px;
 }
 
 .burger-button span {

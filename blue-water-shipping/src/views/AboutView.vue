@@ -1,16 +1,24 @@
 <template>
   <section class="overflow-hidden bg-white">
     <!-- Hero -->
-    <section class="relative bg-bw-blue text-white">
-      <div class="absolute inset-0 opacity-20 hero-grid"></div>
+    <section
+      class="relative bg-bw-blue text-white"
+      aria-labelledby="about-title"
+    >
+      <div class="absolute inset-0 opacity-20 hero-grid" aria-hidden="true"></div>
 
-      <div class="relative z-10 mx-auto grid max-w-7xl gap-12 px-6 py-24 md:px-12 md:py-32 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+      <div
+        class="relative z-10 mx-auto grid max-w-7xl gap-12 px-6 py-24 md:px-12 md:py-32 lg:grid-cols-[1fr_0.9fr] lg:items-center"
+      >
         <div>
-          <p class="text-sm font-black uppercase tracking-[0.3em] text-white/60">
+          <p class="text-sm font-black uppercase tracking-[0.3em] text-white/70">
             About Blue Water Shipping
           </p>
 
-          <h1 class="mt-5 max-w-5xl text-4xl font-black leading-tight md:text-7xl">
+          <h1
+            id="about-title"
+            class="mt-5 max-w-5xl text-4xl font-black leading-tight md:text-7xl"
+          >
             Logistics powered by people, precision and global movement.
           </h1>
 
@@ -21,7 +29,10 @@
         </div>
 
         <!-- Floating cards -->
-        <div class="relative hidden min-h-[420px] lg:block">
+        <div
+          class="relative hidden min-h-[420px] lg:block"
+          aria-label="Blue Water Shipping core strengths"
+        >
           <div class="floating-card top-0 left-10">
             <p class="card-label">Network</p>
             <h3>Global logistics</h3>
@@ -37,21 +48,34 @@
             <h3>A people’s business</h3>
           </div>
 
-          <div class="absolute inset-16 border border-white/20"></div>
-          <div class="absolute inset-28 border border-white/10"></div>
+          <div
+            class="absolute inset-16 border border-white/20"
+            aria-hidden="true"
+          ></div>
+
+          <div
+            class="absolute inset-28 border border-white/10"
+            aria-hidden="true"
+          ></div>
         </div>
       </div>
     </section>
 
     <!-- Intro split -->
-    <section class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
+    <section
+      class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24"
+      aria-labelledby="about-intro-title"
+    >
       <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
             Who we are
           </p>
 
-          <h2 class="mt-3 text-3xl font-black leading-tight text-bw-blue md:text-5xl">
+          <h2
+            id="about-intro-title"
+            class="mt-3 text-3xl font-black leading-tight text-bw-blue md:text-5xl"
+          >
             A transport partner for companies moving goods across markets.
           </h2>
         </div>
@@ -62,7 +86,7 @@
             :key="intro.title"
             class="group border border-gray-200 p-6 transition hover:-translate-y-2 hover:border-bw-blue hover:shadow-xl"
           >
-            <p class="text-4xl font-black text-bw-blue">
+            <p class="text-4xl font-black text-bw-blue" aria-hidden="true">
               {{ intro.number }}
             </p>
 
@@ -79,23 +103,45 @@
     </section>
 
     <!-- Moving stats band -->
-    <section class="bg-gray-100 py-10">
+    <section
+      class="bg-gray-100 py-10"
+      aria-labelledby="stats-title"
+    >
+      <h2 id="stats-title" class="sr-only">
+        Blue Water Shipping logistics services
+      </h2>
+
       <div class="stats-track">
         <div class="stats-row">
-          <span v-for="item in movingStats" :key="item">{{ item }}</span>
-          <span v-for="item in movingStats" :key="`${item}-copy`">{{ item }}</span>
+          <span v-for="item in movingStats" :key="item">
+            {{ item }}
+          </span>
+
+          <span
+            v-for="item in movingStats"
+            :key="`${item}-copy`"
+            aria-hidden="true"
+          >
+            {{ item }}
+          </span>
         </div>
       </div>
     </section>
 
     <!-- Capabilities -->
-    <section class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
+    <section
+      class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24"
+      aria-labelledby="capabilities-title"
+    >
       <div class="max-w-3xl">
-        <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+        <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
           Logistics expertise
         </p>
 
-        <h2 class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
+        <h2
+          id="capabilities-title"
+          class="mt-3 text-3xl font-black text-bw-blue md:text-5xl"
+        >
           Solutions across the transport chain.
         </h2>
       </div>
@@ -106,7 +152,7 @@
           :key="area.title"
           class="capability-card"
         >
-          <div class="capability-number">
+          <div class="capability-number" aria-hidden="true">
             {{ area.number }}
           </div>
 
@@ -122,26 +168,37 @@
     </section>
 
     <!-- People timeline -->
-    <section class="bg-bw-blue text-white">
+    <section
+      class="bg-bw-blue text-white"
+      aria-labelledby="people-title"
+    >
       <div class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
         <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-white/60">
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-white/70">
               A people’s business
             </p>
 
-            <h2 class="mt-3 text-3xl font-black leading-tight md:text-5xl">
+            <h2
+              id="people-title"
+              class="mt-3 text-3xl font-black leading-tight md:text-5xl"
+            >
               Logistics is built on trust, communication and responsibility.
             </h2>
           </div>
 
-          <div class="relative space-y-6 before:absolute before:left-6 before:top-0 before:h-full before:w-px before:bg-white/20">
+          <div
+            class="relative space-y-6 before:absolute before:left-6 before:top-0 before:h-full before:w-px before:bg-white/20"
+          >
             <article
               v-for="point in peoplePoints"
               :key="point.title"
               class="relative ml-16 border border-white/20 bg-white/10 p-6 backdrop-blur-sm transition hover:-translate-y-1 hover:bg-white hover:text-bw-blue"
             >
-              <div class="absolute -left-[52px] top-6 flex h-12 w-12 items-center justify-center rounded-full bg-white text-sm font-black text-bw-blue">
+              <div
+                class="absolute -left-[52px] top-6 flex h-12 w-12 items-center justify-center rounded-full bg-white text-sm font-black text-bw-blue"
+                aria-hidden="true"
+              >
                 {{ point.number }}
               </div>
 
@@ -159,60 +216,71 @@
     </section>
 
     <!-- Brand video -->
-<section class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
-  <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-    <div>
-      <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
-        Blue Water Shipping
-      </p>
-
-      <h2 class="mt-3 text-3xl font-black leading-tight text-bw-blue md:text-5xl">
-        See how Blue Water connects people, cargo and global logistics.
-      </h2>
-
-      <p class="mt-5 text-sm leading-relaxed text-gray-600 md:text-base">
-        This video gives a stronger visual feeling of the company, its logistics operations
-        and the people behind the transport solutions.
-      </p>
-    </div>
-
-    <div class="overflow-hidden border border-gray-200 bg-black shadow-xl">
-      <iframe
-        class="aspect-video w-full"
-        src="https://www.youtube.com/embed/eD7QTX4vZx8?start=3"
-        title="Blue Water Shipping video"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
-    </div>
-  </div>
-</section>
-
-    <!-- CTA
-    <section class="bg-gray-100">
-      <div class="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-16 md:flex-row md:items-center md:justify-between md:px-12">
+    <section
+      class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24"
+      aria-labelledby="video-title"
+    >
+      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
         <div>
-          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
-            Explore services
+          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
+            Blue Water Shipping
           </p>
 
-          <h2 class="mt-3 max-w-3xl text-3xl font-black leading-tight text-bw-blue md:text-5xl">
-            Discover how Blue Water supports sea, road and air freight.
+          <h2
+            id="video-title"
+            class="mt-3 text-3xl font-black leading-tight text-bw-blue md:text-5xl"
+          >
+            See how Blue Water connects people, cargo and global logistics.
           </h2>
+
+          <p class="mt-5 text-sm leading-relaxed text-gray-600 md:text-base">
+            This video gives a stronger visual feeling of the company, its logistics operations
+            and the people behind the transport solutions.
+          </p>
         </div>
 
-        <RouterLink
-          to="/sea-freight"
-          class="inline-flex h-12 items-center justify-center bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900"
-        >
-          View sea freight
-        </RouterLink> -->
-      <!-- </div>
-    </section> -->
+        <div class="overflow-hidden border border-gray-200 bg-black shadow-xl">
+          <iframe
+            class="aspect-video w-full"
+            src="https://www.youtube.com/embed/eD7QTX4vZx8?start=3"
+            title="Blue Water Shipping corporate video"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </section>
   </section>
 </template>
 
 <script setup>
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'About Blue Water Shipping | Global Logistics Partner',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Learn more about Blue Water Shipping as a global logistics partner with strong experience in transport and supply chain solutions.',
+    },
+    {
+      property: 'og:title',
+      content: 'About Blue Water Shipping | Global Logistics Partner',
+    },
+    {
+      property: 'og:description',
+      content:
+        'Learn more about Blue Water Shipping and its global transport, logistics and supply chain expertise.',
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+  ],
+})
+
 const introCards = [
   {
     number: '01',
@@ -317,7 +385,7 @@ const peoplePoints = [
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.7);
 }
 
 .delay-1 {

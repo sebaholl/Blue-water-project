@@ -112,6 +112,19 @@ import {
 import { db } from '../firebase/config'
 import { useAuth } from '../composables/useAuth'
 
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Admin Dashboard | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Prototype admin dashboard for reviewing transport and contact requests.',
+    },
+  ],
+})
+
 const router = useRouter()
 const { t } = useI18n()
 const { logout } = useAuth()

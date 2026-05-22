@@ -1,22 +1,31 @@
 <template>
   <section class="bg-white">
     <!-- Hero -->
-    <section class="relative min-h-[calc(100vh-80px)] overflow-hidden bg-bw-blue text-white md:min-h-[calc(100vh-112px)]">
+    <section
+      class="relative min-h-[calc(100vh-80px)] overflow-hidden bg-bw-blue text-white md:min-h-[calc(100vh-112px)]"
+      aria-labelledby="air-freight-title"
+    >
       <img
         :src="airFreightHero"
-        alt="Air freight cargo airplane"
+        alt="Air freight cargo aircraft used for time-sensitive logistics"
         class="absolute inset-0 h-full w-full object-cover"
+        fetchpriority="high"
       />
 
-      <div class="absolute inset-0 bg-bw-blue/75"></div>
+      <div class="absolute inset-0 bg-bw-blue/75" aria-hidden="true"></div>
 
-      <div class="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center px-6 py-20 md:min-h-[calc(100vh-112px)] md:px-12">
+      <div
+        class="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center px-6 py-20 md:min-h-[calc(100vh-112px)] md:px-12"
+      >
         <div class="max-w-4xl">
           <p class="text-sm font-black uppercase tracking-[0.3em] text-white/70">
             Air Freight
           </p>
 
-          <h1 class="mt-5 text-4xl font-black leading-tight md:text-7xl">
+          <h1
+            id="air-freight-title"
+            class="mt-5 text-4xl font-black leading-tight md:text-7xl"
+          >
             Fast air freight for time-sensitive logistics.
           </h1>
 
@@ -28,14 +37,16 @@
           <div class="mt-8 flex flex-col gap-4 sm:flex-row">
             <RouterLink
               to="/login"
-              class="inline-flex h-12 items-center justify-center bg-white px-6 text-sm font-black uppercase tracking-wide text-black transition hover:-translate-y-1 hover:bg-gray-100"
+              class="inline-flex h-12 items-center justify-center bg-white px-6 text-sm font-black uppercase tracking-wide text-black transition hover:-translate-y-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
+              aria-label="Book air freight through the client portal"
             >
               Book transport
             </RouterLink>
 
             <a
               href="#air-priorities"
-              class="inline-flex h-12 items-center justify-center border border-white/40 px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-white hover:text-bw-blue"
+              class="inline-flex h-12 items-center justify-center border border-white/40 px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-white hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
+              aria-label="Jump to air freight priorities section"
             >
               View priorities
             </a>
@@ -45,15 +56,22 @@
     </section>
 
     <!-- Priority strip -->
-    <section id="air-priorities" class="bg-white">
+    <section
+      id="air-priorities"
+      class="scroll-mt-28 bg-white"
+      aria-labelledby="air-priorities-title"
+    >
       <div class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
         <div class="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
           <div>
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
               Air freight priorities
             </p>
 
-            <h2 class="mt-3 text-3xl font-black leading-tight text-bw-blue md:text-5xl">
+            <h2
+              id="air-priorities-title"
+              class="mt-3 text-3xl font-black leading-tight text-bw-blue md:text-5xl"
+            >
               When speed matters, communication has to be clear.
             </h2>
           </div>
@@ -64,7 +82,7 @@
               :key="priority.title"
               class="border border-gray-200 p-6 transition hover:border-bw-blue hover:shadow-lg"
             >
-              <p class="text-5xl font-black text-bw-blue">
+              <p class="text-5xl font-black text-bw-blue" aria-hidden="true">
                 {{ priority.number }}
               </p>
 
@@ -82,15 +100,21 @@
     </section>
 
     <!-- Blue service board -->
-    <section class="bg-bw-blue text-white">
+    <section
+      class="bg-bw-blue text-white"
+      aria-labelledby="air-service-board-title"
+    >
       <div class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
         <div class="grid gap-12 lg:grid-cols-[1fr_1fr]">
           <div>
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-white/60">
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-white/70">
               Service board
             </p>
 
-            <h2 class="mt-3 text-3xl font-black leading-tight md:text-5xl">
+            <h2
+              id="air-service-board-title"
+              class="mt-3 text-3xl font-black leading-tight md:text-5xl"
+            >
               Air cargo solutions for urgent business needs.
             </h2>
 
@@ -106,7 +130,7 @@
               :key="service.title"
               class="grid gap-4 border border-white/20 bg-white/10 p-6 backdrop-blur-sm md:grid-cols-[90px_1fr]"
             >
-              <p class="text-4xl font-black text-white">
+              <p class="text-4xl font-black text-white" aria-hidden="true">
                 {{ service.code }}
               </p>
 
@@ -126,14 +150,20 @@
     </section>
 
     <!-- Cargo types -->
-    <section class="bg-gray-100">
+    <section
+      class="bg-gray-100"
+      aria-labelledby="air-cargo-title"
+    >
       <div class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
         <div class="max-w-3xl">
-          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
             Cargo categories
           </p>
 
-          <h2 class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
+          <h2
+            id="air-cargo-title"
+            class="mt-3 text-3xl font-black text-bw-blue md:text-5xl"
+          >
             Designed for shipments where timing and handling are critical.
           </h2>
         </div>
@@ -145,7 +175,7 @@
             class="flex flex-col justify-between bg-white p-8 shadow transition hover:-translate-y-1 hover:shadow-xl"
           >
             <div>
-              <p class="text-xs font-black uppercase tracking-[0.25em] text-gray-400">
+              <p class="text-xs font-black uppercase tracking-[0.25em] text-gray-500">
                 {{ cargo.label }}
               </p>
 
@@ -158,7 +188,14 @@
               </p>
             </div>
 
-            <div class="mt-8 h-2 w-full bg-gray-100">
+            <div
+              class="mt-8 h-2 w-full bg-gray-100"
+              role="progressbar"
+              :aria-valuenow="cargo.value"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              :aria-label="`${cargo.title} priority level`"
+            >
               <div class="h-full bg-bw-blue" :class="cargo.width"></div>
             </div>
           </article>
@@ -167,14 +204,20 @@
     </section>
 
     <!-- Process -->
-    <section class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
+    <section
+      class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24"
+      aria-labelledby="air-workflow-title"
+    >
       <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
         <div>
-          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
             Air freight workflow
           </p>
 
-          <h2 class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
+          <h2
+            id="air-workflow-title"
+            class="mt-3 text-3xl font-black text-bw-blue md:text-5xl"
+          >
             A faster route from request to departure.
           </h2>
 
@@ -190,7 +233,10 @@
             :key="step.title"
             class="flex gap-5 border border-gray-200 p-5 transition hover:border-bw-blue hover:shadow-md"
           >
-            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bw-blue text-sm font-black text-white">
+            <div
+              class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bw-blue text-sm font-black text-white"
+              aria-hidden="true"
+            >
               {{ index + 1 }}
             </div>
 
@@ -209,21 +255,28 @@
     </section>
 
     <!-- CTA -->
-    <section class="bg-gray-100">
+    <section
+      class="bg-gray-100"
+      aria-labelledby="air-cta-title"
+    >
       <div class="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-16 md:flex-row md:items-center md:justify-between md:px-12">
         <div>
-          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
             Time-sensitive shipment?
           </p>
 
-          <h2 class="mt-3 max-w-3xl text-3xl font-black leading-tight text-bw-blue md:text-5xl">
+          <h2
+            id="air-cta-title"
+            class="mt-3 max-w-3xl text-3xl font-black leading-tight text-bw-blue md:text-5xl"
+          >
             Use the client portal to request fast air freight support.
           </h2>
         </div>
 
         <RouterLink
           to="/login"
-          class="inline-flex h-12 items-center justify-center bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900"
+          class="inline-flex h-12 items-center justify-center bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+          aria-label="Open the client portal for air freight requests"
         >
           Open portal
         </RouterLink>
@@ -233,7 +286,33 @@
 </template>
 
 <script setup>
+import { useHead } from '@unhead/vue'
+
 import airFreightHero from '../assets/big-ship.png'
+
+useHead({
+  title: 'Air Freight | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Fast air freight solutions for time-sensitive cargo and international logistics requests.',
+    },
+    {
+      property: 'og:title',
+      content: 'Air Freight | Blue Water Shipping',
+    },
+    {
+      property: 'og:description',
+      content:
+        'Fast air freight prototype focused on urgent shipments, shipment visibility and international logistics support.',
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+  ],
+})
 
 const priorities = [
   {
@@ -277,24 +356,28 @@ const cargoTypes = [
     title: 'Urgent commercial goods',
     text: 'Used when companies need to protect production schedules, customer deadlines or supply chain continuity.',
     width: 'w-[92%]',
+    value: 92,
   },
   {
     label: 'Sensitive cargo',
     title: 'High-value or fragile shipments',
     text: 'Air freight can support goods that require controlled handling, reliable timing and strong communication.',
     width: 'w-[78%]',
+    value: 78,
   },
   {
     label: 'Global cargo',
     title: 'International supply chains',
     text: 'Air transport connects markets quickly when distance and delivery windows are critical.',
     width: 'w-[86%]',
+    value: 86,
   },
   {
     label: 'Business cargo',
     title: 'Samples and spare parts',
     text: 'Useful for smaller urgent shipments that need to reach customers, partners or production facilities fast.',
     width: 'w-[70%]',
+    value: 70,
   },
 ]
 

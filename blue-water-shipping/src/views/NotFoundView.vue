@@ -39,3 +39,19 @@
     </div>
   </section>
 </template>
+
+<script setup>
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Page Not Found | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'This page is not available in the Blue Water Shipping prototype.',
+    },
+  ],
+})
+
+</script>

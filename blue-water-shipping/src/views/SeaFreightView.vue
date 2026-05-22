@@ -1,62 +1,71 @@
 <template>
   <section class="bg-white">
-<!-- Hero -->
-<section class="relative min-h-[calc(100vh-80px)] overflow-hidden bg-bw-blue text-white md:min-h-[calc(100vh-112px)]">
-  <!-- Background image -->
-  <img
-    :src="seaFreightHero"
-    alt="Container ship carrying sea freight containers"
-    class="absolute inset-0 h-full w-full object-cover"
-  />
+    <!-- Hero -->
+    <section
+      class="relative min-h-[calc(100vh-80px)] overflow-hidden bg-bw-blue text-white md:min-h-[calc(100vh-112px)]"
+      aria-labelledby="sea-freight-title"
+    >
+      <!-- Background image -->
+      <img
+        :src="seaFreightHero"
+        alt="Container ship carrying sea freight containers for international logistics"
+        class="absolute inset-0 h-full w-full object-cover"
+        fetchpriority="high"
+      />
 
-  <!-- EVEN blue overlay -->
-  <div class="absolute inset-0 bg-bw-blue/75"></div>
+      <!-- Blue overlay -->
+      <div class="absolute inset-0 bg-bw-blue/75" aria-hidden="true"></div>
 
-  <!-- Hero content -->
-  <div
-    class="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center px-6 py-20 md:min-h-[calc(100vh-112px)] md:px-12"
-  >
-    <div class="max-w-3xl">
-      <p class="text-sm font-black uppercase tracking-[0.3em] text-white/70">
-        Sea Freight
-      </p>
+      <!-- Hero content -->
+      <div
+        class="relative z-10 mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center px-6 py-20 md:min-h-[calc(100vh-112px)] md:px-12"
+      >
+        <div class="max-w-3xl">
+          <p class="text-sm font-black uppercase tracking-[0.3em] text-white/70">
+            Sea Freight
+          </p>
 
-      <h1 class="mt-5 text-4xl font-black leading-tight md:text-7xl">
-        Reliable sea freight solutions for European B2B logistics.
-      </h1>
+          <h1
+            id="sea-freight-title"
+            class="mt-5 text-4xl font-black leading-tight md:text-7xl"
+          >
+            Reliable sea freight solutions for European B2B logistics.
+          </h1>
 
-      <p class="mt-6 max-w-2xl text-base leading-relaxed text-white/85 md:text-xl">
-        Move your goods efficiently across global trade routes with flexible FCL, LCL,
-        reefer and project cargo solutions.
-      </p>
+          <p class="mt-6 max-w-2xl text-base leading-relaxed text-white/85 md:text-xl">
+            Move your goods efficiently across global trade routes with flexible FCL, LCL,
+            reefer and project cargo solutions.
+          </p>
 
-      <div class="mt-8 flex flex-col gap-4 sm:flex-row">
-        <RouterLink
-          to="/login"
-          class="inline-flex h-12 items-center justify-center bg-white px-6 text-sm font-black uppercase tracking-wide text-black transition hover:-translate-y-1 hover:bg-gray-100"
-        >
-          Book transport
-        </RouterLink>
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+            <RouterLink
+              to="/login"
+              class="inline-flex h-12 items-center justify-center bg-white px-6 text-sm font-black uppercase tracking-wide text-black transition hover:-translate-y-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
+              aria-label="Book sea freight transport through the client portal"
+            >
+              Book transport
+            </RouterLink>
 
-        <a
-          href="#process"
-          class="inline-flex h-12 items-center justify-center border border-white/40 px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-white hover:text-bw-blue"
-        >
-          View process
-        </a>
+            <a
+              href="#process"
+              class="inline-flex h-12 items-center justify-center border border-white/40 px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-white hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
+              aria-label="Jump to the sea freight process section"
+            >
+              View process
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <!-- USP cards -->
-    <div class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
+    <section class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24" aria-labelledby="sea-freight-benefits">
       <div class="max-w-3xl">
-        <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+        <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
           Why sea freight
         </p>
 
-        <h2 class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
+        <h2 id="sea-freight-benefits" class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
           A clearer way to communicate complex logistics.
         </h2>
       </div>
@@ -67,7 +76,7 @@
           :key="benefit.title"
           class="border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:border-bw-blue hover:shadow-lg"
         >
-          <p class="text-4xl font-black text-bw-blue">
+          <p class="text-4xl font-black text-bw-blue" aria-hidden="true">
             {{ benefit.number }}
           </p>
 
@@ -80,18 +89,18 @@
           </p>
         </article>
       </div>
-    </div>
+    </section>
 
     <!-- Services -->
-    <div class="bg-gray-100">
+    <section class="bg-gray-100" aria-labelledby="sea-freight-services">
       <div class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
         <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+            <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
               Services
             </p>
 
-            <h2 class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
+            <h2 id="sea-freight-services" class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
               Sea freight options
             </h2>
           </div>
@@ -118,16 +127,20 @@
           </article>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Process -->
-    <div id="process" class="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-24">
+    <section
+      id="process"
+      class="mx-auto max-w-7xl scroll-mt-28 px-6 py-16 md:px-12 md:py-24"
+      aria-labelledby="sea-freight-process"
+    >
       <div class="max-w-3xl">
-        <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+        <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
           Process
         </p>
 
-        <h2 class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
+        <h2 id="sea-freight-process" class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
           From request to delivery.
         </h2>
       </div>
@@ -139,7 +152,7 @@
           class="grid gap-6 border border-gray-200 p-6 md:grid-cols-[120px_1fr]"
         >
           <div>
-            <p class="text-5xl font-black text-bw-blue">
+            <p class="text-5xl font-black text-bw-blue" aria-hidden="true">
               {{ String(index + 1).padStart(2, '0') }}
             </p>
           </div>
@@ -155,19 +168,19 @@
           </div>
         </article>
       </div>
-    </div>
+    </section>
 
     <!-- Pre-footer CTA -->
-    <div class="border-y border-gray-200 bg-gray-100">
+    <section class="border-y border-gray-200 bg-gray-100" aria-labelledby="sea-freight-cta">
       <div
         class="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-6 py-14 md:flex-row md:items-center md:px-12"
       >
         <div>
-          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
             Need guidance?
           </p>
 
-          <h2 class="mt-3 max-w-2xl text-3xl font-black text-bw-blue md:text-4xl">
+          <h2 id="sea-freight-cta" class="mt-3 max-w-2xl text-3xl font-black text-bw-blue md:text-4xl">
             Looking for a tailored sea freight solution?
           </h2>
 
@@ -178,19 +191,45 @@
         </div>
 
         <RouterLink
-          to="/login"
-          class="inline-flex h-12 items-center justify-center border border-bw-blue bg-white px-6 text-sm font-black uppercase tracking-wide text-bw-blue transition hover:-translate-y-1 hover:bg-bw-blue hover:text-white"
+          to="/contact"
+          class="inline-flex h-12 items-center justify-center border border-bw-blue bg-white px-6 text-sm font-black uppercase tracking-wide text-bw-blue transition hover:-translate-y-1 hover:bg-bw-blue hover:text-white focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+          aria-label="Contact Blue Water Shipping about a sea freight solution"
         >
           Get in touch
         </RouterLink>
       </div>
-    </div>
+    </section>
   </section>
 </template>
 
 <script setup>
+import { useHead } from '@unhead/vue'
 
 import seaFreightHero from '../assets/Cargo-ship-home-page.jpeg'
+
+useHead({
+  title: 'Sea Freight Solutions | Blue Water Shipping',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Reliable sea freight solutions for European B2B logistics with flexible FCL, LCL, reefer and project cargo options.',
+    },
+    {
+      property: 'og:title',
+      content: 'Sea Freight Solutions | Blue Water Shipping',
+    },
+    {
+      property: 'og:description',
+      content:
+        'Reliable sea freight communication prototype focused on European B2B logistics, transport clarity and stronger customer journeys.',
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+  ],
+})
 
 const benefits = [
   {

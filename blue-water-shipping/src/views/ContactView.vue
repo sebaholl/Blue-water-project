@@ -1,13 +1,19 @@
 <template>
   <section class="bg-white">
     <!-- Hero -->
-    <section class="bg-bw-blue text-white">
+    <section
+      class="bg-bw-blue text-white"
+      aria-labelledby="contact-page-title"
+    >
       <div class="mx-auto max-w-7xl px-6 py-20 md:px-12 md:py-28">
-        <p class="text-sm font-black uppercase tracking-[0.3em] text-white/60">
+        <p class="text-sm font-black uppercase tracking-[0.3em] text-white/70">
           Contact
         </p>
 
-        <h1 class="mt-5 max-w-5xl text-4xl font-black leading-tight md:text-7xl">
+        <h1
+          id="contact-page-title"
+          class="mt-5 max-w-5xl text-4xl font-black leading-tight md:text-7xl"
+        >
           Find the right Blue Water office.
         </h1>
 
@@ -18,14 +24,20 @@
     </section>
 
     <!-- Offices -->
-    <section class="bg-gray-100 px-6 py-16 md:px-12 md:py-24">
+    <section
+      class="bg-gray-100 px-6 py-16 md:px-12 md:py-24"
+      aria-labelledby="local-offices-title"
+    >
       <div class="mx-auto max-w-7xl">
         <div class="max-w-3xl">
-          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-400">
+          <p class="text-sm font-black uppercase tracking-[0.25em] text-gray-500">
             Local offices
           </p>
 
-          <h2 class="mt-3 text-3xl font-black text-bw-blue md:text-5xl">
+          <h2
+            id="local-offices-title"
+            class="mt-3 text-3xl font-black text-bw-blue md:text-5xl"
+          >
             Contact the team closest to your transport needs.
           </h2>
         </div>
@@ -36,7 +48,7 @@
             :key="office.slug"
             class="group bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
           >
-            <p class="text-xs font-black uppercase tracking-[0.25em] text-gray-400">
+            <p class="text-xs font-black uppercase tracking-[0.25em] text-gray-500">
               {{ office.country }}
             </p>
 
@@ -48,14 +60,32 @@
               {{ office.shortDescription }}
             </p>
 
-            <div class="mt-6 space-y-2 text-sm text-gray-600">
-              <p><span class="font-black text-black">Phone:</span> {{ office.phone }}</p>
-              <p><span class="font-black text-black">Email:</span> {{ office.email }}</p>
-            </div>
+            <address class="mt-6 space-y-2 text-sm not-italic text-gray-600">
+              <p>
+                <span class="font-black text-black">Phone:</span>
+                <a
+                  :href="`tel:${office.phone.replaceAll(' ', '')}`"
+                  class="transition hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+                >
+                  {{ office.phone }}
+                </a>
+              </p>
+
+              <p>
+                <span class="font-black text-black">Email:</span>
+                <a
+                  :href="`mailto:${office.email}`"
+                  class="transition hover:text-bw-blue focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+                >
+                  {{ office.email }}
+                </a>
+              </p>
+            </address>
 
             <RouterLink
               :to="`/contact/${office.slug}`"
-              class="mt-8 inline-flex h-12 items-center justify-center bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900"
+              class="mt-8 inline-flex h-12 items-center justify-center bg-bw-blue px-6 text-sm font-black uppercase tracking-wide text-white transition hover:-translate-y-1 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-bw-blue focus:ring-offset-2"
+              :aria-label="`Read more about the ${office.name} office`"
             >
               Read more
             </RouterLink>
@@ -67,6 +97,32 @@
 </template>
 
 <script setup>
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Contact Blue Water Shipping | Local Offices',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Find the right Blue Water Shipping office and contact the team for transport, sea freight and logistics requests.',
+    },
+    {
+      property: 'og:title',
+      content: 'Contact Blue Water Shipping | Local Offices',
+    },
+    {
+      property: 'og:description',
+      content:
+        'Find local Blue Water Shipping offices and contact the right team for sea freight, transport and logistics requests.',
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+  ],
+})
+
 const offices = [
   {
     slug: 'esbjerg',
