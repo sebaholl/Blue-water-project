@@ -288,7 +288,7 @@
 <script setup>
 import { useHead } from '@unhead/vue'
 
-import airFreightHero from '../assets/big-ship.png'
+import airFreightHero from '../assets/AirFreight.jpg'
 
 useHead({
   title: 'Air Freight | Blue Water Shipping',
