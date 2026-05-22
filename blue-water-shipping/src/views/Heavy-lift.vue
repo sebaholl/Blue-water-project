@@ -23,14 +23,11 @@ const form = reactive({
   notes: ''
 })
 
-const submitForm = () => {
-  console.log('Form submitted:', form)
-  alert('Quote request sent successfully!')
-}
 </script>
 
 <template>
   <div class="heavy-lift-page"> 
+    
     <!-- SECTION 1: HERO -->
 
     <HeavyLiftHero />
