@@ -13,7 +13,6 @@ import {
   Zap,
   CheckCircle,
   Award,
-  ArrowRight,
 } from 'lucide-vue-next'
 
 useHead({
@@ -90,9 +89,9 @@ const submitForm = () => {
     </div>
 
     <div class="container relative z-10 mx-auto max-w-7xl px-6 py-24 md:px-12">
-      <div class="grid items-center gap-16 lg:grid-cols-2">
+      <div class="flex flex-col items-center text-center">
         <div class="space-y-8">
-          <div class="flex items-center gap-3">
+          <div class="flex items-center justify-center gap-3">
             <span class="h-2 w-2 rounded-full bg-bw-sky" aria-hidden="true"></span>
             <span class="h-px w-8 bg-bw-sky" aria-hidden="true"></span>
 
@@ -112,13 +111,13 @@ const submitForm = () => {
             </span>
           </h1>
 
-          <p class="max-w-lg text-xl leading-relaxed text-white/85">
+          <p class="mx-auto max-w-lg text-xl leading-relaxed text-white/85">
             {{ t('customs.hero.subheading') }}
           </p>
 
-          <div class="flex flex-wrap gap-4 pt-4">
+          <div class="flex flex-wrap justify-center gap-4 pt-4">
             <button
-              class="inline-flex h-12 items-center justify-center gap-2 bg-bw-sky px-8 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
+              class="inline-flex h-12 items-center justify-center gap-2 bg-bw-sky px-9 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
               aria-label="Download customs guide"
             >
               <Download class="h-4 w-4" aria-hidden="true" />
@@ -131,71 +130,6 @@ const submitForm = () => {
             >
               {{ t('customs.hero.cta_contact') }}
             </button>
-          </div>
-        </div>
-
-        <!-- Stats card -->
-        <div>
-          <div
-            class="rounded-2xl border border-white/10 bg-bw-night/80 p-8 shadow-2xl backdrop-blur-md"
-          >
-            <h2
-              class="mb-8 border-b border-white/5 pb-4 text-xs font-black uppercase tracking-[0.3em] text-white/60"
-            >
-              {{ t('customs.hero.stats_title') }}
-            </h2>
-
-            <div class="mb-8 flex items-center gap-4">
-              <div class="text-center">
-                <div
-                  class="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-bw-blue text-sm font-black text-white"
-                  aria-hidden="true"
-                >
-                  DK
-                </div>
-
-                <div class="text-[10px] font-black uppercase tracking-wider text-white/60">
-                  Denmark
-                </div>
-              </div>
-
-              <div class="flex flex-1 items-center gap-1">
-                <div class="h-px flex-1 bg-bw-sky/40"></div>
-
-                <ArrowRight class="h-5 w-5 text-bw-sky" aria-hidden="true" />
-
-                <div class="h-px flex-1 bg-bw-sky/40"></div>
-              </div>
-
-              <div class="text-center">
-                <div
-                  class="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-bw-sky text-sm font-black text-white"
-                  aria-hidden="true"
-                >
-                  NO
-                </div>
-
-                <div class="text-[10px] font-black uppercase tracking-wider text-white/60">
-                  Norway
-                </div>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-x-8 gap-y-10">
-              <div
-                v-for="i in 4"
-                :key="i"
-                class="space-y-1"
-              >
-                <div class="text-3xl font-black text-bw-green md:text-4xl">
-                  {{ t(`customs.hero.stat_${i}_val`) }}
-                </div>
-
-                <div class="text-[10px] font-black uppercase leading-tight tracking-widest text-white/60">
-                  {{ t(`customs.hero.stat_${i}_label`) }}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
