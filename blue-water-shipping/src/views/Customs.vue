@@ -88,17 +88,10 @@ const submitForm = () => {
       ></div>
     </div>
 
-    <div class="container relative z-10 mx-auto max-w-7xl px-6 py-24 md:px-12">
+    <div class="container relative z-8 mx-auto max-w-7xl px-2 py-24 md:px-12">
       <div class="flex flex-col items-center text-center">
         <div class="space-y-8">
-          <div class="flex items-center justify-center gap-3">
-            <span class="h-2 w-2 rounded-full bg-bw-sky" aria-hidden="true"></span>
-            <span class="h-px w-8 bg-bw-sky" aria-hidden="true"></span>
 
-            <span class="text-xs font-black uppercase tracking-[0.3em] text-bw-sky">
-              {{ t('customs.hero.eyebrow') }}
-            </span>
-          </div>
 
           <h1
             id="customs-title"
