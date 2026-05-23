@@ -4,6 +4,7 @@ import { useHead } from '@unhead/vue'
 
 import FloatingAboutButton from '@/components/ui/FloatingAboutButton.vue'
 import Section1 from '@/views/Section1.vue'
+import Section2 from './Section2.vue';
 
 const { t } = useI18n()
 
@@ -109,4 +110,5 @@ useHead({
   </section>
 
   <Section1 />
+  <Section2 />
 </template>
