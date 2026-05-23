@@ -100,12 +100,14 @@ const { t } = useI18n()
 
           <div class="flex flex-col space-y-4">
             <div>
+              <router-link to="/customs">
               <button
                 id="cta-customs-guide"
                 class="bg-bw-red text-bw-white font-proxima font-bold px-8 py-4 transition-all duration-200 hover:brightness-110 active:scale-95 uppercase tracking-wide"
               >
                 {{ t('section4.cta') }}
               </button>
+              </router-link>
             </div>
 
             <div class="flex items-center gap-2 text-bw-steel">
