@@ -75,11 +75,11 @@ useHead({
         id="home-hero-title"
         class="font-proxima font-black leading-[0.95] text-bw-white"
       >
-        <span class="block text-3xl md:text-7xl lg:text-8xl xl:text-[6rem]">
+        <span class="block text-2xl md:text-7xl lg:text-8xl xl:text-[6rem]">
           {{ t('hero.headingLine1') }}
         </span>
 
-        <span class="block text-3xl md:text-7xl lg:text-8xl xl:text-[6rem]">
+        <span class="block text-2xl md:text-7xl lg:text-8xl xl:text-[6rem]">
           {{ t('hero.headingLine2') }}
         </span>
 
