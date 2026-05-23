@@ -41,6 +41,5 @@ const { t } = useI18n()
    
   </section>
   
-  <Section2 />
   
   </template>
