@@ -233,7 +233,7 @@
 
           <div class="mt-8 flex gap-4">
             <a
-              href="https://www.facebook.com/bluewatershipping"
+              href="https://www.facebook.com/bwsglobal"
               target="_blank"
               rel="noopener noreferrer"
               class="social-link"
