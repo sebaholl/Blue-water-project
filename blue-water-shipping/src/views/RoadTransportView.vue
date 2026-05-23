@@ -295,7 +295,7 @@
 <script setup>
 import { useHead } from '@unhead/vue'
 
-import roadTransportHero from '../assets/Cargo-ship-home-page.jpeg'
+import roadTransportHero from '../assets/RoadTransport.webp'
 
 useHead({
   title: 'Road Transport | Blue Water Shipping',

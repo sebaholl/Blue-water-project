@@ -205,7 +205,7 @@
 <script setup>
 import { useHead } from '@unhead/vue'
 
-import seaFreightHero from '../assets/Cargo-ship-home-page.jpeg'
+import seaFreightHero from '../assets/SeaFreightShip.webp'
 
 useHead({
   title: 'Sea Freight Solutions | Blue Water Shipping',

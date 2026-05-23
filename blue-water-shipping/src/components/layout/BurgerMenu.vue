@@ -546,41 +546,29 @@ const menuItems = computed(() => [
     ],
   },
   {
-    key: 'responsibility',
-    name: t('menu.responsibility'),
-    children: [
-      {
-        key: 'responsibility-overview',
-        name: t('menu.responsibility'),
-        children: [
-          { key: 'environment', name: t('menu.environment'), path: '/not-developed' },
-          { key: 'people-business', name: t('menu.peopleBusiness'), path: '/not-developed' },
-          { key: 'governance', name: t('menu.governance'), path: '/not-developed' },
-          { key: 'partnerships', name: t('menu.partnerships'), path: '/not-developed' },
-        ],
-      },
-    ],
-  },
+  key: 'responsibility',
+  name: t('menu.responsibility'),
+  children: [
+    { key: 'environment', name: t('menu.environment'), path: '/not-developed' },
+    { key: 'people-business', name: t('menu.peopleBusiness'), path: '/not-developed' },
+    { key: 'governance', name: t('menu.governance'), path: '/not-developed' },
+    { key: 'partnerships', name: t('menu.partnerships'), path: '/not-developed' },
+  ],
+},
   {
-    key: 'about',
-    name: t('menu.about'),
-    children: [
-      {
-        key: 'company',
-        name: t('menu.about'),
-        children: [
-          { key: 'about-us', name: t('menu.aboutUs'), path: '/about' },
-          { key: 'organisation', name: t('menu.organisation'), path: '/not-developed' },
-          { key: 'values', name: t('menu.values'), path: '/not-developed' },
-          { key: 'policies', name: t('menu.policies'), path: '/not-developed' },
-          { key: 'safety', name: t('menu.safety'), path: '/not-developed' },
-          { key: 'history', name: t('menu.history'), path: '/not-developed' },
-          { key: 'foundation', name: t('menu.foundation'), path: '/not-developed' },
-          { key: 'contact', name: 'Contact', path: '/contact' },
-        ],
-      },
-    ],
-  },
+  key: 'about',
+  name: t('menu.about'),
+  children: [
+    { key: 'about-us', name: t('menu.aboutUs'), path: '/about' },
+    { key: 'organisation', name: t('menu.organisation'), path: '/not-developed' },
+    { key: 'values', name: t('menu.values'), path: '/not-developed' },
+    { key: 'policies', name: t('menu.policies'), path: '/not-developed' },
+    { key: 'safety', name: t('menu.safety'), path: '/not-developed' },
+    { key: 'history', name: t('menu.history'), path: '/not-developed' },
+    { key: 'foundation', name: t('menu.foundation'), path: '/not-developed' },
+    { key: 'contact', name: 'Contact', path: '/contact' },
+  ],
+},
   {
     key: 'career',
     name: t('menu.career'),
