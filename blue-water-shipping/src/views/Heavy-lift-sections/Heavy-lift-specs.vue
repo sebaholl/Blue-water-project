@@ -7,19 +7,9 @@ import { ShieldCheck, Package, Factory, Scale, Truck, ChevronRight } from 'lucid
 
 const { t } = useI18n()
 
-const form = reactive({
-  cargoType: '',
-  weight: '',
-  origin: '',
-  destination: '',
-  transportMode: '',
-  deadline: '',
-  name: '',
-  company: '',
-  email: '',
-  phone: '',
-  notes: ''
-})
+const scrollToQuote = () => {
+  document.getElementById('quote-section')?.scrollIntoView({ behavior: 'smooth' })
+}
 
 
 
@@ -89,7 +79,10 @@ const form = reactive({
               "{{ t('heavy_lift.specs.banner_text') }}"
             </p>
           </div>
-          <button class="inline-flex h-12 items-center justify-center bg-bw-red px-10 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90 whitespace-nowrap">
+          <button
+            class="inline-flex h-12 items-center justify-center bg-bw-red px-10 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90 whitespace-nowrap"
+            @click="scrollToQuote"
+          >
             {{ t('heavy_lift.specs.banner_cta') }}
           </button>
         </div>
