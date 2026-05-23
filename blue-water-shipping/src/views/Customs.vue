@@ -15,6 +15,15 @@ import {
   Award,
 } from 'lucide-vue-next'
 
+import customsGuidePdf from '@/assets/Place-holder.pdf'
+
+function downloadCustomsGuide() {
+  const link = document.createElement('a')
+  link.href = customsGuidePdf
+  link.download = 'customs-guide.pdf'
+  link.click()
+}
+
 useHead({
   title: 'Customs and Compliance | Blue Water Shipping',
   meta: [
@@ -110,8 +119,9 @@ const submitForm = () => {
 
           <div class="flex flex-wrap justify-center gap-4 pt-4">
             <button
-              class="inline-flex h-12 items-center justify-center gap-2 bg-bw-sky px-9 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
+              class="inline-flex h-12 items-center justify-center gap-2 bg-bw-red px-9 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-bw-blue"
               aria-label="Download customs guide"
+              @click="downloadCustomsGuide"
             >
               <Download class="h-4 w-4" aria-hidden="true" />
               {{ t('customs.hero.cta_guide') }}

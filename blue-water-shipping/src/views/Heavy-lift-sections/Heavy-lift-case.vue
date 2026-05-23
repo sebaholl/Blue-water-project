@@ -25,7 +25,7 @@ const form = reactive({
 
 <template>
     
-    <section class="py-20 md:py-28 bg-white">
+    <section id="cases-section" class="py-20 md:py-28 bg-white">
       <div class="container mx-auto max-w-7xl px-6 md:px-12">
         <div class="mb-16">
           <div class="mb-4 flex items-center gap-3">
