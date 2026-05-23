@@ -39,10 +39,6 @@ const form = reactive({
   message: ''
 })
 
-const submitForm = () => {
-  console.log('Customs enquiry submitted:', form)
-  alert('Your customs enquiry has been sent!')
-}
 </script>
 
 <template>
@@ -53,10 +49,6 @@ const submitForm = () => {
     <div class="container mx-auto max-w-7xl px-6 md:px-12">
       <div class="mb-10">
         <div class="mb-4 flex items-center gap-3">
-          <span class="h-px w-8 bg-bw-sky"></span>
-          <span class="text-xs font-black uppercase tracking-[0.3em] text-bw-sky">
-            {{ t('customs.process.eyebrow') }}
-          </span>
         </div>
         <h2 class="text-bw-blue font-black text-4xl md:text-5xl mb-6">
           {{ t('customs.process.heading') }}

@@ -28,7 +28,7 @@ const submitForm = () => {
 
 <template>
 
-      <section class="grid md:grid-cols-2">
+      <section id="quote-section" class="grid md:grid-cols-2">
       <!-- Left Column: Trust & Context -->
       <div class="bg-bw-blue p-8 md:p-10 text-white flex flex-col justify-center">
         <div class="mb-6 flex items-center gap-3">

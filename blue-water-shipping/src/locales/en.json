@@ -370,7 +370,6 @@
   },
   "heavy_lift": {
     "hero": {
-      "eyebrow": "Heavy Lift & Industrial Freight",
       "heading_line_1": "We Move",
       "heading_line_2": "What Others",
       "heading_line_3": "Won't Touch.",
@@ -422,19 +421,12 @@
       "banner_cta": "Speak to a Specialist"
     },
     "cases": {
-      "eyebrow": "Building Trust",
       "heading": "Proven in the Field.",
       "subtext": "We don't just move cargo — we solve complex logistics challenges for the world's most demanding industries.",
-      "case_1_tag": "Steel & Energy",
-      "case_1_stat": "1,200t",
-      "case_1_stat_label": "Total payload",
-      "case_1_title": "Moving 1,200 Tons of Steel to Norway",
-      "case_1_body": "Full multi-modal logistics chain including barging, heavy road transport, and final jacking-to-foundation.",
-      "case_2_tag": "Offshore",
-      "case_2_stat": "2.4k Miles",
-      "case_2_stat_label": "Ocean voyage",
-      "case_2_title": "Offshore Module Transport: Gulf of Mexico to Rotterdam",
-      "case_2_body": "Critical timeline delivery of oversized modules for a major refinery expansion project.",
+      "case_1_title": "Blue Water wins prize at Heavy Lift Awards",
+      "case_1_body": "Blue Water achieves international renown for challenging airfreight project",
+      "case_2_title": "Blue Water oversees first float-off operation in Port of Gdansk",
+      "case_2_body": "The operation involved submerging the heavy lift vessel to float off the offshore unit ",
       "read_more": "Read more",
       "find_more": "Find More Cases"
     },

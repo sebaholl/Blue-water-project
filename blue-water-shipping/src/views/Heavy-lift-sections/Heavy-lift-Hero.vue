@@ -1,27 +1,16 @@
 <script setup>
 import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ShieldCheck, Package, Factory, Scale, Truck, ChevronRight } from 'lucide-vue-next'
+import { ShieldCheck, Package } from 'lucide-vue-next'
 
 const { t } = useI18n()
 
-const form = reactive({
-  cargoType: '',
-  weight: '',
-  origin: '',
-  destination: '',
-  transportMode: '',
-  deadline: '',
-  name: '',
-  company: '',
-  email: '',
-  phone: '',
-  notes: ''
-})
+const scrollToQuote = () => {
+  document.getElementById('quote-section')?.scrollIntoView({ behavior: 'smooth' })
+}
 
-const submitForm = () => {
-  console.log('Form submitted:', form)
-  alert('Quote request sent successfully!')
+const scrollToCases = () => {
+  document.getElementById('cases-section')?.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
 
@@ -37,16 +26,9 @@ const submitForm = () => {
       </div>
 
       <div class="container mx-auto max-w-7xl px-6 md:px-12 relative z-10 py-24">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-          <!-- Left Content -->
+        <div class="flex flex-col items-center text-center">
           <div class="hero-animate space-y-8">
-            <div class="flex items-center gap-3">
-              <span class="h-2 w-2 rounded-full bg-bw-green"></span>
-              <span class="h-px w-8 bg-bw-green"></span>
-              <span class="text-xs font-black uppercase tracking-[0.3em] text-bw-green">
-                {{ t('heavy_lift.hero.eyebrow') }}
-              </span>
-            </div>
+
 
             <h1 class="text-5xl md:text-7xl font-black leading-tight text-white">
               {{ t('heavy_lift.hero.heading_line_1') }}<br />
@@ -54,37 +36,17 @@ const submitForm = () => {
               <span class="text-bw-green">{{ t('heavy_lift.hero.heading_line_3') }}</span>
             </h1>
 
-            <p class="text-xl text-white/80 max-w-lg leading-relaxed">
+            <p class="mx-auto max-w-lg text-xl text-white/80 leading-relaxed">
               {{ t('heavy_lift.hero.subheading') }}
             </p>
 
-            <div class="flex flex-wrap gap-4 pt-4">
-              <button class="inline-flex h-12 items-center justify-center bg-bw-red px-8 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90">
+            <div class="flex flex-wrap justify-center gap-4 pt-4">
+              <button @click="scrollToQuote" class="inline-flex h-12 items-center justify-center bg-bw-red px-8 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90">
                 {{ t('heavy_lift.hero.cta_quote') }}
               </button>
-              <button class="inline-flex h-12 items-center justify-center border-2 border-white px-8 text-sm font-black uppercase tracking-wide text-white transition hover:bg-white hover:text-bw-blue">
+              <button @click="scrollToCases" class="inline-flex h-12 items-center justify-center border-2 border-white px-8 text-sm font-black uppercase tracking-wide text-white transition hover:bg-white hover:text-bw-blue">
                 {{ t('heavy_lift.hero.cta_cases') }}
               </button>
-            </div>
-          </div>
-
-          <!-- Right Floating Card -->
-          <div class="hero-animate [animation-delay:200ms]">
-            <div class="bg-bw-night/80 backdrop-blur-md rounded-2xl p-8 border border-white/10 animate-float shadow-2xl">
-              <h3 class="text-xs font-black uppercase tracking-[0.3em] text-white/60 mb-8 pb-4 border-b border-white/5">
-                {{ t('heavy_lift.hero.stats_title') }}
-              </h3>
-
-              <div class="grid grid-cols-2 gap-x-8 gap-y-10">
-                <div v-for="i in 4" :key="i" class="space-y-1">
-                  <div class="font-black text-bw-green text-3xl md:text-4xl">
-                    {{ t(`heavy_lift.hero.stat_${i}_val`) }}
-                  </div>
-                  <div class="text-[10px] uppercase tracking-widest text-white/60 font-black leading-tight">
-                    {{ t(`heavy_lift.hero.stat_${i}_label`) }}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

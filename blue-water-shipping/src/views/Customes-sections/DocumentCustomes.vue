@@ -7,6 +7,14 @@ import {
 } from 'lucide-vue-next'
 
 import { useHead } from '@unhead/vue'
+import placeholderPdf from '@/assets/Place-holder.pdf'
+
+function downloadTemplate() {
+  const link = document.createElement('a')
+  link.href = placeholderPdf
+  link.download = 'customs-template.pdf'
+  link.click()
+}
 
 useHead({
   title: 'Customs Documents | Blue Water Shipping',
@@ -39,10 +47,6 @@ const form = reactive({
   message: ''
 })
 
-const submitForm = () => {
-  console.log('Customs enquiry submitted:', form)
-  alert('Your customs enquiry has been sent!')
-}
 </script>
 
 <template>
@@ -51,10 +55,7 @@ const submitForm = () => {
     <div class="container mx-auto max-w-7xl px-6 md:px-12">
       <div class="mb-16">
         <div class="mb-4 flex items-center gap-3">
-          <span class="h-px w-8 bg-bw-sky"></span>
-          <span class="text-xs font-black uppercase tracking-[0.3em] text-bw-sky">
-            {{ t('customs.documents.eyebrow') }}
-          </span>
+
         </div>
         <h2 class="text-bw-blue font-black text-4xl md:text-5xl mb-6">
           {{ t('customs.documents.heading') }}
@@ -82,7 +83,7 @@ const submitForm = () => {
                 {{ t(`customs.documents.doc_${i}_desc`) }}
               </p>
               <div class="flex gap-3">
-                <button class="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wide text-bw-sky hover:text-bw-blue transition">
+                <button class="inline-flex items-center gap-1 text-xs font-black uppercase tracking-wide text-bw-sky hover:text-bw-blue transition" @click="downloadTemplate">
                   <Download class="w-3 h-3" />
                   {{ t('customs.documents.download') }}
                 </button>

@@ -41,10 +41,6 @@ const form = reactive({
   message: ''
 })
 
-const submitForm = () => {
-  console.log('Customs enquiry submitted:', form)
-  alert('Your customs enquiry has been sent!')
-}
 </script>
 
 <template>
@@ -54,10 +50,7 @@ const submitForm = () => {
       <div class="grid lg:grid-cols-2 gap-16 items-start">
         <div class="lg:sticky lg:top-20">
           <div class="mb-4 flex items-center gap-3">
-            <span class="h-px w-8 bg-bw-red"></span>
-            <span class="text-xs font-black uppercase tracking-[0.3em] text-bw-red">
-              {{ t('customs.compliance.eyebrow') }}
-            </span>
+            
           </div>
           <h2 class="text-bw-blue font-black text-4xl md:text-5xl mb-6">
             {{ t('customs.compliance.heading') }}
@@ -65,11 +58,6 @@ const submitForm = () => {
           <p class="text-bw-steel text-lg leading-relaxed">
             {{ t('customs.compliance.subtext') }}
           </p>
-
-          <div class="mt-8 inline-flex items-center gap-3 bg-bw-blue/5 border border-bw-blue/20 px-4 py-3">
-            <Globe class="w-5 h-5 text-bw-blue flex-shrink-0" />
-            <span class="text-xs font-black uppercase tracking-wider text-bw-blue">EEA Member — Preferential Tariffs Apply</span>
-          </div>
         </div>
 
         <div class="space-y-4">

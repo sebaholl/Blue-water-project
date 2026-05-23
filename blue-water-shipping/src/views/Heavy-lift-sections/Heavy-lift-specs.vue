@@ -7,24 +7,10 @@ import { ShieldCheck, Package, Factory, Scale, Truck, ChevronRight } from 'lucid
 
 const { t } = useI18n()
 
-const form = reactive({
-  cargoType: '',
-  weight: '',
-  origin: '',
-  destination: '',
-  transportMode: '',
-  deadline: '',
-  name: '',
-  company: '',
-  email: '',
-  phone: '',
-  notes: ''
-})
-
-const submitForm = () => {
-  console.log('Form submitted:', form)
-  alert('Quote request sent successfully!')
+const scrollToQuote = () => {
+  document.getElementById('quote-section')?.scrollIntoView({ behavior: 'smooth' })
 }
+
 
 
 </script>
@@ -34,12 +20,6 @@ const submitForm = () => {
        <section class="py-20 md:py-28 bg-bw-sand">
       <div class="container mx-auto max-w-7xl px-6 md:px-12">
         <div class="mb-16">
-          <div class="mb-4 flex items-center gap-3">
-            <span class="h-px w-8 bg-bw-green"></span>
-            <span class="text-xs font-black uppercase tracking-[0.3em] text-bw-green">
-              {{ t('heavy_lift.specs.eyebrow') }}
-            </span>
-          </div>
           <h2 class="text-bw-blue font-black text-4xl md:text-5xl mb-6">
             {{ t('heavy_lift.specs.heading') }}
           </h2>
@@ -93,13 +73,16 @@ const submitForm = () => {
         </div>
 
         <!-- Dark Banner -->
-        <div class="bg-bw-night text-white py-10 px-8 md:px-12 mt-16 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div class="bg-bw-night text-white py-10 px-8 md:px-12 mt-16  flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div class="text-center md:text-left">
             <p class="text-2xl font-black text-white italic">
               "{{ t('heavy_lift.specs.banner_text') }}"
             </p>
           </div>
-          <button class="inline-flex h-12 items-center justify-center bg-bw-red px-10 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90 whitespace-nowrap">
+          <button
+            class="inline-flex h-12 items-center justify-center bg-bw-red px-10 text-sm font-black uppercase tracking-wide text-white transition hover:opacity-90 whitespace-nowrap"
+            @click="scrollToQuote"
+          >
             {{ t('heavy_lift.specs.banner_cta') }}
           </button>
         </div>
