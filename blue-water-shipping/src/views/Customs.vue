@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useHead } from '@unhead/vue'
 
@@ -69,14 +69,15 @@ const form = reactive({
   consent: false,
 })
 
+const showSuccess = ref(false)
+
 const submitForm = () => {
   if (!form.consent) {
     alert('Please accept the privacy consent.')
     return
   }
 
-  console.log('Customs enquiry submitted:', form)
-  alert('Your customs enquiry has been sent!')
+  showSuccess.value = true
 }
 </script>
 
@@ -401,6 +402,14 @@ const submitForm = () => {
             >
               {{ t('customs.contact.form_submit') }}
             </button>
+
+            <p
+              v-if="showSuccess"
+              aria-live="polite"
+              class="mt-2 border border-green-200 bg-green-50 p-4 text-sm font-bold text-green-700"
+            >
+              Form submitted successfully!
+            </p>
 
             <p class="text-center text-xs text-bw-clay">
               {{ t('customs.contact.form_footer') }}
