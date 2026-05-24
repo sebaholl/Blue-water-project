@@ -2,7 +2,6 @@
 import { useI18n } from 'vue-i18n'
 import { useHead } from '@unhead/vue'
 
-import FloatingAboutButton from '@/components/ui/FloatingAboutButton.vue'
 import Section1 from '@/views/Section1.vue'
 import Section2 from './Section2.vue';
 
@@ -40,7 +39,6 @@ useHead({
     class="relative flex min-h-[calc(100vh-6rem)] w-full items-center overflow-hidden md:min-h-[calc(100vh-7rem)]"
     aria-labelledby="home-hero-title"
   >
-    <FloatingAboutButton />
 
     <!-- Background video -->
     <video
@@ -110,5 +108,6 @@ useHead({
   </section>
 
   <Section1 />
+
   <Section2 />
 </template>
