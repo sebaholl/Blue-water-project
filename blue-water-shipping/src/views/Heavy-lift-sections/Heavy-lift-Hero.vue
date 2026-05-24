@@ -20,7 +20,7 @@ const scrollToCases = () => {
       <!-- Background Image with Overlay -->
       <div
         class="absolute inset-0 z-0 bg-cover bg-center"
-        style="background-image: url('https://images.unsplash.com/photo-1541888941295-8bc68f3eb730?auto=format&fit=crop&q=80&w=2000')"
+        style="background-image: url('https://hecksher.com/wp-content/uploads/2023/07/Project-Logistics-Blog-image.jpeg.webp')"
       >
         <div class="absolute inset-0 bg-gradient-to-br from-bw-night to-bw-blue/90 opacity-95"></div>
       </div>
@@ -32,7 +32,6 @@ const scrollToCases = () => {
 
             <h1 class="text-5xl md:text-7xl font-black leading-tight text-white">
               {{ t('heavy_lift.hero.heading_line_1') }}<br />
-              {{ t('heavy_lift.hero.heading_line_2') }}<br />
               <span class="text-bw-green">{{ t('heavy_lift.hero.heading_line_3') }}</span>
             </h1>
 

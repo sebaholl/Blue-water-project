@@ -1,7 +1,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { ShieldCheck, Ship } from 'lucide-vue-next'
-import Section2 from './Section2.vue';
+
 const { t } = useI18n()
 
 </script>
@@ -41,5 +41,5 @@ const { t } = useI18n()
    
   </section>
   
-  
+
   </template>

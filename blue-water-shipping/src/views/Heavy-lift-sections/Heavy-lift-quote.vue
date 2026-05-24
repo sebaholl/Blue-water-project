@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { ShieldCheck, Package, Factory, Scale, Truck, ChevronRight } from 'lucide-vue-next'
 
@@ -19,9 +19,10 @@ const form = reactive({
   notes: ''
 })
 
+const showSuccess = ref(false)
+
 const submitForm = () => {
-  console.log('Form submitted:', form)
-  alert('Quote request sent successfully!')
+  showSuccess.value = true
 }
 
 </script>
@@ -31,12 +32,7 @@ const submitForm = () => {
       <section id="quote-section" class="grid md:grid-cols-2">
       <!-- Left Column: Trust & Context -->
       <div class="bg-bw-blue p-8 md:p-10 text-white flex flex-col justify-center">
-        <div class="mb-6 flex items-center gap-3">
-          <span class="h-px w-8 bg-bw-green"></span>
-          <span class="text-xs font-black uppercase tracking-[0.3em] text-bw-green">
-            {{ t('heavy_lift.contact.eyebrow') }}
-          </span>
-        </div>
+  
 
         <h2 class="text-3xl md:text-4xl font-black leading-tight mb-4">
           {{ t('heavy_lift.contact.heading') }}
@@ -149,6 +145,14 @@ const submitForm = () => {
             <button type="submit" class="w-full h-12 bg-bw-red text-white font-black uppercase tracking-widest text-sm shadow-xl transition hover:opacity-90 hover:scale-[1.02] active:scale-95">
               {{ t('heavy_lift.contact.form_submit') }} →
             </button>
+            <p
+              v-if="showSuccess"
+              aria-live="polite"
+              class="mt-2 border border-green-200 bg-green-50 p-4 text-sm font-bold text-green-700"
+            >
+              Form submitted successfully!
+            </p>
+
             <p class="text-[10px] text-bw-steel text-center mt-4 font-bold uppercase tracking-widest opacity-60">
               {{ t('heavy_lift.contact.form_footer') }}
             </p>
