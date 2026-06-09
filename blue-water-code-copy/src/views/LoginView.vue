@@ -42,7 +42,8 @@
           />
         </div>
 
-        <button
+        <!-- If the login is in progress, the button is greyed, you can't click it twice. -->
+        <button 
           type="submit"
           :disabled="isLoading"
           class="flex h-12 w-full items-center justify-center bg-bw-blue px-5 text-sm font-black uppercase tracking-wide text-white transition hover:bg-blue-900 disabled:cursor-not-allowed disabled:opacity-60"
@@ -95,15 +96,15 @@ const { t } = useI18n()
 const email = ref('')
 const password = ref('')
 const errorMessage = ref('')
-const isLoading = ref(false)
+const isLoading = ref(false) // used to grey out the button while logging in. 
 
 const loginUser = async () => {
-  errorMessage.value = ''
-  isLoading.value = true
+  errorMessage.value = '' // clear error message
+  isLoading.value = true 
 
   try {
-    await signInWithEmailAndPassword(auth, email.value, password.value)
-    router.push('/dashboard')
+    await signInWithEmailAndPassword(auth, email.value, password.value) // Awaits for the firebase to say okay
+    router.push('/dashboard') // if okay, sends user to dash board
   } catch (error) {
     if (error.code === 'auth/invalid-email') {
       errorMessage.value = t('auth.invalidEmail')

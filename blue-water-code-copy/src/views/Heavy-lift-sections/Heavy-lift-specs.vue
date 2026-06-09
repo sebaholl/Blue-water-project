@@ -2,7 +2,7 @@
 <script setup>
 import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ShieldCheck, Package, Factory, Scale, Truck, ChevronRight } from 'lucide-vue-next'
+import { Factory, Scale, Truck } from 'lucide-vue-next'
 
 
 const { t } = useI18n()

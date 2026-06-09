@@ -1,7 +1,8 @@
 <template>
   <header
+  
     :class="[
-      'fixed left-0 top-0 z-50 w-full border-b transition-all duration-300',
+      'fixed left-0 top-0 z-50 w-full border-b transition-all duration-300', 
       isScrolled
         ? 'border-gray-200 bg-white shadow-sm'
         : 'border-white/20 bg-bw-blue',
@@ -12,10 +13,11 @@
       aria-label="Main navigation"
     >
       <!-- Left -->
+      <!-- 20: the class gets active only when the condition is made -->
       <div class="flex items-center gap-6 md:gap-10">
         <button
           class="burger-button"
-          :class="{ active: isMenuOpen, scrolled: isScrolled }"
+          :class="{ active: isMenuOpen, scrolled: isScrolled }" 
           :aria-label="isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'"
           :aria-expanded="isMenuOpen"
           aria-controls="main-burger-menu"
@@ -75,6 +77,7 @@
           </button>
 
           <!-- Desktop language -->
+           <!-- The drop down menu for languages -->
           <div class="relative">
             <button
               :class="[
@@ -86,7 +89,7 @@
               :aria-label="t('nav.language')"
               :aria-expanded="isLanguageOpen"
               aria-controls="desktop-language-menu"
-              @click.stop="isLanguageOpen = !isLanguageOpen"
+              @click.stop="isLanguageOpen = !isLanguageOpen" 
             >
               <FontAwesomeIcon :icon="faEarthAmericas" class="text-lg" aria-hidden="true" />
 
@@ -105,7 +108,7 @@
               >
                 <button
                   v-for="language in languages"
-                  :key="language.code"
+                  :key="language.code" 
                   class="language-option"
                   :class="{ active: locale === language.code }"
                   type="button"
@@ -121,7 +124,7 @@
 
         <!-- Desktop CTA -->
         <RouterLink
-          :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'"
+          :to="user ? (userRole === 'admin' ? '/admin' : '/dashboard') : '/login'" 
           :class="[
             'flex h-12 min-w-[170px] items-center justify-center whitespace-nowrap px-5 text-sm font-bold uppercase tracking-wide transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2',
             isScrolled
@@ -187,14 +190,14 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useAuth } from '../../composables/useAuth'
+import { onMounted, onUnmounted, ref, watch } from 'vue' // from vue
+import { useI18n } from 'vue-i18n' // give t() and locale 
+import { useAuth } from '../../composables/useAuth' // from vue composition API
 
-import BwsLogo from '../ui/BwsLogo.vue'
-import BurgerMenu from './BurgerMenu.vue'
+import BwsLogo from '../ui/BwsLogo.vue' // from vue component
+import BurgerMenu from './BurgerMenu.vue' // from vue component
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome' // from fontawesome
 
 import {
   faMagnifyingGlass,
@@ -202,8 +205,8 @@ import {
   faChevronDown,
 } from '@fortawesome/free-solid-svg-icons'
 
-const { t, locale } = useI18n()
-const { user, userRole } = useAuth()
+const { t, locale } = useI18n() // t() gives the translations, locale tells which language to use 
+const { user, userRole } = useAuth() // gives us the logged in user and thier role 
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
@@ -216,18 +219,20 @@ const languages = [
   { code: 'da', label: 'Dansk' },
 ]
 
+// Switches languages 
 const changeLanguage = (code) => {
-  locale.value = code
-  localStorage.setItem('bws-locale', code)
+  locale.value = code // tells Vue i18n to use EN or DA translations
+  localStorage.setItem('bws-locale', code) // Stores the language in local storage (Code doesn't go away when site is reloaded)
 
   isLanguageOpen.value = false
   isMobileLanguageOpen.value = false
 }
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 10
+  isScrolled.value = window.scrollY > 10 // TRUE if we have scrolled more than 10 pixels
 }
 
+// Open burger menu
 const openMenu = () => {
   openSearchOnMenuOpen.value = false
   isLanguageOpen.value = false
@@ -248,17 +253,18 @@ const closeMenu = () => {
 }
 
 const handleWindowClick = (event) => {
-  if (!event.target.closest('.language-switch')) {
+  if (!event.target.closest('.language-switch')) { // If we click outside of the language switch area then close it
     isLanguageOpen.value = false
   }
 
-  if (!event.target.closest('.mobile-language-button')) {
+  if (!event.target.closest('.mobile-language-button')) { // If we click outside of the mobile language switch area then close it
     isMobileLanguageOpen.value = false
   }
 }
 
+// if Escape is pressed, then close the mobile/desktop language switch and the burger menu
 const handleEscape = (event) => {
-  if (event.key === 'Escape') {
+  if (event.key === 'Escape') {  // if escape key is pressed 
     isLanguageOpen.value = false
     isMobileLanguageOpen.value = false
 
@@ -268,6 +274,7 @@ const handleEscape = (event) => {
   }
 }
 
+// Disable scrolling when the burger menu is open
 watch(isMenuOpen, (value) => {
   document.body.style.overflow = value ? 'hidden' : ''
 })

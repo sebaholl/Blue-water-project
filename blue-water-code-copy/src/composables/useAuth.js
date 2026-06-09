@@ -2,12 +2,12 @@ import { ref } from 'vue'
 import { doc, getDoc } from 'firebase/firestore'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth, db } from '../firebase/config'
+// ref = it makes a variable that the rest of the app can react to when it changes
+const user = ref(null) // who is logged in (null = none)
+const userRole = ref('client') // roles = admin, employee, client 
+const isAuthReady = ref(false) // is the login process complete
 
-const user = ref(null)
-const userRole = ref('client')
-const isAuthReady = ref(false)
-
-onAuthStateChanged(auth, async (currentUser) => {
+onAuthStateChanged(auth, async (currentUser) => { // Monitors changes in firebase auth to track who is logged in 
   user.value = currentUser
   userRole.value = 'client'
 
@@ -22,11 +22,11 @@ onAuthStateChanged(auth, async (currentUser) => {
 
   isAuthReady.value = true
 })
-
+// logout function
 const logout = async () => {
-  await signOut(auth)
-  user.value = null
-  userRole.value = 'client'
+  await signOut(auth) // signs out of firebase
+  user.value = null // resets the user variable to null
+  userRole.value = 'client' // resets the role variable to client
 }
 
 export function useAuth() {

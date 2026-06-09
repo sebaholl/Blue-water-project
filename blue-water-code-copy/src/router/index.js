@@ -126,7 +126,7 @@ const getUserRole = async (userId) => {
     : 'client'
 }
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to) => { // Protects the routes from unauthenticated users 
   const currentUser = await getCurrentUser()
 
   // Protected routes

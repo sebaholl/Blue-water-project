@@ -1,11 +1,11 @@
 <script setup>
-import { reactive, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { ShieldCheck, Package, Factory, Scale, Truck, ChevronRight } from 'lucide-vue-next'
+import { reactive, ref } from 'vue' // Imports reactive and ref from Vue
+import { useI18n } from 'vue-i18n' // Imports useI18n from vue-i18n
+import { ShieldCheck } from 'lucide-vue-next' // Imports icons from lucide-vue-next
 
-const { t } = useI18n()
+const { t } = useI18n() // Creates a function t that returns the translation for a given key
 
-const form = reactive({
+const form = reactive({ // watches the object - any change to any field updates
   cargoType: '',
   weight: '',
   origin: '',
@@ -21,8 +21,8 @@ const form = reactive({
 
 const showSuccess = ref(false)
 
-const submitForm = () => {
-  showSuccess.value = true
+const submitForm = () => { // function when form is submitted
+  showSuccess.value = true // makes the success message visible
 }
 
 </script>
@@ -43,11 +43,11 @@ const submitForm = () => {
         </p>
 
         <div class="space-y-3">
-          <div v-for="i in 3" :key="i" class="flex items-center gap-3 text-white/90 font-bold text-sm">
+          <div v-for="i in 3" :key="i" class="flex items-center gap-3 text-white/90 font-bold text-sm">  <!-- "i" unique key for each element, "i in 3" repeat this 3 times -->
             <div class="flex-shrink-0 w-6 h-6 bg-bw-green/20 rounded-full flex items-center justify-center">
               <ShieldCheck class="w-4 h-4 text-bw-green" />
             </div>
-            <span>{{ t(`heavy_lift.contact.trust_${i}`) }}</span>
+            <span>{{ t(`heavy_lift.contact.trust_${i}`) }}</span> <!-- ${i} slots the current number for each element  -->
           </div>
         </div>
       </div>
@@ -59,11 +59,11 @@ const submitForm = () => {
             {{ t('heavy_lift.contact.form_heading') }}
           </h3>
 
-          <form @submit.prevent="submitForm" class="space-y-4">
+          <form @submit.prevent="submitForm" class="space-y-4"> <!-- when the form is submitted, stop the page reloading, and run submitForm instead -->
             <div class="grid md:grid-cols-2 gap-6">
               <div>
                 <label class="mb-2 block text-xs font-black uppercase tracking-widest text-bw-steel">Cargo Type <span class="text-bw-blue">*</span></label>
-                <select v-model="form.cargoType" required class="h-12 w-full border border-gray-200 px-4 text-sm font-bold outline-none transition focus:border-bw-blue appearance-none bg-bw-sand/30">
+                <select v-model="form.cargoType" required class="h-12 w-full border border-gray-200 px-4 text-sm font-bold outline-none transition focus:border-bw-blue appearance-none bg-bw-sand/30"> <!-- two-way binding. Whatever the user selects/types is instantly stored in the form object, and if form changes in code the input updates too -->
                   <option value="" disabled>Select Cargo Type</option>
                   <option>Steel & Pipes</option>
                   <option>Machinery & Equipment</option>

@@ -56,7 +56,7 @@ const form = reactive({
                 {{ t('heavy_lift.cases.case_1_body') }}
               </p>
               <a href="https://www.bws.net/media/news/blue-water-achieves-international-renown-for-challenging-airfreight-project" class="inline-flex items-center gap-2 mt-8 text-bw-blue font-black text-xs uppercase tracking-widest transition-all group-hover:gap-4">
-                {{ t('heavy_lift.cases.read_more') }} <ChevronRight class="w-3 h-3" />
+                {{ t('heavy_lift.cases.read_more') }} <ChevronRight class="w-3 h-3" />  <!-- Right Arrow Icon -->
               </a>
             </div>
           </div>
