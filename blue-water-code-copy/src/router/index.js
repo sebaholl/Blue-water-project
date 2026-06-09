@@ -4,7 +4,9 @@ import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../firebase/config'
 import NotFoundView from '@/views/NotFoundView.vue'
 
-const routes = [
+// path = URL typed in Browser
+// component = page to show 
+const routes = [ // Map of pages
   { path: '/', name: 'home', component: () => import('../views/HomeView.vue') },
   { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
   { path: '/sea-freight', name: 'sea-freight', component: () => import('../views/SeaFreightView.vue') },
@@ -20,24 +22,24 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('../views/DashboardView.vue'),
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true }, // tells the router that the user must be logged in to access this page
   },
   {
     path: '/admin',
     name: 'admin',
     component: () => import('../views/AdminView.vue'),
-    meta: { requiresAuth: true, requiresAdmin: true },
+    meta: { requiresAuth: true, requiresAdmin: true }, // requires auth to be logged in and requires admin to be an admin
   },
   {
-  path: '/:pathMatch(.*)*',
-  name: 'NotFound',
-  component: NotFoundView,
-},
-{
-  path: '/contact/:officeSlug',
-  name: 'ContactOffice',
-  component: () => import('@/views/ContactOfficeView.vue'),
-},
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFoundView, // 404 page if page is not found 
+  },
+  {
+    path: '/contact/:officeSlug',
+    name: 'ContactOffice',
+    component: () => import('@/views/ContactOfficeView.vue'), // displays different contact pages based on the office slug 
+  },
 ]
 
 const router = createRouter({
@@ -58,7 +60,7 @@ const getUserRole = async (userId) => {
   return userDoc.exists() ? userDoc.data().role || 'client' : 'client'
 }
 
-router.beforeEach(async (to) => {
+router.beforeEach(async (to) => { // Protects the routes from unauthenticated users 
   const currentUser = await getCurrentUser()
 
   if (to.meta.requiresAuth && !currentUser) return '/login'

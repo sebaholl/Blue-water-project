@@ -1,10 +1,11 @@
 <template>
+  <!-- Dark overlay -->
   <Transition name="fade">
 
 <div
   v-if="isOpen"
   class="fixed inset-0 z-[90] bg-black/45 backdrop-blur-sm"
-  aria-hidden="true"
+  aria-hidden="true"s
   @click="$emit('close')"
 ></div>
   </Transition>
@@ -301,9 +302,10 @@
       </div>
 
       <!-- Second column desktop -->
+      <!-- activeMain: which top level category is selected -->
       <Transition name="column-slide" mode="out-in">
         <div
-          v-if="activeMain?.children"
+          v-if="activeMain?.children" 
           :key="activeMain.key"
           class="hidden w-[230px] border-r border-gray-200 bg-white px-8 py-24 md:block md:w-[270px]"
         >
@@ -391,23 +393,39 @@
 </template>
 
 <script setup>
+// --- IMPORTS ---
+// Vue tools we use: computed (derived values), nextTick (wait for DOM update),
+// onMounted/onUnmounted (run code when component loads/unloads), ref (reactive variable), watch (react to changes)
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+
+// useAuth gives us the logged-in user and their role (admin or normal user)
 import { useAuth } from '../../composables/useAuth'
+
+// useI18n gives us the translation function t() and the current language (locale)
 import { useI18n } from 'vue-i18n'
 
+// The Blue Water logo component shown in the menu rail
 import BwsLogo from '../ui/BwsLogo.vue'
+
+// FontAwesomeIcon is the component that renders icons
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+// These are the individual icons used throughout the menu
 import {
-  faMagnifyingGlass,
-  faEarthAmericas,
-  faXmark,
-  faChevronRight,
-  faChevronDown,
-  faLocationCrosshairs,
-  faPhone,
+  faMagnifyingGlass,   // search icon
+  faEarthAmericas,     // language/globe icon
+  faXmark,             // close (X) icon
+  faChevronRight,      // right arrow icon
+  faChevronDown,       // down arrow icon
+  faLocationCrosshairs, // track & trace icon
+  faPhone,             // contact icon
 } from '@fortawesome/free-solid-svg-icons'
 
+
+// --- PROPS ---
+// Props are values passed in from the parent component (Navbar).
+// isOpen: tells this component whether the menu should be visible or hidden
+// openSearch: tells this component to open the search panel straight away
 const props = defineProps({
   isOpen: {
     type: Boolean,
@@ -419,29 +437,56 @@ const props = defineProps({
   },
 })
 
+// --- EMITS ---
+// Emits are events this component can send back up to the parent.
+// 'close' → tells the parent to close the menu
+// 'search-opened' → tells the parent the search panel has been opened
 const emit = defineEmits(['close', 'search-opened'])
 
+
+// --- GLOBAL STATE ---
+// t() translates text keys into the correct language
+// locale is the currently selected language ('en' or 'da')
 const { t, locale } = useI18n()
+
+// user is the logged-in Firebase user (or null if not logged in)
+// userRole is either 'admin' or a normal user role
 const { user, userRole } = useAuth()
 
-const activeMainKey = ref(null)
-const activeChildKey = ref(null)
-const isSearchOpen = ref(false)
-const isLanguageOpen = ref(false)
-const searchQuery = ref('')
-const searchInput = ref(null)
 
+// --- REACTIVE VARIABLES (ref) ---
+// These are like "live" variables — when they change, the page updates automatically.
+
+const activeMainKey = ref(null)    // which top-level menu item is currently selected (desktop)
+const activeChildKey = ref(null)   // which second-level menu item is currently selected (desktop)
+const isSearchOpen = ref(false)    // whether the search panel is visible
+const isLanguageOpen = ref(false)  // whether the language dropdown is visible
+const searchQuery = ref('')        // the text the user has typed in the search box
+const searchInput = ref(null)      // a direct reference to the search <input> element in the DOM
+
+
+// --- LANGUAGE LIST ---
+// The two languages available in the language switcher
 const languages = [
   { code: 'en', label: 'English' },
   { code: 'da', label: 'Dansk' },
 ]
 
+
+// --- FUNCTION: changeLanguage ---
+// Called when the user clicks a language option.
+// It updates the active language, saves the choice to localStorage so it
+// is remembered after a page refresh, then closes the language dropdown.
 const changeLanguage = (code) => {
   locale.value = code
   localStorage.setItem('bws-locale', code)
   isLanguageOpen.value = false
 }
 
+
+// --- COMPUTED: popularSearches ---
+// Returns a fixed list of suggested search terms shown in the search panel
+// before the user starts typing. The t() calls translate them automatically.
 const popularSearches = computed(() => [
   t('searchTerms.seaFreight'),
   t('searchTerms.tracking'),
@@ -450,6 +495,15 @@ const popularSearches = computed(() => [
   t('searchTerms.career'),
 ])
 
+
+// --- COMPUTED: menuItems ---
+// Builds the full navigation structure used by the menu.
+// It is a computed value so that all the translated names (t()) update
+// automatically whenever the language changes.
+// Each item can have:
+//   - path: an internal page route (e.g. '/sea-freight')
+//   - url: an external website link
+//   - children: a nested list of sub-items
 const menuItems = computed(() => [
   {
     key: 'solutions',
@@ -588,14 +642,29 @@ const menuItems = computed(() => [
   },
 ])
 
+
+// --- COMPUTED: activeMain ---
+// Finds and returns the full menu item object for whichever top-level
+// item is currently selected (stored as a key in activeMainKey).
+// The template uses this to know which second column to show.
 const activeMain = computed(() =>
   menuItems.value.find((item) => item.key === activeMainKey.value)
 )
 
+// --- COMPUTED: activeChild ---
+// Same idea as activeMain but for the second level.
+// Finds the child item inside the active top-level item.
+// The template uses this to know which third column to show.
 const activeChild = computed(() =>
   activeMain.value?.children?.find((child) => child.key === activeChildKey.value)
 )
 
+
+// --- FUNCTION: openMainColumn ---
+// Called when a top-level menu button is clicked on desktop.
+// If the item goes directly to a page or external link, just close the menu.
+// If the item has sub-items (children), open the second column for that item
+// and reset the third column so it doesn't show stale content.
 const openMainColumn = (item) => {
   if (item.path || item.url) {
     emit('close')
@@ -611,6 +680,9 @@ const openMainColumn = (item) => {
   activeChildKey.value = null
 }
 
+// --- FUNCTION: openChildColumn ---
+// Same logic as openMainColumn but for second-level items.
+// Direct links close the menu; items with children open the third column.
 const openChildColumn = (child) => {
   if (child.path || child.url) {
     emit('close')
@@ -625,6 +697,12 @@ const openChildColumn = (child) => {
   activeChildKey.value = child.key
 }
 
+
+// --- FUNCTION: toggleSearch ---
+// Opens the search panel if it is closed, or closes it if it is open.
+// Also closes the language dropdown so both aren't open at the same time.
+// When opening, we wait for the DOM to update (nextTick) before moving
+// focus to the search input so the user can start typing immediately.
 const toggleSearch = async () => {
   isSearchOpen.value = !isSearchOpen.value
   isLanguageOpen.value = false
@@ -635,11 +713,21 @@ const toggleSearch = async () => {
   }
 }
 
+// --- FUNCTION: closeSearch ---
+// Hides the search panel and clears the search box,
+// so it starts empty the next time the user opens it.
 const closeSearch = () => {
   isSearchOpen.value = false
   searchQuery.value = ''
 }
 
+
+// --- FUNCTION: flattenMenuItems ---
+// The menuItems list is deeply nested (3 levels). For search to work, we
+// need a flat (single-level) list of every page. This function walks through
+// all the levels recursively and returns one big flat array.
+// Each item gets a 'category' label (the top-level parent name) so search
+// results can show which section they belong to (e.g. "Solutions").
 const flattenMenuItems = (items, parent = '') => {
   return items.flatMap((item) => {
     const category = parent || item.name
@@ -658,42 +746,64 @@ const flattenMenuItems = (items, parent = '') => {
   })
 }
 
+// --- COMPUTED: allSearchResults ---
+// Takes the full flat list from flattenMenuItems and removes any items that
+// don't have a destination (no path or url). Those are just category headings.
 const allSearchResults = computed(() =>
   flattenMenuItems(menuItems.value).filter((item) => item.path || item.url)
 )
 
+// --- COMPUTED: filteredResults ---
+// Filters allSearchResults in real time as the user types in the search box.
+// Returns an empty array when nothing is typed (popular searches are shown instead).
+// The comparison is case-insensitive so "sea" matches "Sea Freight".
 const filteredResults = computed(() => {
-  const query = searchQuery.value.trim().toLowerCase()
+  const query = searchQuery.value.trim().toLowerCase() // strip spaces and lowercase
 
-  if (!query) return []
+  if (!query) return [] // nothing typed → show popular searches instead
 
   return allSearchResults.value.filter((item) =>
-    item.name.toLowerCase().includes(query)
+    item.name.toLowerCase().includes(query) // keep items whose name contains the search text
   )
 })
 
 
+// --- FUNCTION: handleEscape ---
+// Listens for keyboard presses. If the user presses the Escape key while
+// the menu is open, it closes the menu. This is an accessibility feature.
 const handleEscape = (event) => {
   if (event.key === 'Escape' && props.isOpen) {
     emit('close')
   }
 }
 
+// --- LIFECYCLE: onMounted ---
+// Runs once when this component appears on the page.
+// Attaches the Escape key listener to the whole window.
 onMounted(() => {
   window.addEventListener('keydown', handleEscape)
 })
 
+// --- LIFECYCLE: onUnmounted ---
+// Runs once when this component is removed from the page.
+// Removes the Escape key listener to avoid memory leaks
+// (an unused listener kept running in the background).
 onUnmounted(() => {
   window.removeEventListener('keydown', handleEscape)
 })
 
+
+// --- WATCHER: props.openSearch ---
+// Watches the openSearch prop that comes from the parent (Navbar).
+// If the parent tells us to open search (e.g. user clicked the search icon
+// in the navbar), we open the panel and focus the input automatically.
 watch(
   () => props.openSearch,
   async (value) => {
     if (value && props.isOpen) {
       isSearchOpen.value = true
       isLanguageOpen.value = false
-      emit('search-opened')
+      emit('search-opened') // tell the parent the search panel is now open
 
       await nextTick()
       searchInput.value?.focus()
@@ -701,10 +811,17 @@ watch(
   }
 )
 
+// --- WATCHER: props.isOpen ---
+// Watches whether the whole menu is opened or closed.
+// When the menu CLOSES: reset everything back to its default state
+//   (clear search, close language dropdown, deselect all columns).
+// When the menu OPENS: check if the parent also wants search open, and if so
+//   open the search panel and focus the input automatically.
 watch(
   () => props.isOpen,
   async (value) => {
     if (!value) {
+      // Menu is closing — reset all state
       closeSearch()
       isLanguageOpen.value = false
       activeMainKey.value = null
@@ -713,6 +830,7 @@ watch(
     }
 
     if (props.openSearch) {
+      // Menu is opening and search should be shown immediately
       isSearchOpen.value = true
       isLanguageOpen.value = false
       emit('search-opened')
